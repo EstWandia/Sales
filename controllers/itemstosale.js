@@ -45,6 +45,7 @@ export const getItembyid = async (req, res) => {
         name: item.name,
         in_stock: item.in_stock,
         price: item.price,
+        buying_price: item.buying_price,
         created_at: item.created_at,
       });
     } catch (error) {
@@ -56,7 +57,7 @@ export const getItembyid = async (req, res) => {
   
   export const getUpdatebyid = async (req, res) => {
     const { id } = req.params;
-    const { name, in_stock,price } = req.body;
+    const { name, in_stock,price,buying_price } = req.body;
   
     try {
       // Find the item first
@@ -72,7 +73,8 @@ export const getItembyid = async (req, res) => {
       const updatedItem = await item.update({
         name,
         in_stock,
-        price
+        price,
+        buying_price
       });
   
       return res.status(200).json({
@@ -113,7 +115,7 @@ export const getItembyid = async (req, res) => {
     }
   };
   export const createbyid = async (req, res) => {
-    const { name, in_stock,price } = req.body;
+    const { name, in_stock,price,buying_price } = req.body;
 
     try {
         // Validate input
@@ -126,6 +128,7 @@ export const getItembyid = async (req, res) => {
             name,
             in_stock,
             price,
+            buying_price
         });
 
         return res.status(201).json({

@@ -46,6 +46,15 @@ export default(sequelize, dataTypes)=>{
              }   
             
         },
+        buying_price:{
+            type:DataTypes.INTEGER,
+            allowNull:false,
+            validate:{
+                notEmpty:true,
+                isNumeric:true
+             }   
+            
+        },
         created_at:{
             type:DataTypes.DATE,
             allowNull:false,

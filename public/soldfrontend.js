@@ -95,7 +95,8 @@ function filterSoldTable() {
            <strong>Category Name:</strong> ${itemDetails.category_id || 'N/A'} <br>
             <strong>Name:</strong> ${itemDetails.name || 'N/A'} <br>
             <strong>Quantity:</strong> ${itemDetails.quantity || '0'} <br>
-            <strong>Amount:</strong> ${(itemDetails.amount / 100).toFixed(2) || '0.00'} <br>
+            <strong>Amount:</strong> ${(itemDetails.amount).toFixed(2) || '0.00'} <br>
+            <strong>Buying Price :</strong> ${(itemDetails.buying_price).toFixed(2) || '0.00'} <br>
             <strong>State:</strong> ${itemDetails.state === 1 ? 'Cash' : 'Mpesa'} <br>
             <strong>Created At:</strong> ${new Date(itemDetails.created_at).toLocaleString()} <br>
           `;
@@ -121,6 +122,7 @@ function filterSoldTable() {
           document.getElementById('editItemName').value = itemDetails.name || '';
           document.getElementById('editItemQuantity').value = itemDetails.quantity || '';
           document.getElementById('editItemAmount').value = (itemDetails.amount).toFixed(2) || '';
+          document.getElementById('editItemBuyingprice').value = (itemDetails.buying_price).toFixed(2) || '';
           const state = itemDetails.state === 'Mpesa' ? 1 : 0;
           document.getElementById('editItemState').value = state;
           document.getElementById('editItemId').value = itemDetails.id || '';
@@ -141,7 +143,8 @@ function filterSoldTable() {
         id: document.getElementById('editItemId').value,
         name: document.getElementById('editItemName').value,
         quantity: parseFloat(document.getElementById('editItemQuantity').value),
-        amount: parseFloat(document.getElementById('editItemAmount').value), // Store in cents
+        amount: parseFloat(document.getElementById('editItemAmount').value),
+        buying_price: parseFloat(document.getElementById('editItemBuyingprice').value), // Store in cents
         state: parseInt(document.getElementById('editItemState').value),
       };
     

@@ -89,14 +89,14 @@ function filteredTable() {
     const filterPrice = document.getElementById('Price').value;
 
     const filteredData = tabledData.filter(item => {
-        return (
-            (filterName === '' || item.name.toLowerCase().includes(filterName)) &&
-            (filterStock === '' || item.in_stock === parseInt(filterStock)) &&
-            (filterPrice === '' || item.price <= parseFloat(filterPrice)) // Allow a price filter range
-        );
-    });
-
-    displayItems(filteredData); // Re-render table with filtered data
+        const matchesName = (filterName === '' || item.name.toLowerCase().includes(filterName));
+        const matchesStock = (filterStock === '' || item.in_stock.toString().includes(filterStock));
+        const matchesPrice = (filterPrice === '' || item.price.toString().includes(filterPrice));
+          
+          // Return true if all conditions are satisfied for the item
+          return matchesName && matchesStock && matchesPrice;
+      });
+      displayItems(filteredData);
 }
 
 
@@ -169,6 +169,7 @@ function showSaleModal(items) {
 
         row.dataset.Id = item.id;
         row.dataset.price = item.price;
+        row.dataset.buying_price = item.buying_price;
         row.dataset.categoryId = item.category_id;
     })
     grossTotalElem.textContent = grossTotal.toFixed(2);
@@ -278,6 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     id:item.id,
                     name: item.name,
                     price: item.price,
+                    buying_price: item.buying_price,
                     quantity: item.quantity,
                     amount: item.total,
                     category_id: item.categoryId || null,

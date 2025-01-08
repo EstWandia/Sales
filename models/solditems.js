@@ -52,6 +52,15 @@ export default(sequelize)=>{
              }   
             
         },
+        buying_price:{
+            type:DataTypes.INTEGER,
+            allowNull:false,
+            validate:{
+                notEmpty:true,
+                isNumeric:true
+             }   
+            
+        },
         state:{
             type:DataTypes.TINYINT,
             allowNull:false,

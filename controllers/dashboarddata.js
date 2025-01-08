@@ -79,7 +79,7 @@ export const getTodayProfit = async (req, res) => {
       const results = await Solditems.findAll({
           attributes: [
               [
-                  sequelize.literal("(price * quantity) - amount"),
+                  sequelize.literal("(price * quantity) - (buying_price*quantity)"),
                   "profit", // Alias for the calculated field
               ],
           ],
@@ -168,6 +168,7 @@ try{
           name: item.name,
           quantity: item.quantity,
           price: item.price,
+          buying_price: item.buying_price,
           amount:item.amount,
           state:state,
           category_id:item.category_id

@@ -12,6 +12,7 @@ export const getAllSoldItems = async(req,res)=>{
         name:item.name,
         quantity:item.quantity,
         amount:item.amount,
+        buying_price:item.buying_price,
         state:item.state,
         created_at: item.createdAt
           ? item.createdAt.toISOString().split('T')[0] 
@@ -42,6 +43,7 @@ export const getItem = async (req, res) => {
         name: item.name,
         quantity: item.quantity,
         amount: item.amount,
+        buying_price:item.buying_price,
         state: item.state,
         created_at: item.created_at,
       });
@@ -54,7 +56,7 @@ export const getItem = async (req, res) => {
   
   export const getUpdate = async (req, res) => {
     const { id } = req.params;
-    const { name, quantity, amount, state } = req.body;
+    const { name, quantity, amount,buying_price, state } = req.body;
   
     try {
       // Find the item first
@@ -71,6 +73,7 @@ export const getItem = async (req, res) => {
         name,
         quantity,
         amount,
+        buying_price,
         state,
       });
   

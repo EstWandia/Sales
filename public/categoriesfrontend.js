@@ -114,6 +114,7 @@ function editItem(event, id) {
       // Populate the form with item details
       document.getElementById('editItemName').value = itemDetails.name || '';
       document.getElementById('editItemStock').value = itemDetails.in_stock || '';
+      document.getElementById('editItemBuyingprice').value = itemDetails.buying_price || '';
       document.getElementById('editItemId').value = itemDetails.id || '';
 
       // Show the modal to edit the item
@@ -130,6 +131,7 @@ function updateItem(event) {
   const updatedItem = {
     id: document.getElementById('editItemId').value,
     name: document.getElementById('editItemName').value,
+    buying_price: parseFloat(document.getElementById('editItemBuyingprice').value),
     stock: parseFloat(document.getElementById('editItemStock').value),
   };
 

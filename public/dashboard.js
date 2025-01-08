@@ -178,6 +178,7 @@ fetch('/partials/_sidebar.html')
          <strong>Id:</strong> ${itemDetails.id || 'N/A'} <br>
           <strong>Name:</strong> ${itemDetails.name || 'N/A'} <br>
           <strong>In stock:</strong> ${itemDetails.in_stock || '0'} <br>
+          <strong>Buying Price:</strong> ${itemDetails.buying_price || '0'} <br>
           <strong>State:</strong> ${itemDetails.state === 1 ? 'Cash' : 'Mpesa'} <br>
           <strong>Created At:</strong> ${new Date(itemDetails.created_at).toLocaleString()} <br>
         `;
@@ -202,6 +203,7 @@ fetch('/partials/_sidebar.html')
         // Populate the form with item details
         document.getElementById('editItemName').value = itemDetails.name || '';
         document.getElementById('editItemStock').value = itemDetails.in_stock || '';
+        document.getElementById('editItemBuyingprice').value = itemDetails.buying_price || '';
         document.getElementById('editItemPrice').value = itemDetails.price || '';
         document.getElementById('editItemId').value = itemDetails.id || '';
   
@@ -220,6 +222,7 @@ fetch('/partials/_sidebar.html')
       id: document.getElementById('editItemId').value,
       name: document.getElementById('editItemName').value,
       in_stock: parseFloat(document.getElementById('editItemStock').value),
+      buying_price: parseFloat(document.getElementById('editItemBuyingprice').value),
       price: parseFloat(document.getElementById('editItemPrice').value),
     };
   
@@ -236,7 +239,7 @@ fetch('/partials/_sidebar.html')
       console.log('Item updated:', updatedItemDetails);
   
       alert('Item successfully updated!');
-      //window.location.reload();
+      window.location.reload();
   
       // Close the modal after saving
       closeeditModal();
@@ -293,10 +296,11 @@ fetch('/partials/_sidebar.html')
 
             const name = document.getElementById('name').value;
             const in_stock = parseInt(document.getElementById('in_stock').value);
+            const buying_price = parseInt(document.getElementById('buying_price').value);
             const price = parseInt(document.getElementById('price').value);
 
             // Validate inputs
-            if (isNaN(in_stock) || isNaN(price)) {
+            if (isNaN(in_stock) || isNaN(price) || isNaN(buying_price)) {
                 alert('In stock and price must be valid numbers');
                 return;
             }
@@ -307,13 +311,13 @@ fetch('/partials/_sidebar.html')
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ name, in_stock, price }),
+                    body: JSON.stringify({ name, in_stock, price,buying_price }),
                 });
 
                 const data = await response.json();
                 if (response.ok) {
                     alert('Item created successfully!');
-                    closeItemsModal(); // Close modal on success
+                    //closeItemsModal(); // Close modal on success
                     location.reload();
                 } else {
                     alert(`Failed to create item: ${data.message || 'Unknown error'}`);

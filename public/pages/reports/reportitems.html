@@ -245,19 +245,33 @@
       <div id="editModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <h4 style="color: black;">Edit Item</h4>
+            <div class="modal-header">
+              <h4 style="color: black;">Edit Item</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeeditModal()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
             <form id="editItemForm" onsubmit="updateItem(event)">
               <input type="hidden" id="editItemId" />
+
               <label for="editItemName" style="color: black;">Name:</label>
-              <input type="text" id="editItemName" required />
+              <input type="text" id="editItemName" required><br><br>
+
               <label for="editItemStock" style="color: black;">Stock:</label>
-              <input type="number" id="editItemStock" required />
+              <input type="number" id="editItemStock" required ><br><br>
+
+              <label for="editItemBuyingprice" style="color: black;">Buying Price:</label>
+              <input type="number" id="editItemBuyingprice" required ><br><br>
+
               <label for="editItemPrice" style="color: black;">Price:</label>
-              <input type="number" id="editItemPrice" required />
-      
-      
+              <input type="number" id="editItemPrice" required ><br><br>
+            </div>
+            <div class="modal-footer">       
               <button type="submit">Save</button>
               <button type="button" onclick="closeeditModal()">Cancel</button>
+            </div> 
+
             </form>
           </div>
         </div>
@@ -265,21 +279,30 @@
       <div id="allitemsModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <span class="close" onclick="closeItemsModal()">&times;</span>
-            <h3 style="color: black">Create Items</h3>
+            <div class="modal-header">
+              <h3 style="color: black">Create Items</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeItemsModal()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
             <form id="allitemsModalSubmit">
                 <label for="name" style="color: black;">Category Name:</label>
                 <input type="text" id="name" name="name" required><br><br>
+
+                <label for="name" style="color: black;">Buying Price:</label>
+                <input type="text" id="buying_price" name="buying_price" required><br><br>
                 
                 <label for="in_stock" style="color: black;">In Stock:</label>
                 <input type="number" id="in_stock" name="in_stock" required><br><br>
 
                 <label for="price" style="color: black;">Price:</label>
                 <input type="number" id="price" name="price" required><br><br>
-                
+            </div>
+            <div class="modal-footer">                 
                 <button type="submit">Submit</button>
                 <button type="button" onclick="closeItemsModal()">Cancel</button>
-
+              </div>
             </form>
           </div>
         </div>
