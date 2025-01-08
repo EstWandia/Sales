@@ -168,6 +168,7 @@ function showSaleModal(items) {
         grossTotal += item.total;
 
         row.dataset.Id = item.id;
+        row.dataset.price = item.price;
         row.dataset.categoryId = item.category_id;
     })
     grossTotalElem.textContent = grossTotal.toFixed(2);
@@ -186,33 +187,35 @@ function deleteSaleItem(index) {
 
     location.reload()
 }
-function displayItemsForIcons(items) {
-    const iconsList = document.getElementById('iconsList');
-    iconsList.innerHTML = ''; // Clear previous content
+// function displayItemsForIcons(items) {
+//     console.log(items)
+//     const iconsList = document.getElementById('iconsList');
+//     iconsList.innerHTML = ''; // Clear previous content
 
-    if (!items.length) {
-        iconsList.innerHTML = `<div class="col-12 text-center">No items found matching the filters.</div>`;
-        return;
-    }
+//     if (!items.length) {
+//         iconsList.innerHTML = `<div class="col-12 text-center">No items found matching the filters.</div>`;
+//         return;
+//     }
 
-    items.forEach((item, index) => {
-        const colDiv = document.createElement('div');
-        colDiv.classList.add('col-sm-6', 'col-md-4', 'col-lg-3');
-        
-        colDiv.innerHTML = `
-            <div class="card">
-                <img src="${item.imageUrl}" alt="Item image" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">${item.name}</h5> <!-- Dynamically bind item name -->
-                    <p class="card-text">In Stock: ${item.in_stock}</p> <!-- Dynamically bind stock value -->
-                    <p class="card-text">Price: ${item.price}</p> <!-- Dynamically bind stock value -->
-                </div>
-            </div>
-        `;
+//     items.forEach((item, index) => {
+//         const colDiv = document.createElement('div');
+//         colDiv.classList.add('col-sm-6', 'col-md-4', 'col-lg-3');
+//         const imageUrl = item.imageUrl ? `/assets/images/dashboard/${item.imageUrl}` : '';
+//         console.log(item.imageUrl)
+//         colDiv.innerHTML = `
+//             <div class="card">
+//             <img src="${imageUrl}" alt="Item image" class="card-img-top"
+//                 <div class="card-body">
+//                     <h5 class="card-title">${item.name}</h5> <!-- Dynamically bind item name -->
+//                     <p class="card-text">In Stock: ${item.in_stock}</p> <!-- Dynamically bind stock value -->
+//                     <p class="card-text">Price: ${item.price}</p> <!-- Dynamically bind stock value -->
+//                 </div>
+//             </div>
+//         `;
 
-        iconsList.appendChild(colDiv);
-    });
-}
+//         iconsList.appendChild(colDiv);
+//     });
+// }
 function updateBalance() {
     const amountGiven = parseFloat(document.getElementById('amountGiven').value) || 0;
     const grossTotal = parseFloat(document.getElementById('grossTotal').textContent) || 0;
@@ -223,8 +226,6 @@ function updateBalance() {
 document.addEventListener('DOMContentLoaded', () => {
     // Fetch and display all items on page load
     fetchItems().then(displayItems);
-
-    fetchItems().then(displayItemsForIcons);
 
     loadSaleItemsFromStorage();
 
@@ -316,3 +317,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+fetch('/allitemsroute/instock')
+  .then(response => response.json())
+  .then(function (itemData) {
+    const allItemsElement = document.getElementById('allinstock')
+    allItemsElement.innerText = itemData.instockItems;
+  })
+  .catch(error => console.error(error));

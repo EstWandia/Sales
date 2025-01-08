@@ -1,4 +1,4 @@
-fetch('/dashboarddata/sales')
+fetch('/dashboarddata/todaycash')
   .then(response => response.json())
   .then(function (data) {
     const dataElement = document.getElementById('dataDisplay');
@@ -6,13 +6,39 @@ fetch('/dashboarddata/sales')
   })
   .catch(error => console.error(error));
 
+  fetch('/dashboarddata/sales')
+  .then(response => response.json())
+  .then(function (data) {
+    const dataElement = document.getElementById('dataDisplayy');
+    dataElement.innerText = data.totalInstock;
+  })
+  .catch(error => console.error(error));
+
 fetch('/dashboarddata/items')
+  .then(response => response.json())
+  .then(function (itemData) {
+    const allItemsElement = document.getElementById('allitemsDisplay')
+    allItemsElement.innerText = itemData.totalItems;
+  })
+  .catch(error => console.error(error));
+
+  fetch('/dashboarddata/todayitems')
   .then(response => response.json())
   .then(function (itemData) {
     const allItemsElement = document.getElementById('itemsDisplay')
     allItemsElement.innerText = itemData.totalItems;
   })
   .catch(error => console.error(error));
+
+  
+fetch('/dashboarddata/todayprofit')
+.then(response => response.json())
+.then(function (itemData) {
+  const allItemsElement = document.getElementById('profit')
+  allItemsElement.innerText = itemData.totalProfit;
+})
+.catch(error => console.error(error));
+
 
 // fetch('/dashboarddata/sold')
 //   .then(response => {
@@ -288,7 +314,7 @@ fetch('/partials/_sidebar.html')
                 if (response.ok) {
                     alert('Item created successfully!');
                     closeItemsModal(); // Close modal on success
-                    // Optionally, refresh the items list here
+                    location.reload();
                 } else {
                     alert(`Failed to create item: ${data.message || 'Unknown error'}`);
                 }

@@ -1,14 +1,18 @@
 import express from 'express';
-import { Getallitems,getItembyid,getUpdatebyid,getDeletebyid,createbyid} from '../controllers/itemstosale.js'
+import { Getallitems,getItembyid,getUpdatebyid,getDeletebyid,createbyid,getinstockItems} from '../controllers/itemstosale.js'
+import { checkAuth } from '../middleware/checkAuth.js';
+
 
 
 const router =express.Router();
 
-router.get('/sale',Getallitems);
-router.get('/itemsview/:id', getItembyid);
-router.put('/itemsupdate/:id', getUpdatebyid);
-router.delete('/itemsdeleted/:id',getDeletebyid);
-router.post('/itemscreate', createbyid);
+router.get('/sale',checkAuth,Getallitems);
+router.get('/itemsview/:id',checkAuth,getItembyid);
+router.put('/itemsupdate/:id',checkAuth,getUpdatebyid);
+router.delete('/itemsdeleted/:id',checkAuth,getDeletebyid);
+router.post('/itemscreate',checkAuth,createbyid);
+router.get('/instock',checkAuth,getinstockItems);
+
 
 
 export default router

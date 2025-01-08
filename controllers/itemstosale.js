@@ -113,18 +113,19 @@ export const getItembyid = async (req, res) => {
     }
   };
   export const createbyid = async (req, res) => {
-    const { name, in_stock } = req.body;
+    const { name, in_stock,price } = req.body;
 
     try {
         // Validate input
-        if (!name || typeof in_stock !== 'number') {
+        if (!name || !price||typeof in_stock !== 'number') {
             return res.status(400).json({ error: 'Name and In Stock are required' });
         }
 
         // Create new category in the database
-        const newitems = await Itemscategory.create({
+        const newitems = await Allitems.create({
             name,
             in_stock,
+            price,
         });
 
         return res.status(201).json({
@@ -136,6 +137,19 @@ export const getItembyid = async (req, res) => {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+export const getinstockItems =async (req, res) => {
+    try{
+
+        //const formattedDate = getFormattedDate(); 
+        const results =await Allitems.count()
+        const instockItems =results || 0;
+        res.json({instockItems});
+    }catch(error){
+        console.error('Error executing database query:',error)
+        res.status(500).json({error:'you got issues in your query'})
+
+    }
+}
  
   
 //export default Getallitems;

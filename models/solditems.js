@@ -43,6 +43,15 @@ export default(sequelize)=>{
              }   
             
         },
+        price:{
+            type:DataTypes.INTEGER,
+            allowNull:false,
+            validate:{
+                notEmpty:true,
+                isNumeric:true
+             }   
+            
+        },
         state:{
             type:DataTypes.TINYINT,
             allowNull:false,
@@ -65,7 +74,7 @@ export default(sequelize)=>{
         {
             type:DataTypes.DATE,
             allowNull:true
-        }
+        },
     },
     
         {

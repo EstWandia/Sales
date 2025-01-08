@@ -1,4 +1,5 @@
 import db from '../models/index.js';
+import sequelize from "sequelize";
 import { v4 as uuidv4 } from 'uuid';
 const { Op } = db.Sequelize; // Add this line if Sequelize is imported from the package
 
@@ -9,16 +10,48 @@ export const getALLSells=async (req, res) => {
         try {
         const results = await Solditems.sum('amount');
         const totalInstock =results || 0;
-        console.log(totalInstock);
+        //console.log(totalInstock);
             res.json({totalInstock});
         }catch(error){
             console.error('Error executing database query:', error);
             res.status(500).json({error: 'Internal Server error'});
         }
 }
+export const getTodaySells=async (req, res) => {
+  
+  try {
+  const formattedDate = getFormattedDate()
+  //console.log(formattedDate);
+  const results = await Solditems.sum('amount',
+    { 
+      where: { 
+        created_at: {
+          [Op.gte]: formattedDate + " 00:00:00", // Start of the day
+          [Op.lte]: formattedDate + " 23:59:59", 
+        }
+      } 
+    }
+  );
+  const totalInstock =results || 0;
+  //console.log(totalInstock);
+      res.json({totalInstock});
+  }catch(error){
+      console.error('Error executing database query:', error);
+      res.status(500).json({error: 'Internal Server error'});
+  }
+}
 export const getItemsSoldToday =async (req, res) => {
     try{
-        const results =await Solditems.count()
+
+        const formattedDate = getFormattedDate(); 
+        const results =await Solditems.count({
+          where: { 
+            created_at: {
+              [Op.gte]: formattedDate + " 00:00:00", // Start of the day
+              [Op.lte]: formattedDate + " 23:59:59", 
+            }
+          } 
+    })
         const totalItems =results || 0;
         res.json({totalItems});
     }catch(error){
@@ -27,6 +60,53 @@ export const getItemsSoldToday =async (req, res) => {
 
     }
 }
+export const getAllitemsSold =async (req, res) => {
+  try{
+      const results =await Solditems.count()
+      const totalItems =results || 0;
+      res.json({totalItems});
+  }catch(error){
+      console.error('Error executing database query:',error)
+      res.status(500).json({error:'you got issues in your query'})
+
+  }
+}
+export const getTodayProfit = async (req, res) => {
+  try {
+      const formattedDate = getFormattedDate();
+
+      // Fetch and calculate profit for each record
+      const results = await Solditems.findAll({
+          attributes: [
+              [
+                  sequelize.literal("(price * quantity) - amount"),
+                  "profit", // Alias for the calculated field
+              ],
+          ],
+          where: {
+              created_at: {
+                  [Op.gte]: `${formattedDate} 00:00:00`, // Start of the day
+                  [Op.lte]: `${formattedDate} 23:59:59`, // End of the day
+              },
+          },
+          raw: true, // Ensures raw data is returned
+      });
+      console.log("Fetched results:", results);
+
+      // Aggregate the profits
+      const totalProfit = results.reduce(
+          (sum, record) => sum + parseFloat(record.profit || 0),
+          0
+      );
+
+      // Send response
+      res.json({ totalProfit });
+  } catch (error) {
+      console.error("Error executing database query:", error);
+      res.status(500).json({ error: "Internal Server error" });
+  }
+};
+
 export const getMapItems = async (req,res)=>{
 try{
     const Solditem = await Solditems.findAll({
@@ -139,7 +219,7 @@ try{
   export const getTotalCashAmount = async (req, res) => {
     try {
       const formattedDate = getFormattedDate(); // Get the formatted date string
-      console.log(formattedDate);
+      //console.log(formattedDate);
   
       // Query for today's total cash amount based on the formatted date
       const cash = await Solditems.sum('amount', { 

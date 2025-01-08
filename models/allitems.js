@@ -1,16 +1,18 @@
 import { DataTypes } from "sequelize";
+import { v4 as uuidv4 } from 'uuid';
 
 export default(sequelize, dataTypes)=>{
     const Allitems =sequelize.define("all_items",{
 
-        id:{
-            type:DataTypes.STRING(36),
-            allowNull:false,
-            primaryKey:true,
-            validate:{
-                notEmpty: true
-            }
-        },
+       id: {
+             type: DataTypes.STRING(36),
+             defaultValue: uuidv4,
+             allowNull: false,
+             primaryKey: true,
+             validate: {
+               notEmpty: true,
+             },
+           },
         items_category_id:{
             type:DataTypes.STRING(36),
             allowNull:true,

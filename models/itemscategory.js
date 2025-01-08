@@ -40,6 +40,10 @@ export default (sequelize) => {
       type: DataTypes.DATE,
       allowNull: true,
     },
+    image_url: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   }, {
     tableName: "items_category",
     timestamps: true,

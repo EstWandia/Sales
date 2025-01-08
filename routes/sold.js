@@ -1,13 +1,14 @@
 import express from 'express'
 import {getAllSoldItems,getItem,getUpdate,getDelete} from '../controllers/allsolditems.js'
+import { checkAuth } from '../middleware/checkAuth.js';
 
 
 
 const router =express.Router();
 
-router.get('/allsold',getAllSoldItems);
-router.get('/item/:id', getItem);
-router.put('/update/:id', getUpdate);
-router.delete('/deleted/:id',getDelete)
+router.get('/allsold',checkAuth,getAllSoldItems);
+router.get('/item/:id',checkAuth, getItem);
+router.put('/update/:id',checkAuth, getUpdate);
+router.delete('/deleted/:id',checkAuth,getDelete)
 
 export default router

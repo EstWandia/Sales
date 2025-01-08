@@ -10,7 +10,6 @@ if (!response.ok) {
 .then(data=>{
 
     categoryData = data
-    console.log(categoryData)
     renderCategoryTable(categoryData)
 }).catch(error=>console.error('Error loading sold data:',error)
 )
@@ -197,35 +196,81 @@ function closeCategoryModal() {
 }
 
 // Handle form submission and create category
-document.getElementById('categoryFormSubmit').addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const name = document.getElementById('name').value;
-    const in_stock = parseInt(document.getElementById('in_stock').value, 10);
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('categoryFormSubmit').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const name = document.getElementById('name').value;
+      const in_stock = parseInt(document.getElementById('in_stock').value, 10);
 
-    if (isNaN(in_stock)) {
-        alert('In stock must be a valid number');
+      if (isNaN(in_stock)) {
+          alert('In stock must be a valid number');
+          return;
+      }
+
+      try {
+          const response = await fetch('/categories/create', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ name, in_stock }),
+          });
+
+          const data = await response.json();  // Ensure this is valid JSON
+          if (response.ok) {
+              alert('Category created successfully!');
+              closeCategoryModal(); // Close modal on success
+              // Optionally, refresh the category list here
+          } else {
+              alert('Failed to create category');
+          }
+      } catch (error) {
+          console.error('Error:', error);
+          alert('An error occurred while creating the category');
+      }
+  });
+});
+
+fetch('/categories/displaycategory')
+  .then(response => {
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log("rent", data); // Log the fetched data
+
+    const iconsList = document.getElementById('iconsList');
+    iconsList.innerHTML = ''; // Clear previous content
+
+    if (!data.length) {
+        iconsList.innerHTML = `<div class="col-12 text-center">No items found matching the filters.</div>`;
         return;
     }
 
-  try {
-      const response = await fetch('/categories/create', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ name, in_stock }),
-      });
+    data.forEach((item, index) => {
+        const colDiv = document.createElement('div');
+        colDiv.classList.add('col-sm-6', 'col-md-4', 'col-lg-3');
 
-      const data = await response.json();
-      if (response.ok) {
-          alert('Category created successfully!');
-          closeCategoryModal(); // Close modal on success
-          // Optionally, you could refresh the category list here
-      } else {
-          alert('Failed to create category');
-      }
-  } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred while creating the category');
-  }
-});
+        // Ensure the image URL is correct
+        const imageUrl = item.image_url ? item.image_url : '/assets/images/default.jpg'; // Use default image if not present
+        console.log(item.image_url); // Check if the image URL is correct
+
+        colDiv.innerHTML = `
+            <div class="card">
+                <img src="${imageUrl}" alt="Item image" class="card-img-top"> <!-- Fixed closing tag -->
+                <div class="card-body">
+                    <h5 class="card-title">${item.name}</h5> <!-- Dynamically bind item name -->
+                    <p class="card-text">In Stock: ${item.in_stock}</p> <!-- Dynamically bind stock value -->
+                    <p class="card-text">Price: ${item.price}</p> <!-- Dynamically bind price value -->
+                </div>
+            </div>
+        `;
+
+        iconsList.appendChild(colDiv);
+    });
+  })
+  .catch(error => {
+    console.error('Fetch error:', error);
+  });

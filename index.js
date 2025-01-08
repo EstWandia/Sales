@@ -38,14 +38,22 @@ app.get('index.html',checkAuth,noCache,(req,res) =>{
     res.sendFile(path.join(__dirname,'public','index.html'));
 })
 
-app.get('/', (req, res) => {
-    res.setHeader('Cache-Control', 'no-store');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
+app.get('/pages/samples/allitems.html', checkAuth, noCache, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'pages', 'samples', 'allitems.html'));
+});
+
+// Block unauthenticated access to static samples
+app.use('/public/pages/samples', (req, res) => {
+    res.status(403).send('Access denied');
+});
+
+
+app.get('/',noCache, (req, res) => {
     console.log(path.join(__dirname, 'public', 'pages', 'samples', 'login.html'));
     res.sendFile(path.join(__dirname, 'public', 'pages', 'samples', 'login.html'));
 });
 
+app.use('/public/pages/samples', checkAuth, noCache);
 app.use(express.static(path.join(__dirname, 'public')));
 
 db.sequelize.sync().then(() => {

@@ -5,23 +5,45 @@ const { Itemscategory } =db;
 export const Category = async(req,res)=>{
     try{
         const category = await Itemscategory.findAll()
+        
         const formattedData =category.map(item=>({
             ...item.toJSON(),
             id:item.id,
             name:item.name,
             stock:item.in_stock,
+            image_url:item.image_url,
             created_at: item.createdAt
               ? item.createdAt.toISOString().split('T')[0] 
               : 'N/A',
     
         }));
         res.json(formattedData)
-        console.log(formattedData)
     }catch(error){
         console.error(error)
         res.status(500).send('Internal Error Server')
     }
     }
+    export const Categorydisplay = async(req,res)=>{
+      try{
+          const category = await Itemscategory.findAll()
+          
+          const formattedData =category.map(item=>({
+              ...item.toJSON(),
+              id:item.id,
+              name:item.name,
+              stock:item.in_stock,
+              image_url:item.image_url,
+              created_at: item.createdAt
+                ? item.createdAt.toISOString().split('T')[0] 
+                : 'N/A',
+      
+          }));
+          res.json(formattedData)
+      }catch(error){
+          console.error(error)
+          res.status(500).send('Internal Error Server')
+      }
+      }
     export const getcategoryItem = async (req, res) => {
         const { id } = req.params; 
         

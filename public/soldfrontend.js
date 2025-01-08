@@ -19,6 +19,7 @@ function renderSoldTable(data) {
       soldDataTable.innerHTML = `<tr><td colspan="7" class="text-center">No items found matching the filters.</td></tr>`;
       return;
   }
+  console.log("god have:",data)
 
   data.forEach((item, index) => {
       const row = document.createElement('tr');
@@ -28,7 +29,7 @@ function renderSoldTable(data) {
           <td>${item.quantity ? item.quantity.toFixed(2) : '0.00'}</td>
           <td>${item.amount ? item.amount.toFixed(2) : '0.00'}</td>
           <td>${item.state === 1 ? 'cash' : item.state === 0 ? 'mpesa' : 'N/A'}</td>
-          <td>${item.created_at || 'Unknown'}</td>
+          <td>${item.createdAt ? new Date(item.createdAt).toLocaleString('en-US', { dateStyle: 'short', hour12: false, timeStyle: 'short' }) : 'Unknown'}</td>
           <td>
         <a href="#" class="mdi mdi-eye" title="View" data-id="${item.id}" onclick="viewItem(event, '${item.id}')"></a>
 <a href="#" class="mdi mdi-pencil" title="Edit" data-id="${item.id}" onclick="editItem(event, '${item.id}')"></a>
