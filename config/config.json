@@ -4,20 +4,20 @@
     "password": "bc7pmeb95702eup8",
     "database": "rtvobv5try04w7re",
     "host": "i2cpbxbi4neiupid.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-    "dialect": "mysql2"
+    "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
-    "dialect": "mysql2"
+    "dialect": "mysql"
   },
   "production": {
     "username": "rk5ste5y794pnynz",
     "password": "bc7pmeb95702eup8",
     "database": "rtvobv5try04w7re",
     "host": "i2cpbxbi4neiupid.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-    "dialect": "mysql2"
+    "dialect": "mysql"
   }
 }
