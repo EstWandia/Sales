@@ -1,10 +1,10 @@
 {
   "development": {
-    "username": "root",
-    "password": "P@ssW0rd",
-    "database": "students_db",
-    "host": "localhost",
-    "dialect": "mysql"
+    "username": "rk5ste5y794pnynz",
+    "password": "bc7pmeb95702eup8",
+    "database": "rtvobv5try04w7re",
+    "host": "i2cpbxbi4neiupid.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "dialect": "mysql2"
   },
   "test": {
     "username": "root",
@@ -14,10 +14,10 @@
     "dialect": "mysql2"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username": "rk5ste5y794pnynz",
+    "password": "bc7pmeb95702eup8",
+    "database": "rtvobv5try04w7re",
+    "host": "i2cpbxbi4neiupid.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "dialect": "mysql2"
   }
 }
