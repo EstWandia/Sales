@@ -102,16 +102,18 @@ fetch('/partials/_sidebar.html')
   function renderTable(data) {
     const salesTableBody = document.getElementById('reportItemsTable');
     salesTableBody.innerHTML = ''; // Clear existing rows
-  
+    //data in descending order
+    data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));  
     if (Array.isArray(data)) {
       data.forEach((item, index) => {
         const row = document.createElement('tr');
+        const formattedDate = item.createdAt ? new Date(item.createdAt).toISOString().slice(0, 19).replace('T', ' ') : 'Unknown';
         row.innerHTML = `
           <td>${index + 1}</td>
           <td>${item.name || 'N/A'}</td>
           <td>${item.in_stock || 0}</td>
           <td>${item.price?.toFixed(2) || '0.00'}</td>
-          <td>${item.created_at || 'Unknown'}</td>
+          <td>${formattedDate}</td>
          <td>
         <a href="#" class="mdi mdi-eye" title="View" data-id="${item.id}" onclick="viewItem(event, '${item.id}')"></a>
         <a href="#" class="mdi mdi-pencil" title="Edit" data-id="${item.id}" onclick="editItem(event, '${item.id}')"></a>
@@ -178,8 +180,8 @@ fetch('/partials/_sidebar.html')
          <strong>Id:</strong> ${itemDetails.id || 'N/A'} <br>
           <strong>Name:</strong> ${itemDetails.name || 'N/A'} <br>
           <strong>In stock:</strong> ${itemDetails.in_stock || '0'} <br>
+          <strong>Price:</strong> ${itemDetails.price || '0'} <br>
           <strong>Buying Price:</strong> ${itemDetails.buying_price || '0'} <br>
-          <strong>State:</strong> ${itemDetails.state === 1 ? 'Cash' : 'Mpesa'} <br>
           <strong>Created At:</strong> ${new Date(itemDetails.created_at).toLocaleString()} <br>
         `;
         document.getElementById('view-details').innerHTML = viewDetails;
@@ -295,7 +297,7 @@ fetch('/partials/_sidebar.html')
             event.preventDefault();
 
             const name = document.getElementById('name').value;
-            const in_stock = parseInt(document.getElementById('in_stock').value);
+            const in_stock = parseFloat(document.getElementById('in_stock').value);
             const buying_price = parseInt(document.getElementById('buying_price').value);
             const price = parseInt(document.getElementById('price').value);
 

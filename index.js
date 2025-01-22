@@ -57,6 +57,6 @@ app.use('/public/pages/samples', checkAuth, noCache);
 app.use(express.static(path.join(__dirname, 'public')));
 
 db.sequelize.sync().then(() => {
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 4000;
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });

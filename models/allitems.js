@@ -29,7 +29,7 @@ export default(sequelize, dataTypes)=>{
             }
         },
          in_stock:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.FLOAT,
             allowNull:false,
             validate:{
                 notEmpty:true,

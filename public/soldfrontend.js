@@ -23,18 +23,19 @@ function renderSoldTable(data) {
 
   data.forEach((item, index) => {
       const row = document.createElement('tr');
+      const formattedDate = item.createdAt ? new Date(item.createdAt).toISOString().slice(0, 19).replace('T', ' ') : 'Unknown';
       row.innerHTML = `
           <td>${index + 1}</td>
           <td>${item.name || 'N/A'}</td>
           <td>${item.quantity ? item.quantity.toFixed(2) : '0.00'}</td>
           <td>${item.amount ? item.amount.toFixed(2) : '0.00'}</td>
           <td>${item.state === 1 ? 'cash' : item.state === 0 ? 'mpesa' : 'N/A'}</td>
-          <td>${item.createdAt ? new Date(item.createdAt).toLocaleString('en-US', { dateStyle: 'short', hour12: false, timeStyle: 'short' }) : 'Unknown'}</td>
+          <td>${formattedDate}</td>
           <td>
         <a href="#" class="mdi mdi-eye" title="View" data-id="${item.id}" onclick="viewItem(event, '${item.id}')"></a>
-<a href="#" class="mdi mdi-pencil" title="Edit" data-id="${item.id}" onclick="editItem(event, '${item.id}')"></a>
-<a href="#" class="mdi mdi-delete" title="Delete" data-id="${item.id}" onclick="deleteItem(event, '${item.id}')"></a>
-</td>
+        <a href="#" class="mdi mdi-pencil" title="Edit" data-id="${item.id}" onclick="editItem(event, '${item.id}')"></a>
+        <a href="#" class="mdi mdi-delete" title="Delete" data-id="${item.id}" onclick="deleteItem(event, '${item.id}')"></a>
+        </td>
 
       `;
       soldDataTable.appendChild(row); // Append the row to the table body

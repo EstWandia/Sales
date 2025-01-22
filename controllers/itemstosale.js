@@ -11,7 +11,7 @@ export const Getallitems = async(req,res)=>{
 
         //if (id) filters.id = { [Sequelize.Op.like]: `%${id}%` };
         if (name) filters.name = { [Sequelize.Op.like]: `%${name}%` };  // case-insensitive search
-        if (in_stock && !isNaN(in_stock)) filters.in_stock = { [Sequelize.Op.eq]: parseInt(in_stock) };  // Ensure it's a number
+        if (in_stock && !isNaN(in_stock)) filters.in_stock = { [Sequelize.Op.eq]: parseFloat(in_stock) };  // Ensure it's a number
         if (price && !isNaN(price)) filters.price = { [Sequelize.Op.eq]: parseFloat(price) };  // Ensure it's a float
 
         const itemsTosale=await Allitems.findAll({
