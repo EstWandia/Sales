@@ -11,7 +11,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.7",
     "crypto": "^1.0.1",
@@ -28,8 +27,8 @@
     "sequelize": "^6.37.5",
     "sequelize-cli": "^6.6.2"
   },
- "engines": {
-  "node": "14.x",
-  "npm": "6.x"
-}
+  "engines": {
+    "node": "14.x",
+    "npm": "6.x"
+  }
 }
