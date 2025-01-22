@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { randomBytes } from 'crypto';
 import db from '../models/index.js';
@@ -13,7 +13,7 @@ export const getRegisterData=async(req,res)=>{
         if (existingUser) {
             return res.status(400).json({ success: false, message: 'User already exists' });
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcryptjs.hash(password, 10);
         const newPerson = await users.create ({
             email:email,
             name:name,
@@ -39,7 +39,7 @@ export const getloginUser=async(req,res)=>{
             return res.status(401).json({success:false,message:'You are not allowed to this app'})
         }
 
-        const isPasswordValid=await bcrypt.compare(password,user.password)
+        const isPasswordValid=await bcryptjs.compare(password,user.password)
         if(!isPasswordValid){
             return res.status(401).json({success:false,message:'Wrong email or password'})
         }

@@ -2,7 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { Sequelize } from 'sequelize';
 import { fileURLToPath, pathToFileURL } from 'url';
-import configData from '../config/config.json' assert { type: 'json' };
+// import configData from '../config/config.json' assert { type: 'json' };
+const configFilePath = path.resolve('./config/config.json');
+const configData = JSON.parse(fs.readFileSync(configFilePath, 'utf-8'));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
