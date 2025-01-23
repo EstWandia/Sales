@@ -343,6 +343,10 @@ function closeeditModal() {
         console.error("Modal with ID 'allitemsModal' not found.");
     }
 }
+function closedtModal() {
+  const modal = document.getElementById('editModal');
+  modal.style.display = 'none';
+}
 async function fetchTransactionTotals() {
   try {
     const response = await fetch('/dashboarddata/mpesa');
