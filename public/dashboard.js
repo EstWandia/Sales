@@ -297,8 +297,8 @@ fetch('/partials/_sidebar.html')
             event.preventDefault();
 
             const name = document.getElementById('itemName').value;
-            const in_stock = parseFloat(document.getElementById('buyingPrice').value);
-            const buying_price = parseInt(document.getElementById('inStock').value);
+            const in_stock = parseFloat(document.getElementById('inStock').value);
+            const buying_price = parseInt(document.getElementById('buyingPrice').value);
             const price = parseInt(document.getElementById('itemPrice').value);
 
             // Validate inputs
