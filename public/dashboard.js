@@ -296,10 +296,10 @@ fetch('/partials/_sidebar.html')
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
 
-            const name = document.getElementById('name').value;
-            const in_stock = parseFloat(document.getElementById('in_stock').value);
-            const buying_price = parseInt(document.getElementById('buying_price').value);
-            const price = parseInt(document.getElementById('price').value);
+            const name = document.getElementById('itemName').value;
+            const in_stock = parseFloat(document.getElementById('buyingPrice').value);
+            const buying_price = parseInt(document.getElementById('inStock').value);
+            const price = parseInt(document.getElementById('itemPrice').value);
 
             // Validate inputs
             if (isNaN(in_stock) || isNaN(price) || isNaN(buying_price)) {
