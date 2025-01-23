@@ -22,7 +22,8 @@
     <div class="container-scroller">
       <!-- partial:../../partials/_sidebar.html -->
       <div id="sidebar-container"></div>
-      <div class="col-lg-12 grid-margin stretch-card">
+      <div class="container-fluid page-body-wrapper">
+      <div class="col-lg-12 stretch-card">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Bordered table</h4>
@@ -32,7 +33,7 @@
               <button id="createCategoryBtn" class="btn btn-primary" onclick="openItemsModal()">Add New  Items</button>
           </div>
             <div class="table-responsive">
-              <table class="table table-bordered custom">
+              <table class="table table-bordered table-contextual">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -63,7 +64,7 @@
         </div>
       </div>
       <!-- partial -->
-      <div class="container-fluid page-body-wrapper">
+      <!-- <div class="container-fluid page-body-wrapper"> -->
         <!-- partial:../../partials/_navbar.html -->
         <nav class="navbar p-0 fixed-top d-flex flex-row">
           <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
