@@ -55,9 +55,6 @@ app.get('/pages/reports', checkAuth, noCache, (req, res) => {
 });
 
 // Block unauthenticated access to static samples
-app.use('/pages/samples', (req, res) => {
-    res.status(403).send('Access denied');
-});
 
 
 app.get('/',noCache, (req, res) => {

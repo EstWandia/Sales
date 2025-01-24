@@ -2,7 +2,7 @@ app.use((req, res, next) => {
     // If the user is not logged in, allow access to login page only
     if (!req.session.user) {
         // Allow access to login page only
-        if (req.path !== '/login' && req.path !== '/index.html') {
+        if (req.path !== '/login' && req.path !== '/pages/samples/register.html') {
             return res.redirect('/login');
         }
     }
