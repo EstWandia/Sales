@@ -354,3 +354,21 @@ fetch('/allitemsroute/instock')
     })
     .catch((error) => console.error('Error fetching user details:', error));
 });
+document.addEventListener('DOMContentLoaded', () => {
+
+    fetch('/allitemsroute/allpermision')
+        .then(response => response.json())
+        .then(data => {
+            if (data.perm === 1) {
+                // Hide rows or sections with `data-perm="0"`
+                const restrictedRows = document.querySelectorAll('.row[data-perm="0"]');
+                restrictedRows.forEach(row => {
+                    row.style.display = 'none';
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching user permission:', error);
+        });
+});
+

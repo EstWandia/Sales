@@ -1,5 +1,5 @@
 import express from 'express';
-import { Getallitems,getItembyid,getUpdatebyid,getDeletebyid,createbyid,getinstockItems} from '../controllers/itemstosale.js'
+import { Getallitems,getItembyid,getUpdatebyid,getDeletebyid,createbyid,getinstockItems,allPerm} from '../controllers/itemstosale.js'
 import { checkAuth } from '../middleware/checkAuth.js';
 
 
@@ -12,6 +12,8 @@ router.put('/itemsupdate/:id',checkAuth,getUpdatebyid);
 router.delete('/itemsdeleted/:id',checkAuth,getDeletebyid);
 router.post('/itemscreate',checkAuth,createbyid);
 router.get('/instock',checkAuth,getinstockItems);
+router.get('/allpermision',checkAuth,allPerm);
+
 
 
 

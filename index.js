@@ -12,6 +12,8 @@ import dotenv from 'dotenv'
 import { checkAuth } from './middleware/checkAuth.js';
 import { noCache } from './middleware/nocache.js';
 import session from 'express-session';
+import { checkPermission } from './middleware/allowedUsers.js';  // Adjust path as needed
+
 
 
 dotenv.config();
@@ -47,11 +49,11 @@ app.get('index.html',checkAuth,noCache,(req,res) =>{
     res.sendFile(path.join(__dirname,'public','index.html'));
 })
 
-app.get('/pages/samples', checkAuth, noCache, (req, res) => {
+app.get('/pages/samples', checkAuth, noCache,checkPermission, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'pages', 'samples', 'allitems.html'));
 });
-app.get('/pages/reports', checkAuth, noCache, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'pages', 'reports', 'reportitems.html','reportsold.html'));
+app.get('/pages/reports', checkAuth, noCache,checkPermission, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'pages', 'reports', 'reportitems.html'));
 });
 
 // Block unauthenticated access to static samples

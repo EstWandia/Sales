@@ -153,6 +153,20 @@ export const getinstockItems =async (req, res) => {
 
     }
 }
+export const allPerm = (req, res) => {
+  try {
+      // Ensure the user is authenticated and has the perm field
+      if (!req.session || !req.session.user || typeof req.session.user.perm === 'undefined') {
+          return res.status(401).json({ error: 'Unauthorized access or missing permission' });
+      }
+
+      // Send the permission value to the client
+      res.json({ perm: req.session.user.perm });
+  } catch (error) {
+      console.error('Error fetching permission:', error.message);
+      res.status(500).json({ error: 'Failed to fetch user permission' });
+  }
+};
  
   
 //export default Getallitems;

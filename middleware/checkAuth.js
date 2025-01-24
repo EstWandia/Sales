@@ -11,7 +11,7 @@ export const checkAuth = (req, res, next) => {
 
   // If no token, redirect to the login page
   if (!token) {
-    return res.status(401).redirect('/');
+    return res.status(401).redirect('/pages/sample/login');
   }
 
   try {
@@ -22,6 +22,6 @@ export const checkAuth = (req, res, next) => {
   } catch (err) {
     // If the token is invalid, redirect to the login page
     console.error('Authentication error:', err.message);
-    return res.status(401).redirect('/');
+    return res.status(401).redirect('/pages/sample/login');
   }
 };

@@ -51,7 +51,7 @@
           <div class="button-container">
             <button id="createCategoryBtn" class="btn btn-primary" onclick="openItemsModal()">Add New Items</button>
           </div>
-          <div class="row">
+          <div class="row" data-perm="0">
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
@@ -114,6 +114,7 @@
         </div>
 
         <!-- Add New Items Modal -->
+      <div class="row" data-perm="0">
         <div id="allitemsModal" class="modal" tabindex="-1" role="dialog">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -146,6 +147,7 @@
             </div>
           </div>
         </div>
+      </div>
         <div id="editModal" class="modal" tabindex="-1" role="dialog">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
