@@ -43,9 +43,21 @@ export const getloginUser=async(req,res)=>{
         if(!isPasswordValid){
             return res.status(401).json({success:false,message:'Wrong email or password'})
         }
-        const payload ={email};
+        const payload ={
+            id:user.id,
+            email:user.email
+        };
         const token = jwt.sign(payload, secret, { algorithm: 'HS256', expiresIn: '1h' }); // Correct usage with options
         res.cookie('auth_token',token,{httpOnly:true,secure:true,maxAge:3600000})
+
+        req.session.user = {
+            id: user.id,
+            email: user.email,
+            perm: user.perm,
+        };
+        if (user.perm === 1) {
+            return res.redirect('/public/pages/samples/allitems.html');
+        }
         res.json({
             success:true,
             message:'Youve succesfully login',
@@ -83,3 +95,27 @@ export const loggedInuser =async (req,res)=>{
 
     }
 }
+export const getLoginName = async (req, res) => {
+    try {
+      const userId = req.user.id;
+      console.log('User ID:', userId);
+
+  
+      const user = await users.findByPk(userId);
+  
+      if (!user) {
+        return res.status(404).json({ success: false, message: "User not found" });
+      }
+  
+      res.json({
+        success: true,
+        user: {
+          name: user.name,
+          email: user.email,
+        },
+      });
+    } catch (err) {
+      console.error('Error fetching user details:', err.message);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  };  

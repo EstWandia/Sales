@@ -18,6 +18,14 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        perm: {
+            type: DataTypes.TINYINT,
+            allowNull: false,
+            defaultValue: 0,
+            validate: {
+                isIn: [[0, 1]],
+            },
+        }
     });
 
     return Users;

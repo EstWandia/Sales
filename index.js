@@ -41,6 +41,9 @@ app.get('index.html',checkAuth,noCache,(req,res) =>{
 app.get('/pages/samples/allitems.html', checkAuth, noCache, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'pages', 'samples', 'allitems.html'));
 });
+app.get('/pages/reports/reportitems.html', checkAuth, noCache, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'pages', 'reports', 'reportitems.html','reportsold.html'));
+});
 
 // Block unauthenticated access to static samples
 app.use('/public/pages/samples', (req, res) => {
@@ -57,6 +60,6 @@ app.use('/public/pages/samples', checkAuth, noCache);
 app.use(express.static(path.join(__dirname, 'public')));
 
 db.sequelize.sync().then(() => {
-    const PORT = process.env.PORT || 4000;
+    const PORT = process.env.PORT || 3306;
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });

@@ -326,3 +326,31 @@ fetch('/allitemsroute/instock')
     allItemsElement.innerText = itemData.instockItems;
   })
   .catch(error => console.error(error));
+  document.addEventListener('DOMContentLoaded', function () {
+    fetch('/auth/loginname', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Include cookies for authentication
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.success && data.user) {
+            // Update profile name in both places
+            const profileNameElement = document.querySelector('.profile-name h5');
+            const navbarProfileNameElement = document.querySelector('.navbar-profile-name');
+
+            if (profileNameElement) {
+                profileNameElement.textContent = data.user.name;
+            }
+
+            if (navbarProfileNameElement) {
+                navbarProfileNameElement.textContent = data.user.name;
+            }
+        } else {
+            console.error('Failed to fetch user details:', data.message);
+        }
+    })
+    .catch((error) => console.error('Error fetching user details:', error));
+});

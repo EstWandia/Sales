@@ -1,5 +1,5 @@
 import express from 'express'
-import { getRegisterData,getloginUser,logOut, loggedInuser,} from '../controllers/authentication.js';
+import { getRegisterData,getloginUser,logOut, loggedInuser,getLoginName} from '../controllers/authentication.js';
 import { checkAuth } from '../middleware/checkAuth.js';
 import { noCache } from '../middleware/nocache.js';
  
@@ -10,6 +10,7 @@ router.post('/userdetails',getRegisterData)
 router.post('/userlogin',getloginUser)
 router.post('/logout', checkAuth,logOut)
 router.get('/users',checkAuth,loggedInuser)
+router.get('/loginname',checkAuth,getLoginName)
 
 
 
