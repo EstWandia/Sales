@@ -55,16 +55,14 @@ export const getloginUser=async(req,res)=>{
             email: user.email,
             perm: user.perm,
         };
-        if (user.perm === 1) {
-            return res.redirect('/public/pages/samples/allitems.html');
-        }
         res.json({
             success:true,
             message:'Youve succesfully login',
             data:{
                 userId:user.userId,
                 email:user.email,
-                name:user.name
+                name:user.name,
+                perm:user.perm
             }
         })
 

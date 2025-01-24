@@ -11,6 +11,8 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv'
 import { checkAuth } from './middleware/checkAuth.js';
 import { noCache } from './middleware/nocache.js';
+import session from 'express-session';
+
 
 dotenv.config();
 
@@ -22,6 +24,13 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.use(session({
+    secret: 'your-secret-key', // Secret key for signing the session ID cookie
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to `true` if using HTTPS
+}));
 
 
 
@@ -38,15 +47,15 @@ app.get('index.html',checkAuth,noCache,(req,res) =>{
     res.sendFile(path.join(__dirname,'public','index.html'));
 })
 
-app.get('/pages/samples/allitems.html', checkAuth, noCache, (req, res) => {
+app.get('/pages/samples', checkAuth, noCache, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'pages', 'samples', 'allitems.html'));
 });
-app.get('/pages/reports/reportitems.html', checkAuth, noCache, (req, res) => {
+app.get('/pages/reports', checkAuth, noCache, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'pages', 'reports', 'reportitems.html','reportsold.html'));
 });
 
 // Block unauthenticated access to static samples
-app.use('/public/pages/samples', (req, res) => {
+app.use('/pages/samples', (req, res) => {
     res.status(403).send('Access denied');
 });
 
@@ -60,6 +69,6 @@ app.use('/public/pages/samples', checkAuth, noCache);
 app.use(express.static(path.join(__dirname, 'public')));
 
 db.sequelize.sync().then(() => {
-    const PORT = process.env.PORT || 3306;
+    const PORT = process.env.PORT || 4000;
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
