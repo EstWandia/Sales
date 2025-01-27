@@ -355,8 +355,8 @@ async function fetchTransactionTotals() {
     const { cash, mpesa } = await response.json(); // Ensure the API sends these fields in JSON format
 
     // Update the DOM
-    document.getElementById('cash').textContent = `$${cash}`;
-    document.getElementById('mpesa').textContent = `$${mpesa}`;
+    document.getElementById('cash').textContent = `ksh${cash}`;
+    document.getElementById('mpesa').textContent = `ksh${mpesa}`;
 
     updateTransactionChart(cash, mpesa);
   } catch (error) {

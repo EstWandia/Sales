@@ -44,7 +44,7 @@ function displayItems(items) {
             <td>${index + 1}</td>
             <td>${item.name}</td>
             <td>${item.in_stock}</td>
-            <td>$${item.price}</td>
+            <td>ksh${item.price}</td>
             <td>
                 <input type="number" id="quantity-${item.name}" class="form-control" min="1" max="${item.in_stock}" placeholder="Enter quantity"
                 oninput="validateQuantity('${item.name}', ${item.in_stock})" />
@@ -158,7 +158,7 @@ function showSaleModal(items) {
         const row = document.createElement('tr');
         row.innerHTML = `
         <td>${item.name}</td>
-        <td>$${item.price})</td>
+        <td>ksh${item.price}</td>
         <td>${item.quantity}</td>
         <td>${item.total.toFixed(2)}</td>
         <td>
