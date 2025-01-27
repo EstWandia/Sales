@@ -114,6 +114,7 @@ function getQuantityForItems(items) {
                 name: item.name,
                 price: item.price,
                 quantity: quantity,
+                buying_price:item.buying_price,
                 total: item.price * quantity
             });
         }
@@ -300,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(response => response.json())
             .then(data => {
-                console.log('Sale confirmation success:', data);
+                //console.log('Sale confirmation success:', data);
                 localStorage.removeItem('saleItems'); // Clear the sale items from localStorage
     
                 //Hide the modal

@@ -5,7 +5,7 @@ const { Allitems } =db
 
 export const Getallitems = async(req,res)=>{
     try{
-        const {name,in_stock,price } =req.query;
+        const {name,in_stock,price,buying_price } =req.query;
         const filters ={};
 
 
@@ -15,7 +15,7 @@ export const Getallitems = async(req,res)=>{
         if (price && !isNaN(price)) filters.price = { [Sequelize.Op.eq]: parseFloat(price) };  // Ensure it's a float
 
         const itemsTosale=await Allitems.findAll({
-            attributes:['id','name','in_stock','price'],
+            attributes:['id','name','in_stock','price','buying_price'],
             where:filters
     })
     const items = itemsTosale.map(item => item.get({ plain: true }));

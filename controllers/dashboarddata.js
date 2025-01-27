@@ -161,7 +161,7 @@ try{
         const itemId = uuidv4();
         console.log("Generated UUID:", itemId);
 
-        const { name, quantity, price, amount, state, category_id } = item;
+        const { name, quantity, price, amount, state,buying_price, category_id } = item;
 
         await Solditems.create({ 
           id:itemId,
