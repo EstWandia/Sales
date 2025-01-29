@@ -40,43 +40,42 @@ fetch('/dashboarddata/todayprofit')
 .catch(error => console.error(error));
 
 
-// fetch('/dashboarddata/sold')
-//   .then(response => {
-//     if (!response.ok) {
-//       throw new Error('Server Error: ' + response.statusText);
-//     }
-//     return response.json();
-//   })
-//   .then(function (data) {
-//     console.log(data); // Log the data to check its structure
-//     const salesTableBody = document.getElementById('soldDisplay');
-//     salesTableBody.innerHTML = ''; // Clear any existing data
+fetch('/dashboarddata/sold')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Server Error: ' + response.statusText);
+    }
+    return response.json();
+  })
+  .then(function (data) {
+    console.log(data);
+    const salesTableBody = document.getElementById('soldDisplay');
+    salesTableBody.innerHTML = '';
 
-//     if (Array.isArray(data)) {
-//       data.forEach(item => {
-//         const row = document.createElement('tr');
-//         row.innerHTML = `
-//           <td>
-//             <div class="form-check form-check-muted m-0">
-//               <label class="form-check-label">
-//                 <input type="checkbox" class="form-check-input">
-//               </label>
-//             </div>
-//           </td>
-//           <td><span class="ps-2">${item.category_name}</span></td>
-//           <td>${item.name}</td>
-//           <td>${item.quantity}</td>
-//           <td>$${item.amount}</td>
-//           <td>${item.status}</td>
-//           <td>${item.created_at}</td>
-//         `;
-//         salesTableBody.appendChild(row); // Add the row to the table
-//       });
-//     } else {
-//       console.error('Expected an array, but received:', data);
-//     }
-//   })
-//   .catch(error => console.error('Error loading sales data:', error));
+    if (Array.isArray(data)) {
+      data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>
+            <div class="form-check form-check-muted m-0">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input">
+              </label>
+            </div>
+          </td>
+          <td>${item.name}</td>
+          <td>${item.quantity}</td>
+          <td>ksh${item.amount}</td>
+          <td>${item.state}</td>
+          <td>${item.created_at}</td>
+        `;
+        salesTableBody.appendChild(row); // Add the row to the table
+      });
+    } else {
+      console.error('Expected an array, but received:', data);
+    }
+  })
+  .catch(error => console.error('Error loading sales data:', error));
 
  const sidebarContainer = document.getElementById('sidebar-container');
 
@@ -406,21 +405,21 @@ function getFormattedDate() {
 document.getElementById('mpesa-date').textContent = getFormattedDate();
 document.getElementById('cash-date').textContent = getFormattedDate();
 
-document.addEventListener('DOMContentLoaded', () => {
-    
-  fetch('/dashboarddata/permision')
-      .then(response => response.json())
-      .then(data => {
-          if (data.perm === 1) {
-              // Hide rows or sections with `data-perm="0"`
-              const restrictedRows = document.querySelectorAll('.row[data-perm="0"]');
-              restrictedRows.forEach(row => {
-                  row.style.display = 'none';
-              });
-          }
-      })
-      .catch(error => {
-          console.error('Error fetching user permission:', error);
-      });
-});
+
+  document.addEventListener('DOMContentLoaded', checkPermissions);
+  window.addEventListener('pageshow', checkPermissions);
+  
+  function checkPermissions() {
+      fetch('/dashboarddata/permision')
+          .then(response => response.json())
+          .then(data => {
+              if (data.perm === 1) {
+                  document.querySelectorAll('.row[data-perm="0"]').forEach(row => {
+                      row.style.display = 'none';
+                  });
+              }
+          })
+          .catch(error => console.error('Error fetching user permission:', error));
+  }
+  
 

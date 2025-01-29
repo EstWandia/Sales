@@ -62,7 +62,15 @@ export const getItemsSoldToday =async (req, res) => {
 }
 export const getAllitemsSold =async (req, res) => {
   try{
-      const results =await Solditems.count()
+    const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    const endOfMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59);
+      const results =await Solditems.count({
+        where: {
+          createdAt: {
+            [Op.between]: [startOfMonth, endOfMonth]
+          }
+        }
+      })
       const totalItems =results || 0;
       res.json({totalItems});
   }catch(error){
@@ -124,33 +132,27 @@ try{
 }
 }
 
-//  export const  mapSoldItems = async (req, res) => {
-//     try {
-//       const salesData = await db.Solditems.findAll({
-//         limit: 5,
-//         order: [['created_at', 'DESC']],
-//         include: {
-//           model: db.Itemscategory,
-//           attributes: ['name'], // Select the category name
-//           required: true // This ensures that sold_items will only be fetched if there's a matching category
-//         }
-//       });
+ export const  mapSoldItems = async (req, res) => {
+    try {
+      const salesData = await db.Solditems.findAll({
+        limit: 5,
+        order: [['created_at', 'DESC']],
+      });
   
-//       const formattedSalesData = salesData.map(item => ({
-//         category_name: item.Itemscategory.name,
-//         name: item.name,
-//         quantity: item.quantity,
-//         amount: item.amount,
-//         status: item.status === 1 ? 'cash' : 'mpesa', // Adjust status as needed
-//       created_at: item.created_at.toISOString().split('T')[0] 
-//       }));
+      const formattedSalesData = salesData.map(item => ({
+        name: item.name,
+        quantity: item.quantity,
+        amount: item.amount,
+        state: item.state === 1 ? 'cash' : 'mpesa',
+        created_at: new Date(item.created_at).toLocaleString()
+      }));
   
-//       res.json(formattedSalesData);
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ error: 'Error fetching sales data' });
-//     }
-//   }
+      res.json(formattedSalesData);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error fetching sales data' });
+    }
+  }
   export const confirmSale = async (req, res) => {
     try {
       console.log('kasongo')

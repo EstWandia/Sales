@@ -1,4 +1,6 @@
 console.log('for the love of christ');
+console.log(`Current Time: ${new Date().toString()}`);
+console.log(`Time Zone Offset: ${new Date().getTimezoneOffset()} minutes`);
 let tabledData = []; 
 
 async function fetchItems(filters = {}) {
@@ -355,21 +357,19 @@ fetch('/allitemsroute/instock')
     })
     .catch((error) => console.error('Error fetching user details:', error));
 });
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', checkPermissions);
+window.addEventListener('pageshow', checkPermissions);
 
+function checkPermissions() {
     fetch('/allitemsroute/allpermision')
         .then(response => response.json())
         .then(data => {
             if (data.perm === 1) {
-                // Hide rows or sections with `data-perm="0"`
-                const restrictedRows = document.querySelectorAll('.row[data-perm="0"]');
-                restrictedRows.forEach(row => {
+                document.querySelectorAll('.row[data-perm="0"]').forEach(row => {
                     row.style.display = 'none';
                 });
             }
         })
-        .catch(error => {
-            console.error('Error fetching user permission:', error);
-        });
-});
+        .catch(error => console.error('Error fetching user permission:', error));
+}
 

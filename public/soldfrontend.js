@@ -199,24 +199,22 @@ function filterSoldTable() {
         });
       }
     }
-    
-    document.addEventListener('DOMContentLoaded', () => {
-    
-      fetch('/sold/soldpermision')
-          .then(response => response.json())
-          .then(data => {
-              if (data.perm === 1) {
-                  // Hide rows or sections with `data-perm="0"`
-                  const restrictedRows = document.querySelectorAll('.row[data-perm="0"]');
-                  restrictedRows.forEach(row => {
-                      row.style.display = 'none';
-                  });
-              }
-          })
-          .catch(error => {
-              console.error('Error fetching user permission:', error);
-          });
-    });
+    document.addEventListener('DOMContentLoaded', checkPermissions);
+window.addEventListener('pageshow', checkPermissions);
+
+function checkPermissions() {
+    fetch('/sold/soldpermision')
+        .then(response => response.json())
+        .then(data => {
+            if (data.perm === 1) {
+                document.querySelectorAll('.row[data-perm="0"]').forEach(row => {
+                    row.style.display = 'none';
+                });
+            }
+        })
+        .catch(error => console.error('Error fetching user permission:', error));
+}
+
     
     
    
