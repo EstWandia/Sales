@@ -39,6 +39,14 @@ fetch('/dashboarddata/todayprofit')
 })
 .catch(error => console.error(error));
 
+fetch('/dashboarddata/instock')
+.then(response => response.json())
+.then(function (itemData) {
+  const allItemsElement = document.getElementById('instock')
+  allItemsElement.innerText = itemData.totalStock;
+})
+.catch(error => console.error(error));
+
 
 fetch('/dashboarddata/sold')
   .then(response => {

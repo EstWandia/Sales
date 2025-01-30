@@ -1,5 +1,5 @@
 import express from 'express';
-import { getALLSells,getItemsSoldToday,mapSoldItems,confirmSale,Reportitem,getTotalCashAmount,getTodaySells,getAllitemsSold,getTodayProfit,Perm} from '../controllers/dashboarddata.js';
+import { getALLSells,getItemsSoldToday,getCashInStock,mapSoldItems,confirmSale,Reportitem,getTotalCashAmount,getTodaySells,getAllitemsSold,getTodayProfit,Perm} from '../controllers/dashboarddata.js';
 import { checkAuth } from '../middleware/checkAuth.js';
 
 
@@ -15,6 +15,8 @@ router.get('/reportitem',checkAuth,Reportitem);
 router.get('/mpesa',checkAuth,getTotalCashAmount);
 router.get('/todaycash',checkAuth,getTodaySells);
 router.get('/todayprofit',checkAuth,getTodayProfit);
+router.get('/instock',checkAuth,getCashInStock);
+
 router.get('/permision',checkAuth,Perm);
 
 

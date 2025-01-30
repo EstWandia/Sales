@@ -144,7 +144,7 @@ export const getinstockItems =async (req, res) => {
     try{
 
         //const formattedDate = getFormattedDate(); 
-        const results =await Allitems.count()
+        const results = await Allitems.sum("in_stock");
         const instockItems =results || 0;
         res.json({instockItems});
     }catch(error){

@@ -1,7 +1,7 @@
 import db from '../models/index.js';
 import sequelize from "sequelize";
 import { v4 as uuidv4 } from 'uuid';
-const { Op } = db.Sequelize; // Add this line if Sequelize is imported from the package
+import { Op } from 'sequelize'; // Add this line if Sequelize is imported from the package
 
 
 const {Solditems,Allitems} =db;
@@ -44,7 +44,7 @@ export const getItemsSoldToday =async (req, res) => {
     try{
 
         const formattedDate = getFormattedDate(); 
-        const results =await Solditems.count({
+          const results = await Solditems.sum("quantity", {
           where: { 
             created_at: {
               [Op.gte]: formattedDate + " 00:00:00", // Start of the day
@@ -64,13 +64,13 @@ export const getAllitemsSold =async (req, res) => {
   try{
     const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
     const endOfMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59);
-      const results =await Solditems.count({
-        where: {
-          createdAt: {
-            [Op.between]: [startOfMonth, endOfMonth]
-          }
+    const results = await Solditems.sum("quantity", {
+      where: {
+        created_at: {
+          [Op.between]: [startOfMonth, endOfMonth]
         }
-      })
+      }
+    });
       const totalItems =results || 0;
       res.json({totalItems});
   }catch(error){
@@ -109,6 +109,35 @@ export const getTodayProfit = async (req, res) => {
 
       // Send response
       res.json({ totalProfit });
+  } catch (error) {
+      console.error("Error executing database query:", error);
+      res.status(500).json({ error: "Internal Server error" });
+  }
+};
+export const getCashInStock = async (req, res) => {
+  try {
+      const formattedDate = getFormattedDate();
+
+      // Fetch and calculate profit for each record
+      const results = await Allitems.findAll({
+          attributes: [
+              [
+                  sequelize.literal("(buying_price*in_stock)"),
+                  "instock", // Alias for the calculated field
+              ],
+          ],
+          raw: true, // Ensures raw data is returned
+      });
+      console.log("Fetched results:", results);
+
+      // Aggregate the profits
+      const totalStock = results.reduce(
+          (sum, record) => sum + parseFloat(record.instock || 0),
+          0
+      );
+
+      // Send response
+      res.json({ totalStock });
   } catch (error) {
       console.error("Error executing database query:", error);
       res.status(500).json({ error: "Internal Server error" });
