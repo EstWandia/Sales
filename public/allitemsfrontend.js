@@ -48,8 +48,8 @@ function displayItems(items) {
             <td>${item.in_stock}</td>
             <td>ksh${item.price}</td>
             <td>
-                <input type="number" id="quantity-${item.name}" class="form-control" min="1" max="${item.in_stock}" placeholder="Enter quantity"
-                oninput="validateQuantity('${item.name}', ${item.in_stock})" />
+            <input type="number" id="quantity-${item.name}" class="form-control" min="0" max="${item.in_stock}" placeholder="Enter quantity"
+            oninput="console.log('value:', this.value, 'valueAsNumber:', this.valueAsNumber); validateQuantity('${item.name}', ${item.in_stock})" />
             </td>
         `;
         grid.appendChild(row);
@@ -63,28 +63,33 @@ function displayItems(items) {
       tabledData = data; // Store fetched data for filtering
     })
     .catch(error => console.error('Error loading sales data:', error));
-function validateQuantity(itemName, stock) {
-    const quantityInput = document.getElementById(`quantity-${itemName}`);
-    const quantity = parseFloat(quantityInput.value);
-    const inputValue = quantityInput.value;
     
-    if (inputValue === '') {
-        return;
+    function validateQuantity(itemName, stock) {
+        const quantityInput = document.getElementById(`quantity-${itemName}`);
+        const inputValue = quantityInput.value;
+        
+        if (inputValue === '') {
+            return;
+        }
+    
+        // Ensure the input is a valid number
+        const quantity = parseFloat(inputValue);
+        if (isNaN(quantity)) {
+            event.preventDefault();
+            return;
+        }
+    
+        // If the value is greater than stock, set it to stock
+        if (quantity > stock) {
+            quantityInput.value = stock; // Set the input to max stock value
+        }
+    
+        // If the value is less than 0, set it to 0
+        if (quantity < 0) {
+            quantityInput.value = 0;
+        }
     }
-
-    if (isNaN(inputValue)) {
-        event.preventDefault();
-        return;
-    }
-
-    if (inputValue > stock) {
-        quantityInput.value = stock; // Set the input to max stock value
-    }
-
-    if (inputValue < 1) {
-        quantityInput.value = 1; // Prevent values less than 1
-    }
-}
+    
 function filteredTable() {
     const filterName = document.getElementById('Name').value.toLowerCase();
     const filterStock = document.getElementById('Stock').value;
