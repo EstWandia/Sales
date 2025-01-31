@@ -6,6 +6,9 @@ export const getAllSoldItems = async(req,res)=>{
     console.log('this')
     try{
     const all_sold = await Solditems.findAll(
+      {
+        order:[['created_at','DESC']]
+      }
     )
     const formattedData =all_sold.map(item=>({
         ...item.toJSON(),
