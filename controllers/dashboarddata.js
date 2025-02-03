@@ -163,9 +163,15 @@ try{
 
  export const  mapSoldItems = async (req, res) => {
     try {
+      const formattedDate = getFormattedDate();
       const salesData = await db.Solditems.findAll({
-        limit: 5,
         order: [['created_at', 'DESC']],
+        where:  {
+          created_at: {
+            [Op.gte]: `${formattedDate} 00:00:00`, // Start of the day
+            [Op.lte]: `${formattedDate} 23:59:59`, // End of the day
+        },
+        },
       });
   
       const formattedSalesData = salesData.map(item => ({
