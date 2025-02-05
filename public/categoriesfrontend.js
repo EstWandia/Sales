@@ -276,3 +276,41 @@ fetch('/categories/displaycategory')
   .catch(error => {
     console.error('Fetch error:', error);
   });
+
+  fetch('/categories/deplict')
+.then(response => response.json())
+.then(data => {
+  finishedTable(data); 
+})
+.catch(error => console.error('Error loading sales data:', error));
+
+function finishedTable(data) {
+  console.log('youps')
+  const salesTableBody = document.getElementById('reportfinishedItems');
+  salesTableBody.innerHTML = ''; // Clear existing rows
+  //data in descending order
+  data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));  
+  if (Array.isArray(data)) {
+    data.forEach((item, index) => {
+      const row = document.createElement('tr');
+      const formattedDate = item.createdAt ? new Date(item.createdAt).toISOString().slice(0, 19).replace('T', ' ') : 'Unknown';
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${item.name || 'N/A'}</td>
+        <td>${item.in_stock || 0}</td>
+        <td>${item.price?.toFixed(2) || '0.00'}</td>
+        <td>${formattedDate}</td>
+       <td>
+      <a href="#" class="mdi mdi-eye" title="View" data-id="${item.id}" onclick="viewItem(event, '${item.id}')"></a>
+      <a href="#" class="mdi mdi-pencil" title="Edit" data-id="${item.id}" onclick="editItem(event, '${item.id}')"></a>
+      <a href="#" class="mdi mdi-delete" title="Delete" data-id="${item.id}" onclick="deleteItem(event, '${item.id}')"></a>
+      </td>
+      `;
+      salesTableBody.appendChild(row);
+    });
+  }
+}
+
+    
+    
+   

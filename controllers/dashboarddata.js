@@ -99,7 +99,6 @@ export const getTodayProfit = async (req, res) => {
           },
           raw: true, // Ensures raw data is returned
       });
-      console.log("Fetched results:", results);
 
       // Aggregate the profits
       const totalProfit = results.reduce(
@@ -128,7 +127,6 @@ export const getCashInStock = async (req, res) => {
           ],
           raw: true, // Ensures raw data is returned
       });
-      console.log("Fetched results:", results);
 
       // Aggregate the profits
       const totalStock = results.reduce(

@@ -1,6 +1,9 @@
 import db from '../models/index.js'
 
-const { Itemscategory } =db;
+import { Op } from 'sequelize';
+
+
+const { Itemscategory,Allitems } =db;
 
 export const Category = async(req,res)=>{
     try{
@@ -151,4 +154,28 @@ export const Category = async(req,res)=>{
             return res.status(500).json({ error: 'Internal Server Error' });
         }
     };
+    export const finishedItems = async (req, res) => {
+      try {
+        const allReportItems = await Allitems.findAll(
+          {
+            where: {
+              in_stock: { [Op.lte]: 1 } // Filter items with quantity <= 1
+            }
+          }
+        );
+        const formattedItems = allReportItems.map(item => ({
+          ...item.toJSON(),
+          created_at: item.createdAt
+            ? item.createdAt.toISOString().split('T')[0] 
+            : 'N/A', // Example: YYYY-MM-DD
+        }));
+    
+        res.json(formattedItems); // Send the formatted items to the frontend
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+      }
+    };
+    
+       
      
