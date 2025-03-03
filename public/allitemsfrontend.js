@@ -325,8 +325,101 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Insufficient amount given.');
         }
     });
+    document.getElementById('debtDetail').addEventListener('click', function() {
+        console.log('debtor name')
+        showdebtModal()
+    });
+    document.getElementById('closedebtButton').addEventListener('click', function() {
+        console.log('close')
+        closedebtModal()
+    });
+
+    document.getElementById('debtSaleButton').addEventListener('click', function() {
+        console.log('save debt')
+        const saleItems = JSON.parse(localStorage.getItem('saleItems')) || [];
+        const amountGiven = parseFloat(document.getElementById('amountGiven').value) || 0;
+        const grossTotal = saleItems.reduce((total, item) => total + item.total, 0);
+        const balance = amountGiven - grossTotal;
+    
+        // Update the gross total and balance on the UI
+        document.getElementById('grossTotal').textContent = grossTotal.toFixed(2);
+        document.getElementById('balance').textContent = balance.toFixed(2);
+        const cashCheckbox = document.getElementById('cashCheckbox');
+    
+        saleItems.forEach(item => {
+            // Check if the checkbox is checked and update the item's state accordingly
+            if (cashCheckbox.checked) {
+                item.state = 0;  // If checked, set state to 0 (Cash)
+            } else {
+                item.state = 1;  // If unchecked, set state to 1 (Credit)
+            }
+        });
+    
+    
+        if (amountGiven < grossTotal) {
+            const debtSold = saleItems.map(item => {
+                return {
+                    id:item.id,
+                    name: item.name,
+                    client_name: item.client_name,
+                    amount_remaining: item.total-item.amount_given,
+                    price: item.price,
+                    buying_price: item.buying_price,
+                    quantity: item.quantity,
+                    amount_paid: item.total || 0,
+                    category_id: item.categoryId || null,
+                    state:item.state
+                };
+            });
+            console.log(debtSold);
+    
+            // Send the sale data to the backend
+            fetch('/debtroute/getdebt', {
+                
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ debtSold: debtSold })
+                
+            })
+            .then(response => response.json())
+            .then(data => {
+                //console.log('Sale confirmation success:', data);
+                localStorage.removeItem('saleItems'); // Clear the sale items from localStorage
+    
+                //Hide the modal
+                // const saleModal = new bootstrap.Modal(document.getElementById('saleModal'));
+                // saleModal.hide();
+    
+                // Reload the page
+                location.reload();
+            })
+            .catch(error => {
+                console.error('Error during sale confirmation:', error);
+            });
+        } else {
+            alert('Insufficient amount given.');
+        }
+    });
+
+    function showdebtModal() { 
+        const modal = document.getElementById('debtModal');
+         modal.classList.add('show');
+          modal.style.display = 'block';
+         }
+
+         function closedebtModal() {
+            const modal = document.getElementById('debtModal');
+            if (modal) {
+                modal.style.display = 'none';
+            } else {
+                console.error("Modal with ID 'allitemsModal' not found.");
+            }
+        }
     
 });
+
 fetch('/allitemsroute/instock')
   .then(response => response.json())
   .then(function (itemData) {

@@ -8,7 +8,19 @@ const {Solditems,Allitems} =db;
 
 export const getALLSells=async (req, res) => {
         try {
-        const results = await Solditems.sum('amount');
+          const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+          const endOfMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59);
+
+        const results = await Solditems.sum('amount',
+          { 
+            where: {
+              created_at: {
+                [Op.between]: [startOfMonth, endOfMonth]
+              }
+            }
+          }
+
+        );
         const totalInstock =results || 0;
         //console.log(totalInstock);
             res.json({totalInstock});
@@ -123,7 +135,7 @@ export const getCashInStock = async (req, res) => {
               [
                   sequelize.literal("(buying_price*in_stock)"),
                   "instock", // Alias for the calculated field
-              ],
+               ],
           ],
           raw: true, // Ensures raw data is returned
       });
@@ -151,7 +163,7 @@ try{
 
     const items =Solditem.map(item => item.get({ plain: true }));
     
-    console.log(items)
+    //console.log(items)
     res.status(200).json(items)
 }catch(error){
     console.error('Error getting items to sell:',error.message)
@@ -190,7 +202,7 @@ try{
     try {
       console.log('kasongo')
       const { itemsSold } = req.body;
-      console.log('Received itemsSold:', itemsSold);
+      //console.log('Received itemsSold:', itemsSold);
       
       for (const item of itemsSold) {
         const itemId = uuidv4();
