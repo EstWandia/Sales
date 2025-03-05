@@ -94,6 +94,15 @@ fetch('/partials/_sidebar.html')
   })
   .catch(error => console.error('Error loading sidebar:', error));
 
+  const topbarContainer = document.getElementById('topbar-container');
+
+fetch('/partials/_topbar.html')
+  .then(response => response.text())
+  .then(html => {
+    topbarContainer.innerHTML = html;
+  })
+  .catch(error => console.error('Error loading topbar:', error));
+
   let tableData = []; // Variable to store fetched data
 
   // Fetch and render the data
