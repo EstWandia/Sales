@@ -55,12 +55,14 @@ import Solditems from './solditems.js';
 import users from './users.js';
 import Itemscategory from './itemscategory.js';
 import Debtitems from './debt.js';
+import Dailyreport from './dailyreport.js';
 
 db.Solditems = Solditems(sequelize, Sequelize.DataTypes);
 db.users = users(sequelize, Sequelize.DataTypes);
 db.Allitems =Allitems(sequelize, Sequelize.DataTypes);
 db.Itemscategory = Itemscategory(sequelize, Sequelize.DataTypes);
 db.Debtitems =Debtitems(sequelize, Sequelize.DataTypes);
+db.Dailyreport =Dailyreport(sequelize, Sequelize.DataTypes);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

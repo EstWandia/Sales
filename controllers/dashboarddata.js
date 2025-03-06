@@ -113,13 +113,15 @@ export const getTodayProfit = async (req, res) => {
       });
 
       // Aggregate the profits
-      const totalProfit = results.reduce(
+      const beforeProfit = results.reduce(
           (sum, record) => sum + parseFloat(record.profit || 0),
           0
       );
 
+      const totalProfit = Math.max(beforeProfit-800, 0);
+
       // Send response
-      res.json({ totalProfit });
+     res.json({ totalProfit });
   } catch (error) {
       console.error("Error executing database query:", error);
       res.status(500).json({ error: "Internal Server error" });
