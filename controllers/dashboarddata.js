@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Op } from 'sequelize'; // Add this line if Sequelize is imported from the package
 
 
-const {Solditems,Allitems} =db;
+const {Solditems,Allitems,Returneditems} =db;
 
 export const getALLSells=async (req, res) => {
         try {
@@ -185,8 +185,8 @@ try{
         },
         },
       });
-  
       const formattedSalesData = salesData.map(item => ({
+        id:item.id,
         name: item.name,
         quantity: item.quantity,
         amount: item.amount,
@@ -325,4 +325,88 @@ try{
     }
 };
 
-  
+export const getsoldItemss = async (req, res) => {
+  try {
+      const { id } = req.params;
+      console.log("Fetching sold item details for ID:", id);  // Debugging log
+
+      const item = await db.Solditems.findOne({ where: { id } });
+
+      if (!item) {
+          console.error("Error: No item found for ID:", id);
+          return res.status(404).json({ error: 'Item not found' });
+      }
+
+      console.log("Found item details:", item.toJSON());  // Log the actual item
+
+      res.json({
+          id: item.id,
+          name: item.name,
+          quantity: item.quantity
+      });
+  } catch (error) {
+      console.error("Error fetching sold item details:", error);
+      res.status(500).json({ error: 'Server error' });
+  }
+};
+
+export const getReturnbyid = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const { quantity } = req.body;
+      console.log("Processing return for ID:", id, "Quantity:", quantity);
+
+      const returnQuantity = parseInt(quantity, 10);
+      const soldItem = await db.Solditems.findOne({ where: { id } });
+
+      if (!soldItem) {
+          console.error("Sold item not found for ID:", id);
+          return res.status(404).json({ error: 'Sold item not found' });
+      }
+
+      if (returnQuantity <= 0 || returnQuantity > soldItem.quantity) {
+          console.error("Invalid return quantity:", returnQuantity);
+          return res.status(400).json({ error: 'Invalid return quantity' });
+      }
+
+      const newQuantity = soldItem.quantity - returnQuantity;
+
+      console.log("Inserting into returned_items:", {
+          id: soldItem.id,
+          name: soldItem.name,
+          quantity: returnQuantity,
+          amount: soldItem.amount,
+          buying_price: soldItem.buying_price,
+          state: soldItem.state,
+          created_at: new Date()
+      });
+
+      // Attempt to insert into returned_items
+      const returnedItem = await db.Returneditems.create({
+          id: soldItem.id,  // Ensure no unique constraint conflict
+          name: soldItem.name,
+          quantity: returnQuantity,
+          amount: soldItem.amount,
+          buying_price: soldItem.buying_price,
+          state: soldItem.state,
+          created_at: new Date()
+      });
+
+      console.log("Insert into returned_items successful:", returnedItem.toJSON());
+
+      // Update sold_items
+      if (newQuantity <= 0) {
+          console.log("Deleting sold item as quantity is now 0");
+          await db.Solditems.destroy({ where: { id } });
+      } else {
+          console.log("Updating sold item quantity to:", newQuantity);
+          await db.Solditems.update({ quantity: newQuantity }, { where: { id } });
+      }
+
+      res.json({ success: true, message: 'Return processed successfully', returnedItem });
+  } catch (error) {
+      console.error('Error processing return:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+

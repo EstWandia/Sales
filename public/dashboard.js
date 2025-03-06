@@ -56,7 +56,6 @@ fetch('/dashboarddata/sold')
     return response.json();
   })
   .then(function (data) {
-    console.log(data);
     const salesTableBody = document.getElementById('soldDisplay');
     salesTableBody.innerHTML = '';
 
@@ -76,9 +75,10 @@ fetch('/dashboarddata/sold')
           <td>ksh${item.amount}</td>
           <td>${item.state}</td>
           <td>${item.created_at}</td>
-          <td>
-  <a href="#" class="mdi mdi-undo" title="returned" data-id="${item.id}" onclick="viewItem(event, '${item.id}')"></a>
+         <td>
+      <a href="#" class="mdi mdi-undo" title="returned" data-id="${item.id}" onclick="returnItem(event, '${item.id}')"></a>
 </td>
+
 
         `;
         salesTableBody.appendChild(row); // Add the row to the table
@@ -165,6 +165,17 @@ fetch('/partials/_topbar.html')
         modal.classList.add('show');
         modal.style.display = 'block';
       }
+      function showReturnModal() {
+        const modal = document.getElementById('returnModal');
+        modal.classList.add('show');
+        modal.style.display = 'block';
+      }
+      function closeReturnModal() {
+        const modal = document.getElementById('returnModal');
+        modal.classList.remove('show');
+        modal.style.display = 'none';
+      }
+      
   
   // Function to filter the table
   function filterTable() {
@@ -442,5 +453,61 @@ document.getElementById('cash-date').textContent = getFormattedDate();
           })
           .catch(error => console.error('Error fetching user permission:', error));
   }
-  
 
+  function returnItem(event, id) {
+    event.preventDefault();
+    console.log("Return button clicked for item ID:", id); // Debugging log
+
+    if (!id) {
+        console.error("Error: ID is undefined");
+        return;
+    }
+
+    fetch(`/dashboarddata/returnitem/${id}`)
+      .then(response => response.json())
+      .then(returnDetails => {
+          console.log("Received return details:", returnDetails);
+
+          document.getElementById('returnItemName').value = returnDetails.name || '';
+          document.getElementById('returnItemQuantity').value = returnDetails.quantity || '';
+          document.getElementById('returnItemId').value = returnDetails.id || '';
+
+          showReturnModal();
+      })
+      .catch(error => console.error('Error fetching return item details:', error));
+}
+
+function updatereturnItem(event) {
+  event.preventDefault();
+  
+  const id = document.getElementById('returnItemId').value;
+  const quantity = parseInt(document.getElementById('returnItemQuantity').value, 10);
+
+  console.log("Submitting return for item ID:", id, "with quantity:", quantity); // Debugging
+
+  if (!id || isNaN(quantity) || quantity <= 0) {
+      alert('Please enter a valid quantity.');
+      return;
+  }
+
+  fetch(`/dashboarddata/return/${id}`, {
+      method: 'PUT',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ quantity }) // Send only quantity
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log("Server response:", data); // Debugging
+
+      if (data.success) {
+          alert('Return processed successfully!');
+          closeReturnModal();
+          location.reload(); // Refresh UI to show updated stock
+      } else {
+          alert('Error: ' + data.error);
+      }
+  })
+  .catch(error => console.error('Error processing return:', error));
+}

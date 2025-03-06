@@ -325,17 +325,17 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Insufficient amount given.');
         }
     });
-    document.getElementById('debtDetail').addEventListener('click', function() {
-        console.log('debtor name')
-        showdebtModal()
-    });
-    document.getElementById('closedebtButton').addEventListener('click', function() {
-        console.log('close')
-        closedebtModal()
-    });
+    // document.getElementById('debtDetail').addEventListener('click', function() {
+    //     console.log('debtor name')
+    //     showDebtModal()
+    // });
+    // document.getElementById('closedebtButton').addEventListener('click', function() {
+    //     console.log('close')
+    //     closeDebtModal()
+    // });
 
-    document.getElementById('debtSaleButton').addEventListener('click', function() {
-        console.log('save debt')
+    document.getElementById('returnItemForm').addEventListener('submit', function(event) {
+            console.log('save debt')
         const saleItems = JSON.parse(localStorage.getItem('saleItems')) || [];
         const amountGiven = parseFloat(document.getElementById('amountGiven').value) || 0;
         const grossTotal = saleItems.reduce((total, item) => total + item.total, 0);
@@ -403,21 +403,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function showdebtModal() { 
+    function showDebtModal() {
         const modal = document.getElementById('debtModal');
-         modal.classList.add('show');
-          modal.style.display = 'block';
-         }
+        modal.classList.add('show');
+        modal.style.display = 'block';
+      }
+      function closeDebtModal() {
+        const modal = document.getElementById('debtModal');
+        modal.classList.remove('show');
+        modal.style.display = 'block';
+      }
 
-         function closedebtModal() {
-            const modal = document.getElementById('debtModal');
-            if (modal) {
-                modal.style.display = 'none';
-            } else {
-                console.error("Modal with ID 'allitemsModal' not found.");
-            }
-        }
-    
 });
 
 fetch('/allitemsroute/instock')

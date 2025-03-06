@@ -7,6 +7,7 @@ import soldRoutes from './routes/sold.js';
 import categoryRoute from './routes/categories.js';
 import allitems from './routes/allitemsroute.js';
 import debtRoute from './routes/debtroute.js';
+import dailyreportRoute from './routes/dailyreportroute.js';
 import db from './models/index.js';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv'
@@ -43,6 +44,7 @@ app.use('/categories', categoryRoute);
 app.use('/allitemsroute',allitems);
 app.use('/sold',soldRoutes)
 app.use('/debtroute',debtRoute)
+app.use('/dailyreportroute', dailyreportRoute);
 
 app.set('view engine','ejs')
 app.set('views',path.join(__dirname, 'views'));
