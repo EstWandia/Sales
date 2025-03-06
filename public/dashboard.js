@@ -77,7 +77,7 @@ fetch('/dashboarddata/sold')
           <td>${item.state}</td>
           <td>${item.created_at}</td>
           <td>
-  <a href="#" class="mdi mdi-undo" title="View" data-id="${item.id}" onclick="viewItem(event, '${item.id}')"></a>
+  <a href="#" class="mdi mdi-undo" title="returned" data-id="${item.id}" onclick="viewItem(event, '${item.id}')"></a>
 </td>
 
         `;
