@@ -76,6 +76,10 @@ fetch('/dashboarddata/sold')
           <td>ksh${item.amount}</td>
           <td>${item.state}</td>
           <td>${item.created_at}</td>
+          <td>
+  <a href="#" class="mdi mdi-undo" title="View" data-id="${item.id}" onclick="viewItem(event, '${item.id}')"></a>
+</td>
+
         `;
         salesTableBody.appendChild(row); // Add the row to the table
       });
