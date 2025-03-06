@@ -387,9 +387,12 @@ export const getReturnbyid = async (req, res) => {
           name: soldItem.name,
           quantity: returnQuantity,
           amount: soldItem.amount,
+          price: soldItem.price,            
           buying_price: soldItem.buying_price,
           state: soldItem.state,
-          created_at: new Date()
+          created_at: new Date(),
+          updated_at: new Date(),        
+          deleted_at: null
       });
 
       console.log("Insert into returned_items successful:", returnedItem.toJSON());
