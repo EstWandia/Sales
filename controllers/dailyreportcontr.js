@@ -25,9 +25,17 @@ const {Dailyreport,Solditems} = db
                 group: [db.Sequelize.fn("DATE", db.Sequelize.col("created_at"))], // Group by sale date
                 order: [[db.Sequelize.fn("DATE", db.Sequelize.col("created_at")), "DESC"]]
             });
+            const reportsWithAdjustedProfit = reports.map(report => {
+                const adjustedProfit = parseFloat(report.get('total_profit')) - 800;
+                return {
+                    ...report.get(),
+                    total_profit: adjustedProfit
+                };
+            });
+            
     
             console.log("Daily reports fetched successfully.");
-            res.json(reports);
+            res.json(reportsWithAdjustedProfit);
         } catch (error) {
             console.error("Error fetching daily reports:", error);
             res.status(500).json({ error: "Internal Server Error" });
