@@ -11,6 +11,13 @@ export default(sequelize)=>{
                 notEmpty: true
             }
         },
+        sold_item_id:{
+            type:DataTypes.STRING(36),
+            allowNull:true,
+            validate:{
+                notEmpty: false
+            }
+        },
         category_id:{
           type:DataTypes.STRING,
           allowNull:true,

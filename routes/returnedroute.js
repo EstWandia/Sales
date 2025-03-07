@@ -1,11 +1,13 @@
 import express from 'express';
-import { } from '../controllers/returncont.js';
+import {getReturnedItems,confirmReturnedItem} from '../controllers/returncont.js';
 import { checkAuth } from '../middleware/checkAuth.js';
 
 
 const router=express.Router();
 //const db = query()
 
+router.get('/returned',checkAuth,getReturnedItems);
+router.put('/retstore/:id/confirm', checkAuth, confirmReturnedItem);
 
 
 export default router;

@@ -330,7 +330,7 @@ export const getsoldItemss = async (req, res) => {
       const { id } = req.params;
       console.log("Fetching sold item details for ID:", id);  // Debugging log
 
-      const item = await db.Solditems.findOne({ where: { id } });
+      const item = await Solditems.findOne({ where: { id } });
 
       if (!item) {
           console.error("Error: No item found for ID:", id);
@@ -352,64 +352,74 @@ export const getsoldItemss = async (req, res) => {
 
 export const getReturnbyid = async (req, res) => {
   try {
-      const { id } = req.params;
+      const { id } = req.params; // This is sold_item_id
       const { quantity } = req.body;
-      console.log("Processing return for ID:", id, "Quantity:", quantity);
+
+      console.log("Processing return for Sold Item ID:", id, "Quantity:", quantity);
 
       const returnQuantity = parseInt(quantity, 10);
-      const soldItem = await db.Solditems.findOne({ where: { id } });
+
+      // Step 1: Fetch the sold item (guarantee it exists)
+      const soldItem = await Solditems.findByPk(id);
 
       if (!soldItem) {
-          console.error("Sold item not found for ID:", id);
+          console.log('Sold item not found for ID:', id);
           return res.status(404).json({ error: 'Sold item not found' });
       }
 
+      console.log('Found sold item:', soldItem.toJSON());
+
+      // Step 2: Validate return quantity
       if (returnQuantity <= 0 || returnQuantity > soldItem.quantity) {
-          console.error("Invalid return quantity:", returnQuantity);
           return res.status(400).json({ error: 'Invalid return quantity' });
       }
 
+      // Step 3: Calculate new stock and returned amount
       const newQuantity = soldItem.quantity - returnQuantity;
+      const returnedAmount = returnQuantity * soldItem.price;
 
-      console.log("Inserting into returned_items:", {
-          id: soldItem.id,
+      const returnId = uuidv4();
+      // Step 4: Create returned item record
+      const returnedItem = await Returneditems.create({
+          id:   returnId,
+          sold_item_id: soldItem.id,  // Guaranteed correct because we fetched it above
           name: soldItem.name,
           quantity: returnQuantity,
-          amount: soldItem.amount,
-          buying_price: soldItem.buying_price,
-          state: soldItem.state,
-          created_at: new Date()
-      });
-
-      // Attempt to insert into returned_items
-      const returnedItem = await db.Returneditems.create({
-          id: soldItem.id,  // Ensure no unique constraint conflict
-          name: soldItem.name,
-          quantity: returnQuantity,
-          amount: soldItem.amount,
-          price: soldItem.price,            
+          amount: returnedAmount,      // Using selling price * returned quantity
+          price: soldItem.price,
           buying_price: soldItem.buying_price,
           state: soldItem.state,
           created_at: new Date(),
-          updated_at: new Date(),        
+          updated_at: new Date(),
           deleted_at: null
       });
 
-      console.log("Insert into returned_items successful:", returnedItem.toJSON());
+      console.log("Inserted into returned_items:", returnedItem.toJSON());
 
-      // Update sold_items
+      // Step 5: Update or delete the sold item record
       if (newQuantity <= 0) {
-          console.log("Deleting sold item as quantity is now 0");
-          await db.Solditems.destroy({ where: { id } });
+          // Remove item if no more stock left
+          await Solditems.destroy({ where: { id } });
+          console.log(`Sold item with ID ${id} deleted (no stock left)`);
       } else {
-          console.log("Updating sold item quantity to:", newQuantity);
-          await db.Solditems.update({ quantity: newQuantity }, { where: { id } });
+          // Update item quantity and amount
+          const newAmount = newQuantity * soldItem.price;
+
+          await Solditems.update({
+              quantity: newQuantity,
+              amount: newAmount
+          }, {
+              where: { id }
+          });
+
+          console.log(`Sold item with ID ${id} updated (new quantity: ${newQuantity}, new amount: ${newAmount})`);
       }
 
+      // Step 6: Final response
       res.json({ success: true, message: 'Return processed successfully', returnedItem });
+
   } catch (error) {
       console.error('Error processing return:', error);
       res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
