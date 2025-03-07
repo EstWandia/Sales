@@ -210,10 +210,11 @@ try{
         const itemId = uuidv4();
         console.log("Generated UUID:", itemId);
 
-        const { name, quantity, price, amount, state,buying_price, category_id } = item;
+        const {  id,name, quantity, price, amount, state,buying_price, category_id } = item;
 
         await Solditems.create({ 
           id:itemId,
+          item_id:item.id,
           name: item.name,
           quantity: item.quantity,
           price: item.price,
@@ -222,7 +223,8 @@ try{
           state:state,
           category_id:item.category_id
         });
-        
+
+        console.log("Item id:", item.id);
         const existingItem = await Allitems.findOne({ where: { id: item.id } });
         
             if (existingItem) {
@@ -382,7 +384,7 @@ export const getReturnbyid = async (req, res) => {
       // Step 4: Create returned item record
       const returnedItem = await Returneditems.create({
           id:   returnId,
-          sold_item_id: soldItem.id,  // Guaranteed correct because we fetched it above
+          sold_item_id: soldItem.item_id,  // Guaranteed correct because we fetched it above
           name: soldItem.name,
           quantity: returnQuantity,
           amount: returnedAmount,      // Using selling price * returned quantity

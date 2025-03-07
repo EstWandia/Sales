@@ -19,6 +19,13 @@ export default(sequelize)=>{
             notEmpty:false
           }
         },
+        item_id:{
+            type:DataTypes.STRING,
+            allowNull:true,
+            validate:{
+              notEmpty:false
+            }
+          },
         name:{
             type:DataTypes.STRING,
             allowNull:true,

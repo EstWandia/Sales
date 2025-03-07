@@ -26,7 +26,7 @@ function populateReturnedItemsTable(items) {
                 <td>${item.state == 1 ? 'cash' : 'mpesa'}</td>
                 <td>${new Date(item.createdAt).toLocaleDateString()}</td>
                 <td>
-                    <button class="btn btn-warning btn-sm" onclick="confirmReturnedItem('${item.id}')">Confirmed</button>
+                    <button class="btn btn-warning btn-sm" onclick="confirmReturnedItem('${item.id}')">Return Confirmed</button>
                 </td>
             </tr>
         `;
