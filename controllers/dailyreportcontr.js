@@ -14,7 +14,7 @@ const {Dailyreport,Solditems} = db
                     [db.Sequelize.fn("DATE", db.Sequelize.col("created_at")), "sale_date"],
                     [db.Sequelize.fn("SUM", db.Sequelize.col("amount")), "total_sale"],
                     [db.Sequelize.fn("SUM", db.Sequelize.col("quantity")), "total_quantity"],
-                    [db.Sequelize.fn("SUM", db.Sequelize.literal("amount - buying_price * quantity")), "total_profit"],
+                    [db.Sequelize.fn("SUM", db.Sequelize.literal("(price - buying_price) * quantity")), "total_profit"]
                     [db.Sequelize.fn("MAX", db.Sequelize.col("created_at")), "created_at"],
                     [db.Sequelize.fn("MAX", db.Sequelize.col("updated_at")), "updated_at"],
                 ],
