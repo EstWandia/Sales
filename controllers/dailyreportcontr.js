@@ -19,8 +19,7 @@ const {Dailyreport,Solditems} = db
                     [db.Sequelize.fn("MAX", db.Sequelize.col("updated_at")), "updated_at"],
                 ],
                 where: {
-                    state: 1, // Only include completed sales (adjust if needed)
-                    deleted_at: { [Op.is]: null }, // Ignore soft-deleted records
+                    deleted_at: { [Op.is]: null },
                 },
                 group: [db.Sequelize.fn("DATE", db.Sequelize.col("created_at"))], // Group by sale date
                 order: [[db.Sequelize.fn("DATE", db.Sequelize.col("created_at")), "DESC"]]
