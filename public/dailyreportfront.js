@@ -66,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td>${report.total_sale}</td>
                         <td>${report.total_quantity}</td>
                         <td>${new Date(report.created_at).toLocaleDateString()}</td>
-                        <td>${new Date(report.updated_at).toLocaleDateString()}</td>
                         <td>
                             <button class="btn btn-danger btn-sm" onclick="deleteReport('${report.sale_date}')">
                                 Delete

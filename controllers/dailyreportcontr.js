@@ -14,7 +14,6 @@ export const getDailyReports = async (req, res) => {
                 [Sequelize.fn("SUM", Sequelize.col("quantity")), "total_quantity"],
                 [Sequelize.literal("SUM((price - buying_price) * quantity)"), "total_profit"],
                 [Sequelize.fn("MAX", Sequelize.col("created_at")), "created_at"],
-                [Sequelize.fn("MAX", Sequelize.col("updated_at")), "updated_at"],
             ],
             where: { deleted_at: { [Op.is]: null } },
             group: [Sequelize.fn("DATE", Sequelize.col("created_at"))],
