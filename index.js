@@ -9,6 +9,7 @@ import allitems from './routes/allitemsroute.js';
 import debtRoute from './routes/debtroute.js';
 import dailyreportRoute from './routes/dailyreportroute.js';
 import returnedRoute from './routes/returnedroute.js';
+import fastmovingRoute from './routes/fastmovingroute.js';
 
 import db from './models/index.js';
 import cookieParser from 'cookie-parser';
@@ -48,6 +49,7 @@ app.use('/sold',soldRoutes)
 app.use('/debtroute',debtRoute)
 app.use('/dailyreportroute', dailyreportRoute);
 app.use('/returnedroute', returnedRoute);
+app.use('/fastmovingroute', fastmovingRoute);
 
 
 app.set('view engine','ejs')
