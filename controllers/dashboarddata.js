@@ -274,7 +274,7 @@ try{
       //console.log(formattedDate);
   
       // Query for today's total cash amount based on the formatted date
-      const cash = await Solditems.sum('amount', { 
+      const cash = await Solditems.sum('quantity', { 
         where: { 
           state: 0, 
           created_at: {
@@ -286,7 +286,7 @@ try{
       console.log(cash);
 
   
-      const mpesa = await Solditems.sum('amount', {
+      const mpesa = await Solditems.sum('quantity', {
          where: {
            state: 1,
            created_at: {
