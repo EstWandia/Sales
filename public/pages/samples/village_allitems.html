@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>All Items</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!-- End Plugin css for this page -->
+  <!-- inject:css -->
+  <!-- endinject -->
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <!-- End layout styles -->
+  <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_sidebar.html -->
+    <div id="sidebar-container"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_navbar.html -->
+      <nav class="navbar p-0 fixed-top d-flex flex-row">
+        <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+          <a class="navbar-brand brand-logo-mini" href="../../village_index.html"><img src="../../assets/images/logo-mini.svg"
+              alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          <ul class="navbar-nav w-100">
+            <li class="nav-item w-100">
+              <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
+                <input type="text" class="form-control" placeholder="Search products">
+              </form>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+            data-toggle="offcanvas">
+            <span class="mdi mdi-format-line-spacing"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- partial -->
+      <!--start here-->
+
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <h4 class="card-title">Village Table to sale</h4>
+                  <div class="filters d-flex justify-content-center">
+                    <button id="village_submitSaleButton" class="btn btn-primary btn-rounded btn-fw"
+                      style="margin-left: 10px;font-size: 18px; padding: 10px 20px;margin-top: 20px;">Sale</button>
+                  </div>
+          <div class="row ">
+            <div class="col-lg-12 grid-margin">
+              <div class="card">
+                <div class="card-body" style="display: flex; flex-direction: column; height: 100%;">
+                  <div class="table-responsive" style="flex-grow: 1; overflow-y: auto; max-height: 60vh;">
+                    <table class="table table-bordered table-contextual">
+                      <thead>
+                        <tr>
+                          <th style="color: rgb(236, 231, 231);"> # </th>
+                          <th style="color: rgb(231, 225, 225);">Name
+                            <input type="text" id="Name" class="form-control form-control-sm"
+                              placeholder="Search Stock" oninput="villagefilteredTable()">
+                          </th>
+                          <th style="color: rgb(242, 236, 236);"> In stock
+                            <input type="number" id="Stock" class="form-control form-control-sm"
+                              placeholder="Search Stock" oninput="villagefilteredTable()">
+                          </th>
+                          <th style="color: rgb(234, 229, 229);">Price
+                            <input type="number" id="Price" class="form-control form-control-sm"
+                              placeholder="Search Stock" oninput="villagefilteredTable()">
+                          </th>
+                          <th style="color: rgb(231, 222, 222);">Quantity
+
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody style="color: black;" id="villageitemsGrid">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- main-panel ends -->
+          <!-- Sale Modal -->
+          <div id="saleModal" class="modal" tabindex="-1" aria-labelledby="saleModalLabel">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="saleModalLabel">Sale Details</h5>
+                </div>
+                <div class="modal-body">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th id="in_stockFilter">Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody style="color: black;" id="saleItemsTable">
+                      <!-- Item rows will be added here dynamically -->
+                    </tbody>
+                  </table>
+                  <h5 class="text-end" style="color: black;">Gross Total: Ksh<span id="grossTotal"
+                      style="color: red;">0.00</span></h5>
+                </div>
+
+                <!-- Balance Display -->
+                <div>
+                  <h5 class="text-end" style="color: black;">Balance: Ksh<span id="balance"
+                      style="color: #00ff33;">0.00</span></h5>
+                </div>
+                <div class="modal-footer">
+                  <input type="number" id="amountGiven" class="form-control amount-input" placeholder="Enter cash" />
+
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="cashCheckbox">
+                    <label class="form-check-label" for="cashCheckbox">Mpesa</label>
+                  </div>
+
+                  <button type="button" class="btn btn-secondary" id="clearSaleButton" data-bs-dismiss="modal">Clear
+                    sales</button>
+                  <button type="button" class="btn btn-primary" id="confirmSaleButton">Confirm Sale</button>
+                </div>
+                <!-- <div class="d-flex justify-content-center">
+                  <button type="button" class="btn btn-primary" id="debtDetail">Deni</button>
+                </div> -->
+                
+              </div>
+            </div>
+          </div>
+
+
+          <div id="debtModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" style="color: black;">Client Details</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeDebtModal()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="debtItemForm" onsubmit="return updateDebt(event)"> <!-- Corrected onsubmit -->
+                        <div class="modal-body">
+                            <label for="clientName" style="color: rgb(197, 41, 41);">Name:</label>
+                            <input type="text" id="clientName" class="form-control" required />
+        
+                            <label for="debtPaid" style="color: rgb(183, 34, 34);">Amount paid:</label>
+                            <input type="text" id="debtPaid" class="form-control" required />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit">Save</button>
+                            <button type="button" onclick="closeDebtModal()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        
+        </div>
+
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../../assets/js/off-canvas.js"></script>
+    <script src="../../assets/js/hoverable-collapse.js"></script>
+    <script src="../../assets/js/misc.js"></script>
+    <script src="../../assets/js/settings.js"></script>
+    <script src="../../assets/js/todolist.js"></script>
+    <script src="/allitemsfrontend.js"></script>
+    <script src="/dashboard.js"></script>
+
+    <script src="/assets/js/dashboard.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <!-- End custom js for this page -->
+</body>
+
+</html>

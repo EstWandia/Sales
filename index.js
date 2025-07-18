@@ -11,6 +11,15 @@ import dailyreportRoute from './routes/dailyreportroute.js';
 import returnedRoute from './routes/returnedroute.js';
 import fastmovingRoute from './routes/fastmovingroute.js';
 
+import villagedataRoute from './routes/village_dashboarddata.js';
+import villagesoldRoutes from './routes/village_sold.js';
+import villagecategoryRoute from './routes/village_categories.js';
+import villageallitems from './routes/village_allitemsroute.js';
+import villagedebtRoute from './routes/village_debtroute.js';
+import villagedailyreportRoute from './routes/village_dailyreportroute.js';
+import villagereturnedRoute from './routes/village_returnedroute.js';
+import villagefastmovingRoute from './routes/village_fastmovingroute.js';
+
 import db from './models/index.js';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv'
@@ -51,6 +60,15 @@ app.use('/dailyreportroute', dailyreportRoute);
 app.use('/returnedroute', returnedRoute);
 app.use('/fastmovingroute', fastmovingRoute);
 
+app.use('/village_dashboarddata', villagedataRoute);
+app.use('/village_categories', villagecategoryRoute);
+app.use('/village_allitemsroute',villageallitems);
+app.use('/village_sold',villagesoldRoutes)
+app.use('/village_debtroute',villagedebtRoute)
+app.use('/village_dailyreportroute',villagedailyreportRoute);
+app.use('/village_returnedroute', villagereturnedRoute);
+app.use('/village_fastmovingroute', villagefastmovingRoute);
+
 
 app.set('view engine','ejs')
 app.set('views',path.join(__dirname, 'views'));
@@ -59,11 +77,15 @@ app.get('index.html',checkAuth,noCache,(req,res) =>{
     res.sendFile(path.join(__dirname,'public','index.html'));
 })
 
+app.get('village_index.html',checkAuth,noCache,(req,res) =>{
+    res.sendFile(path.join(__dirname,'public','index.html'));
+})
+
 app.get('/pages/samples', checkAuth, noCache,checkPermission, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'pages', 'samples', 'allitems.html'));
+    res.sendFile(path.join(__dirname, 'public', 'pages', 'samples', 'allitems.html','village_allitems.html'));
 });
 app.get('/pages/reports', checkAuth, noCache,checkPermission, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'pages', 'reports', 'reportitems.html'));
+    res.sendFile(path.join(__dirname, 'public', 'pages', 'reports', 'reportitems.html','village_reportitems.html'));
 });
 
 // Block unauthenticated access to static samples

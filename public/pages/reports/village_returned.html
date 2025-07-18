@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Sold Items</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!-- End Plugin css for this page -->
+  <!-- inject:css -->
+  <!-- endinject -->
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <!-- End layout styles -->
+  <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_sidebar.html -->
+    <div id="sidebar-container"></div>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row" data-perm="0">
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body" style="display: flex; flex-direction: column; height: 100%;">
+                    <h4 class="card-title">Bordered table</h4>
+                    <p class="card-description"> FIND <code>RETURNED ITEMS</code>
+                    </p>
+                    <div class="table-responsive" style="flex-grow: 1; overflow-y: auto; max-height: 60vh;">
+                      <table class="table table-bordered custom">
+                          <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th>
+                                      Name
+                                      <input type="text" id="returnedName" class="form-control form-control-sm" placeholder="Search Name" oninput="villagefilterSoldTable()">
+                                  </th>
+                                  <th>
+                                      Quantity
+                                      <input type="number" id="returnedQuantity" class="form-control form-control-sm" placeholder="Search Stock" oninput="villagefilterSoldTable()">
+                                  </th>
+                                  <th>
+                                      Amount
+                                      <input type="number" id="returnedAmount" class="form-control form-control-sm" placeholder="Search Price" oninput="villagefilterSoldTable()">
+                                  </th>
+                                  <th>
+                                      State
+                                      <select id="returnedState" class="form-control form-control-sm" oninput="villagefilterSoldTable()">
+                                          <option value="">all</option>
+                                          <option value="1">cash</option>
+                                          <option value="0">mpesa</option>
+                                      </select>
+                                  </th>
+                                  <th>Created At
+                                      <input type="date" id="returnedDate" class="form-control form-control-sm" oninput="villagefilterSoldTable()">
+                                  </th>
+                                  <th>Actions</th>
+                              </tr>
+                          </thead>
+                          <tbody style="color: #fcf1f1;" id="returnedItems">
+                              <!-- Rows will be dynamically added here by JavaScript -->
+                          </tbody>
+                      </table>
+                  </div>
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        <!-- partial:../../partials/_navbar.html -->
+        <!-- partial -->
+        <div>GREAT SELLING DAY</div>
+        <!-- main-panel ends -->
+          </div>
+        </div>
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../../assets/js/off-canvas.js"></script>
+    <script src="../../assets/js/hoverable-collapse.js"></script>
+    <script src="../../assets/js/misc.js"></script>
+    <script src="../../assets/js/settings.js"></script>
+    <script src="../../assets/js/todolist.js"></script>
+    <script src="/allitemsfrontend.js"></script>
+    <script src="/village_dashboard.js"></script>
+    <script src="/village_soldfrontend.js"></script>
+    <script src="/village_returnedfront.js"></script>
+    <script src="/assets/js/dashboard.js"></script>
+    <!-- endinject -->
+</body>
+
+</html>

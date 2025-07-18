@@ -58,6 +58,13 @@ import Debtitems from './debt.js';
 import Dailyreport from './dailyreport.js';
 import ReturnedItems from './returned.js';
 
+import VillageAllitems from './village_allitems.js';
+import VillageSolditems from './village_solditems.js';
+import VillageItemscategory from './village_itemscategory.js';
+import VillageDebtitems from './village_debt.js';
+import VillageDailyreport from './village_dailyreport.js';
+import VillageReturnedItems from './village_returned.js';
+
 db.Solditems = Solditems(sequelize, Sequelize.DataTypes);
 db.users = users(sequelize, Sequelize.DataTypes);
 db.Allitems =Allitems(sequelize, Sequelize.DataTypes);
@@ -65,6 +72,13 @@ db.Itemscategory = Itemscategory(sequelize, Sequelize.DataTypes);
 db.Debtitems =Debtitems(sequelize, Sequelize.DataTypes);
 db.Dailyreport =Dailyreport(sequelize, Sequelize.DataTypes);
 db.Returneditems =ReturnedItems(sequelize, Sequelize.DataTypes);
+
+db.VillageSolditems = VillageSolditems(sequelize, Sequelize.DataTypes);
+db.VillageAllitems = VillageAllitems(sequelize, Sequelize.DataTypes);
+db.VillageItemscategory = VillageItemscategory(sequelize, Sequelize.DataTypes);
+db.VillageDebtitems = VillageDebtitems(sequelize, Sequelize.DataTypes);
+db.VillageDailyreport  = VillageDailyreport(sequelize, Sequelize.DataTypes);
+db.VillageReturneditems = VillageReturnedItems(sequelize, Sequelize.DataTypes);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

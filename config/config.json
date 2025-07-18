@@ -1,9 +1,16 @@
 {
-  "development": {
+  "devlopment": {
     "username": "rk5ste5y794pnynz",
     "password": "bc7pmeb95702eup8",
     "database": "rtvobv5try04w7re",
     "host": "i2cpbxbi4neiupid.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "dialect": "mysql"
+  },
+    "development": {
+    "username": "root",
+    "password": "P@ssW0rd",
+    "database": "students_db",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {

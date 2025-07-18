@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Sold Items</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!-- End Plugin css for this page -->
+  <!-- inject:css -->
+  <!-- endinject -->
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <!-- End layout styles -->
+  <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_sidebar.html -->
+    <div id="sidebar-container"></div>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row" data-perm="0">
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body" style="display: flex; flex-direction: column; height: 100%;">
+                    <h4 class="card-title">Bordered table</h4>
+                    <p class="card-description"> FIND <code>ALL ITEMS SOLD</code>
+                    </p>
+                    <div class="table-responsive" style="flex-grow: 1; overflow-y: auto; max-height: 60vh;">
+                      <table class="table table-bordered custom">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>
+                              Name
+                              <input type="text" id="filterName" class="form-control form-control-sm" placeholder="Search Name"
+                                oninput="villagefilterSoldTable()">
+                            </th>
+                            <th>
+                              Quantity
+                              <input type="number" id="filterQuantity" class="form-control form-control-sm"
+                                placeholder="Search Stock" oninput="villagefilterSoldTable()">
+                            </th>
+                            <th>
+                              Amount
+                              <input type="number" id="filterAmount" class="form-control form-control-sm"
+                                placeholder="Search Price" oninput="villagefilterSoldTable()">
+                            </th>
+                            <th>
+                              State
+                              <select id="filterState" class="form-control form-control-sm" oninput="villagefilterSoldTable()">
+                                <option value="">all</option>
+                                <option value="1">cash</option>
+                                <option value="0">mpesa</option>
+                              </select>
+                            </th>>
+                            <th>Created At
+                              <input type="date" id="filterDate" class="form-control form-control-sm"
+                                oninput="villagefilterSoldTable()">
+                            </th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody style="color: #fcf1f1;" id="reportSoldItems">
+                          <!-- Item rows will be added here dynamically -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        <!-- partial:../../partials/_navbar.html -->
+        <!-- partial -->
+        <div>GREAT SELLING DAY</div>
+        <!-- main-panel ends -->
+          </div>
+        </div>
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <div id="villageviewModal" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Item Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+              onclick="closeModal('villageviewModal')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div style="color: black;" id="view-details">
+              <!-- Item details will be inserted here -->
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('villageviewModal')">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="editModal" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <h4 style="color: black;">Edit Item</h4>
+          <form id="editItemForm" onsubmit="updateItem(event)">
+            <input type="hidden" id="editItemId" />
+            <label for="editItemName" style="color: black;">Name:</label>
+            <input type="text" id="editItemName" required />
+
+            <label for="editItemQuantity" style="color: black;">Quantity:</label>
+            <input type="number" id="editItemQuantity" required />
+
+            <label for="editItemBuyingprice" style="color: black;">Buying Price:</label>
+            <input type="number" id="editItemBuyingprice" required />
+
+            <label for="editItemAmount" style="color: black;">Amount:</label>
+            <input type="number" id="editItemAmount" required />
+
+            <label for="editItemState">State:</label>
+            <select id="editItemState" required>
+              <option value="1">Cash</option>
+              <option value="0">Mpesa</option>
+            </select>
+
+            <button type="submit">Save</button>
+            <button type="button" onclick="closeEditModal(editModal)">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="../../assets/js/off-canvas.js"></script>
+    <script src="../../assets/js/hoverable-collapse.js"></script>
+    <script src="../../assets/js/misc.js"></script>
+    <script src="../../assets/js/settings.js"></script>
+    <script src="../../assets/js/todolist.js"></script>
+    <script src="/village_allitemsfrontend.js"></script>
+    <script src="/village_dashboard.js"></script>
+    <script src="/village_soldfrontend.js"></script>
+    <script src="/assets/js/dashboard.js"></script>
+    <!-- endinject -->
+</body>
+
+</html>

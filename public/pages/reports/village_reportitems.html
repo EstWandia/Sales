@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>View Items</title>
+  <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- Sidebar -->
+    <div id="sidebar-container"></div>
+
+    <div class="container-fluid page-body-wrapper">
+      <!-- Navbar -->
+      <nav class="navbar p-0 fixed-top d-flex flex-row">
+        <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+          <a class="navbar-brand brand-logo-mini" href="../../index.html">
+            <img src="../../assets/images/logo-mini.svg" alt="logo" />
+          </a>
+        </div>
+        <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          <ul class="navbar-nav w-100">
+            <li class="nav-item w-100">
+              <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
+                <input type="text" class="form-control" placeholder="Search products">
+              </form>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+            data-toggle="offcanvas">
+            <span class="mdi mdi-format-line-spacing"></span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <p class="card-description">
+            FIND <code>ALL ITEMS IN STOCK</code>
+          </p>
+          <div class="button-container">
+            <button id="createCategoryBtn" class="btn btn-primary" onclick="openItemsModal()">Add New Items</button>
+          </div>
+          <div class="row" data-perm="0">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body" style="display: flex; flex-direction: column; height: 100%;">
+                  <h4 class="card-title">Bordered table</h4>
+                  <div class="table-responsive" style="flex-grow: 1; overflow-y: auto; max-height: 60vh;">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>
+                            Name
+                            <input type="text" id="filterName" class="form-control form-control-sm" placeholder="Search Name" oninput="villagefilterTable()">
+                          </th>
+                          <th>
+                            In Stock
+                            <input type="number" id="filterStock" class="form-control form-control-sm" placeholder="Search Stock" oninput="villagefilterTable()">
+                          </th>
+                          <th>
+                            Price
+                            <input type="number" id="filterPrice" class="form-control form-control-sm" placeholder="Search Price" oninput="villagefilterTable()">
+                          </th>
+                          <th>
+                            Created At
+                            <input type="date" id="filterDate" class="form-control form-control-sm" oninput="villagefilterTable()">
+                          </th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="villagereportItemsTable" style="color: #fcf1f1;">
+                        <!-- Item rows will be added here dynamically -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modals -->
+        <div id="villageviewModal" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Item Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal('villageviewModal')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div id="view-details" style="color: black;">
+                  <!-- Item details will be inserted here -->
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('villageviewModal')">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add New Items Modal -->
+      <div class="row" data-perm="0">
+        <div id="allitemsModal" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 style="color: black;">Create Items</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeItemsModal()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form id="villageallitemsModalSubmit">
+                  <label for="itemName" style="color: black;">Category Name:</label>
+                  <input type="text" id="itemName" name="name" required><br><br>
+
+                  <label for="buyingPrice" style="color: black;">Buying Price:</label>
+                  <input type="text" id="buyingPrice" name="buying_price" required><br><br>
+
+                  <label for="inStock" style="color: black;">In Stock:</label>
+                  <input type="number" step="0.01" id="inStock" name="in_stock" required><br><br>
+
+                  <label for="itemPrice" style="color: black;">Price:</label>
+                  <input type="number" id="itemPrice" name="price" required><br><br>
+
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeItemsModal()">Cancel</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div id="editModal" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <h4 style="color: black;">Edit Item</h4>
+              <form id="editItemForm" onsubmit="updateItem(event)">
+                <input type="hidden" id="editItemId" />
+                <label for="editItemName" style="color: black;">Name:</label>
+                <input type="text" id="editItemName" required /><br><br>
+        
+                <label for="editItemStock" style="color: black;">Stock:</label>
+                <input type="text" id="editItemStock" required /><br><br>
+
+                <label for="editItemStock" style="color: black;">Buying Price:</label>
+                <input type="number" id="editItemBuyingprice" required /><br><br>
+
+                <label for="editItemStock" style="color: black;">Price:</label>
+                <input type="number" id="editItemPrice" required /><br><br>
+        
+
+                <div class="modal-footer">
+                <button type="submit">Save</button>
+                <button type="button" onclick="closedtModal()">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+  <script src="../../assets/js/off-canvas.js"></script>
+  <script src="../../assets/js/hoverable-collapse.js"></script>
+  <script src="../../assets/js/misc.js"></script>
+  <script src="../../assets/js/settings.js"></script>
+  <script src="../../assets/js/todolist.js"></script>
+  <script src="/village_allitemsfrontend.js"></script>
+  <script src="/village_dashboard.js"></script>
+  <script src="/assets/js/dashboard.js"></script>
+</body>
+
+</html>
