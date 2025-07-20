@@ -94,7 +94,7 @@ export default(sequelize)=>{
     },
     
         {
-            tableName: "returned_items",
+            tableName: "village_returned_items",
             timestamps: true,
             underscored: true   
 

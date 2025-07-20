@@ -56,7 +56,7 @@ fetch('/village_dashboarddata/sold')
     return response.json();
   })
   .then(function (data) {
-    const salesTableBody = document.getElementById('village_soldDisplay');
+    const salesTableBody = document.getElementById('villagesoldDisplay');
     salesTableBody.innerHTML = '';
 
     if (Array.isArray(data)) {
@@ -434,15 +434,15 @@ function getFormattedDate() {
 }
 
 // Update the date dynamically for Mpesa and Cash
-document.getElementById('village_mpesa-date').textContent = getFormattedDate();
-document.getElementById('village_cash-date').textContent = getFormattedDate();
+document.getElementById('villagempesa-date').textContent = getFormattedDate();
+document.getElementById('villagecash-date').textContent = getFormattedDate();
 
 
   document.addEventListener('DOMContentLoaded', checkPermissions);
   window.addEventListener('pageshow', checkPermissions);
   
   function checkPermissions() {
-      fetch('/dashboarddata/permision')
+      fetch('/village_dashboarddata/permision')
           .then(response => response.json())
           .then(data => {
               if (data.perm === 1) {
@@ -468,9 +468,9 @@ document.getElementById('village_cash-date').textContent = getFormattedDate();
       .then(returnDetails => {
           console.log("Received return details:", returnDetails);
 
-          document.getElementById('village_returnItemName').value = returnDetails.name || '';
-          document.getElementById('returnItemQuantity').value = returnDetails.quantity || '';
-          document.getElementById('returnItemId').value = returnDetails.id || '';
+          document.getElementById('villagereturnItemName').value = returnDetails.name || '';
+          document.getElementById('villagereturnItemQuantity').value = returnDetails.quantity || '';
+          document.getElementById('villagereturnItemId').value = returnDetails.id || '';
 
           showReturnModal();
       })
@@ -480,8 +480,8 @@ document.getElementById('village_cash-date').textContent = getFormattedDate();
 function updatereturnItem(event) {
   event.preventDefault();
   
-  const id = document.getElementById('returnItemId').value;
-  const quantity = parseInt(document.getElementById('returnItemQuantity').value, 10);
+  const id = document.getElementById('villagereturnItemId').value;
+  const quantity = parseInt(document.getElementById('villagereturnItemQuantity').value, 10);
 
   console.log("Submitting return for item ID:", id, "with quantity:", quantity); // Debugging
 

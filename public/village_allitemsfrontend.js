@@ -6,7 +6,7 @@ let tabledData = [];
 async function fetchItems(filters = {}) {
     try {
         const query = new URLSearchParams(filters).toString();
-        const response = await fetch(`/allitemsroute/sale?${query}`);
+        const response = await fetch(`/village_allitemsroute/sale?${query}`);
 
         if (!response.ok) {
             throw new Error(`Error: ${response.status} - ${response.statusText}`);
@@ -150,12 +150,12 @@ function loadSaleItemsFromStorage() {
 function clearSaleItems() {
     console.log("Clear sale button clicked");
     localStorage.removeItem('saleItems');
-    document.getElementById('saleItemsTable').innerHTML = '';
-    document.getElementById('grossTotal').textContent = '0.00';
+    document.getElementById('villagesaleItemsTable').innerHTML = '';
+    document.getElementById('villagegrossTotal').textContent = '0.00';
 }
 function showSaleModal(items) {
-    const saleItemsTable = document.getElementById('saleItemsTable');
-    const grossTotalElem = document.getElementById('grossTotal');
+    const saleItemsTable = document.getElementById('villagesaleItemsTable');
+    const grossTotalElem = document.getElementById('villagegrossTotal');
 
     saleItemsTable.innerHTML = '';
 
@@ -226,10 +226,10 @@ function deleteSaleItem(index) {
 //     });
 // }
 function updateBalance() {
-    const amountGiven = parseFloat(document.getElementById('amountGiven').value) || 0;
-    const grossTotal = parseFloat(document.getElementById('grossTotal').textContent) || 0;
+    const amountGiven = parseFloat(document.getElementById('villageamountGiven').value) || 0;
+    const grossTotal = parseFloat(document.getElementById('villagegrossTotal').textContent) || 0;
     const balance = amountGiven - grossTotal;
-    document.getElementById('balance').textContent = balance.toFixed(2);
+    document.getElementById('villagebalance').textContent = balance.toFixed(2);
   }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    document.getElementById('village_submitSaleButton').addEventListener('click', async () => {
+    document.getElementById('villagesubmitSaleButton').addEventListener('click', async () => {
         const items = await fetchItems();
         const quantities = getQuantityForItems(items);
 
@@ -254,22 +254,22 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('Name').addEventListener('input', villagefilteredTable);
     document.getElementById('Stock').addEventListener('input', villagefilteredTable);
     document.getElementById('Price').addEventListener('input', villagefilteredTable);
-    document.getElementById('clearSaleButton').addEventListener('click', () => {
+    document.getElementById('villageclearSaleButton').addEventListener('click', () => {
         clearSaleItems();
     });
-    document.getElementById('amountGiven').addEventListener('input', updateBalance);
+    document.getElementById('villageamountGiven').addEventListener('input', updateBalance);
 
-    document.getElementById('confirmSaleButton').addEventListener('click', function() {
+    document.getElementById('villageconfirmSaleButton').addEventListener('click', function() {
         console.log('kasongo')
         const saleItems = JSON.parse(localStorage.getItem('saleItems')) || [];
-        const amountGiven = parseFloat(document.getElementById('amountGiven').value) || 0;
+        const amountGiven = parseFloat(document.getElementById('villageamountGiven').value) || 0;
         const grossTotal = saleItems.reduce((total, item) => total + item.total, 0);
         const balance = amountGiven - grossTotal;
     
         // Update the gross total and balance on the UI
-        document.getElementById('grossTotal').textContent = grossTotal.toFixed(2);
-        document.getElementById('balance').textContent = balance.toFixed(2);
-        const cashCheckbox = document.getElementById('cashCheckbox');
+        document.getElementById('villagegrossTotal').textContent = grossTotal.toFixed(2);
+        document.getElementById('villagebalance').textContent = balance.toFixed(2);
+        const cashCheckbox = document.getElementById('villagecashCheckbox');
     
         saleItems.forEach(item => {
             // Check if the checkbox is checked and update the item's state accordingly
@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
             //console.log(itemsSold);
     
             // Send the sale data to the backend
-            fetch('/dashboarddata/pay', {
+            fetch('/village_dashboarddata/pay', {
                 
                 method: 'POST',
                 headers: {
@@ -334,17 +334,17 @@ document.addEventListener('DOMContentLoaded', () => {
     //     closeDebtModal()
     // });
 
-    document.getElementById('returnItemForm').addEventListener('submit', function(event) {
+    document.getElementById('villagereturnItemForm').addEventListener('submit', function(event) {
             console.log('save debt')
         const saleItems = JSON.parse(localStorage.getItem('saleItems')) || [];
-        const amountGiven = parseFloat(document.getElementById('amountGiven').value) || 0;
+        const amountGiven = parseFloat(document.getElementById('villageamountGiven').value) || 0;
         const grossTotal = saleItems.reduce((total, item) => total + item.total, 0);
         const balance = amountGiven - grossTotal;
     
         // Update the gross total and balance on the UI
-        document.getElementById('grossTotal').textContent = grossTotal.toFixed(2);
-        document.getElementById('balance').textContent = balance.toFixed(2);
-        const cashCheckbox = document.getElementById('cashCheckbox');
+        document.getElementById('villagegrossTotal').textContent = grossTotal.toFixed(2);
+        document.getElementById('villagebalance').textContent = balance.toFixed(2);
+        const cashCheckbox = document.getElementById('villagecashCheckbox');
     
         saleItems.forEach(item => {
             // Check if the checkbox is checked and update the item's state accordingly
