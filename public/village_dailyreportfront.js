@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Error loading sold data:', error));
 
     function loadDailyReports(data) {
-        const soldDataTable = document.getElementById('village_dailyreportitems');
+        const soldDataTable = document.getElementById('villagedailyreportitems');
         soldDataTable.innerHTML = ''; // Clear table
 
         if (!data.length) {
@@ -42,9 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Add month header row
             soldDataTable.innerHTML += `
-                <tr style="background-color: #E91E63; font-weight: bold;">
-                    <td colspan="9">Month: ${month}</td>
-                </tr>`;
+    <tr class="bg-primary text-white fw-bold">
+        <td colspan="9">Month: ${month}</td>
+    </tr>`;
+
 
             let monthProfit = 0;
             let monthSale = 0;

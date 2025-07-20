@@ -17,7 +17,7 @@ export const checkAuth = (req, res, next) => {
   try {
     // Verify the token using the secret key
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Attach user data to the request for downstream use
+    req.user = decoded; 
     next();
   } catch (err) {
     // If the token is invalid, redirect to the login page
