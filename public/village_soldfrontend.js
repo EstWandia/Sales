@@ -199,7 +199,6 @@ function villagefilterSoldTable() {
         });
       }
     }
-    document.addEventListener('DOMContentLoaded', checkPermissions);
 window.addEventListener('pageshow', checkPermissions);
 
 function checkPermissions() {
@@ -207,13 +206,21 @@ function checkPermissions() {
         .then(response => response.json())
         .then(data => {
             if (data.perm === 1) {
-                document.querySelectorAll('.row[data-perm="0"]').forEach(row => {
-                    row.style.display = 'none';
+                document.querySelectorAll('[data-perm="0"]').forEach(el => {
+                    const parentLi = el.closest('li.nav-item');
+                    if (parentLi) {
+                        parentLi.style.display = 'none';
+                    } else {
+                        // fallback: hide element itself if parent li isn't found
+                        el.style.display = 'none';
+                    }
                 });
             }
         })
         .catch(error => console.error('Error fetching user permission:', error));
 }
+
+document.addEventListener('DOMContentLoaded', checkPermissions);
 
     
     
