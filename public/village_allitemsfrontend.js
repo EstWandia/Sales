@@ -331,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const printUrl = `https://charity-001-dbcfa9ff5e49.herokuapp.com/village_dashboarddata/printreceipt?id=${transactionId}`;
 
                 // Option 1: Directly use the URL (recommended)
-                const schemeLink = `my.bluetoothprint.scheme://${encodeURIComponent(printUrl)}`;
+                const schemeLink = `my.bluetoothprint.scheme://${printUrl}`;
                 console.log('Final print link:', schemeLink);
                 window.location.href = schemeLink;
 
