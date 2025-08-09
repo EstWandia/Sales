@@ -2,7 +2,7 @@
 
 //console.log('I am here')
 let soldData =[]
-fetch('/sold/allsold')
+fetch('/village_sold/allsold')
 .then(response =>
   response.json())
 .then(data=>{
