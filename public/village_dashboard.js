@@ -201,7 +201,7 @@ fetch('/partials/_topbar.html')
     console.log('View button clicked for item ID:', id);
   
     // Fetch item details from the server (replace with actual URL)
-    fetch(`/allitemsroute/itemsview/${id}`)
+    fetch(`/village_allitemsroute/itemsview/${id}`)
       .then(response => response.json())
       .then(itemDetails => {
         console.log(itemDetails);
@@ -228,7 +228,7 @@ fetch('/partials/_topbar.html')
     console.log('Edit button clicked for item ID:', id);
   
     // Fetch item details from the server to populate the form (replace with your actual URL)
-    fetch(`/allitemsroute/itemsview/${id}`)
+    fetch(`/village_allitemsroute/itemsview/${id}`)
       .then(response => response.json())
       .then(itemDetails => {
         console.log(itemDetails);
@@ -260,7 +260,7 @@ fetch('/partials/_topbar.html')
     };
   
     // Send updated data to the server (replace with your actual API endpoint)
-    fetch(`/allitemsroute/itemsupdate/${updatedItem.id}`, {
+    fetch(`/village_allitemsroute/itemsupdate/${updatedItem.id}`, {
       method: 'PUT', 
       headers: {
         'Content-Type': 'application/json'
@@ -286,7 +286,7 @@ fetch('/partials/_topbar.html')
     const confirmation = confirm('Are you sure you want to delete this item?');
   
     if (confirmation) {
-      fetch(`/allitemsroute/itemsdeleted/${id}`,{
+      fetch(`/village_allitemsroute/itemsdeleted/${id}`,{
         method: 'DELETE', 
         headers: {
           'Content-Type': 'application/json',

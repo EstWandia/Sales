@@ -205,6 +205,7 @@ try{
       console.log('kasongo')
       const { itemsSold } = req.body;
       //console.log('Received itemsSold:', itemsSold);
+      const transactionId = uuidv4();
       
       for (const item of itemsSold) {
         const itemId = uuidv4();
@@ -215,6 +216,7 @@ try{
         await VillageSolditems.create({ 
           id:itemId,
           item_id:item.id,
+          transaction_id: transactionId, // Assign same transaction ID
           name: item.name,
           quantity: item.quantity,
           price: item.price,
@@ -423,5 +425,87 @@ export const getReturnbyid = async (req, res) => {
   } catch (error) {
       console.error('Error processing return:', error);
       res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+export const printReceipt = async (req, res) => {
+  try {
+    const { id } = req.query; // transactionId
+
+    if (!id) {
+      return res.status(400).json({ error: 'Missing transaction ID' });
+    }
+
+    const items = await Solditems.findAll({
+      where: { transaction_id: id },
+      raw: true
+    });
+
+    if (!items.length) {
+      return res.status(404).json({ error: 'No items found for receipt' });
+    }
+
+    const receipt = [];
+
+    // Title
+    receipt.push({
+      type: 0,
+      content: 'SALES RECEIPT',
+      bold: 1,
+      align: 1,
+      format: 2
+    });
+
+    receipt.push({
+      type: 0,
+      content: `Transaction ID: ${id}`,
+      bold: 0,
+      align: 0,
+      format: 0
+    });
+
+    receipt.push({
+      type: 0,
+      content: '-----------------------------',
+      bold: 0,
+      align: 0,
+      format: 0
+    });
+
+    // Each item
+    for (const item of items) {
+      receipt.push({
+        type: 0,
+        content: `${item.name} x${item.quantity} - Ksh ${item.amount}`,
+        bold: 0,
+        align: 0,
+        format: 0
+      });
+    }
+
+    // Total
+    const total = items.reduce((sum, item) => sum + parseFloat(item.amount), 0);
+    receipt.push({
+      type: 0,
+      content: `Total: Ksh ${total.toFixed(2)}`,
+      bold: 1,
+      align: 2,
+      format: 1
+    });
+
+    // Thank you message
+    receipt.push({
+      type: 0,
+      content: 'Thank you for shopping!',
+      bold: 0,
+      align: 1,
+      format: 0
+    });
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(receipt);
+
+  } catch (error) {
+    console.error('Error generating receipt:', error);
+    res.status(500).json({ error: 'Server error' });
   }
 };

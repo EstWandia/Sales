@@ -314,9 +314,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 //Hide the modal
                 // const saleModal = new bootstrap.Modal(document.getElementById('saleModal'));
                 // saleModal.hide();
+
+                const transactionId = data.transactionId;
+                const responseURL = `https://charity-001-dbcfa9ff5e49.herokuapp.com/printreceipt?id=${transactionId}`;
+                const schemeLink = `my.bluetoothprint.scheme://${responseURL}`;
+
+                // Trigger print
+                window.location.href = schemeLink;
+
+                // Optional reload
+                setTimeout(() => location.reload(), 2000);
     
                 // Reload the page
-                location.reload();
+               // location.reload();
             })
             .catch(error => {
                 console.error('Error during sale confirmation:', error);

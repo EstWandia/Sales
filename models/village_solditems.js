@@ -11,6 +11,13 @@ export default(sequelize)=>{
                 notEmpty: true
             }
         },
+         transaction_id: {
+            type: DataTypes.STRING(36), // or DataTypes.UUID if you want UUID type
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        },
         category_id:{
           type:DataTypes.STRING,
           allowNull:true,
