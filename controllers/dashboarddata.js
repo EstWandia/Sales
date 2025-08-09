@@ -437,7 +437,10 @@ export const printReceipt = async (req, res) => {
     const { id } = req.query; // transactionId
 
     if (!id) {
-      return res.status(400).json({ error: 'Missing transaction ID' });
+      const jsonResponse = JSON.stringify({ error: 'Missing transaction ID' });
+      console.log('Sending JSON:', jsonResponse);
+      res.setHeader('Content-Type', 'application/json');
+      return res.end(jsonResponse);
     }
 
     const items = await Solditems.findAll({
@@ -446,10 +449,13 @@ export const printReceipt = async (req, res) => {
     });
 
     if (!items.length) {
-      return res.status(404).json({ error: 'No items found for receipt' });
+      const jsonResponse = JSON.stringify({ error: 'No items found for receipt' });
+      console.log('Sending JSON:', jsonResponse);
+      res.setHeader('Content-Type', 'application/json');
+      return res.end(jsonResponse);
     }
 
-    const receipt = [];
+    let receipt = [];
 
     // Title
     receipt.push({
@@ -460,6 +466,7 @@ export const printReceipt = async (req, res) => {
       format: 2
     });
 
+    // Transaction ID
     receipt.push({
       type: 0,
       content: `Transaction ID: ${id}`,
@@ -468,6 +475,7 @@ export const printReceipt = async (req, res) => {
       format: 0
     });
 
+    // Separator
     receipt.push({
       type: 0,
       content: '-----------------------------',
@@ -497,7 +505,7 @@ export const printReceipt = async (req, res) => {
       format: 1
     });
 
-    // Thank you message
+    // Thank you
     receipt.push({
       type: 0,
       content: 'Thank you for shopping!',
@@ -506,11 +514,27 @@ export const printReceipt = async (req, res) => {
       format: 0
     });
 
+    // Convert array to object with numeric keys
+    const jsonObject = {};
+    receipt.forEach((entry, index) => {
+      jsonObject[index] = entry;
+    });
+
+    // Stringify & log before sending
+    const jsonResponse = JSON.stringify(jsonObject);
+    console.log('Sending JSON:', jsonResponse);
+
     res.setHeader('Content-Type', 'application/json');
-    res.send(receipt);
+    res.end(jsonResponse);
 
   } catch (error) {
+    // Log the error for debugging
     console.error('Error generating receipt:', error);
-    res.status(500).json({ error: 'Server error' });
+
+    const jsonResponse = JSON.stringify({ error: 'Server error' });
+    console.log('Sending JSON:', jsonResponse);
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(jsonResponse);
   }
 };
