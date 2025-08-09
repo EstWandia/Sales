@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // saleModal.hide();
 
                 const transactionId = data.transactionId;
-                const responseURL = `https://charity-001-dbcfa9ff5e49.herokuapp.com/printreceipt?id=${transactionId}`;
+                const responseURL = `https://charity-001-dbcfa9ff5e49.herokuapp.com/dashboarddata/printreceipt?id=${transactionId}`;
                 const schemeLink = `my.bluetoothprint.scheme://${responseURL}`;
 
                 // Trigger print

@@ -249,7 +249,11 @@ try{
       }
       
   
-      res.json({ success: true, message: 'Sale confirmed successfully!' });
+      res.json({
+        success: true,
+        message: 'Sale confirmed successfully!',
+        transactionId
+ });
   
     } catch (error) {
       console.error('Error during sale confirmation:', error);

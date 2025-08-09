@@ -312,7 +312,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.removeItem('saleItems'); // Clear the sale items from localStorage
 
                 const transactionId = data.transactionId;
-                const responseURL = `https://charity-001-dbcfa9ff5e49.herokuapp.com/printreceipt?id=${transactionId}`;
+                //console.log('transactionId',transactionId);
+                const responseURL = `https://charity-001-dbcfa9ff5e49.herokuapp.com/village_dashboarddata/printreceipt?id=${transactionId}`;
+                //console.log('response',responseURL);
                 const schemeLink = `my.bluetoothprint.scheme://${responseURL}`;
 
                 // Trigger print

@@ -248,7 +248,12 @@ try{
       }
       
   
-      res.json({ success: true, message: 'Sale confirmed successfully!' });
+      res.json({ 
+        success: true,
+        message: 'Sale confirmed successfully!',
+        transactionId
+
+       });
   
     } catch (error) {
       console.error('Error during sale confirmation:', error);
@@ -435,7 +440,7 @@ export const printReceipt = async (req, res) => {
       return res.status(400).json({ error: 'Missing transaction ID' });
     }
 
-    const items = await Solditems.findAll({
+    const items = await VillageSolditems.findAll({
       where: { transaction_id: id },
       raw: true
     });
