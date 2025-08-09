@@ -332,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // console.log('Final print link:', schemeLink);
                 // window.location.href = schemeLink;
 
-                setTimeout(() => location.reload(), 2000);
+                //setTimeout(() => location.reload(), 2000);
             })
                 .catch(error => {
                     console.error('Error:', error);
@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // saleModal.hide();
     
                 // Reload the page
-                //location.reload();
+                location.reload();
             // })
             // .catch(error => {
             //     console.error('Error during sale confirmation:', error);

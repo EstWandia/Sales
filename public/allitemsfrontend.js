@@ -320,13 +320,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 // const schemeLink = `my.bluetoothprint.scheme://${responseURL}`;
 
                 // Trigger print
-                window.location.href = schemeLink;
+                //window.location.href = schemeLink;
 
                 // Optional reload
-                setTimeout(() => location.reload(), 2000);
+                //setTimeout(() => location.reload(), 2000);
     
                 // Reload the page
-               // location.reload();
+                location.reload();
             })
             .catch(error => {
                 console.error('Error during sale confirmation:', error);
