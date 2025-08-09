@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(data => {
                  localStorage.removeItem('saleItems');
-    console.log('Transaction data:', data);
+                 console.log('Transaction data:', data);
     
                 const transactionId = data.transactionId;
                 if (!transactionId) {
@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('Final print link:', schemeLink);
                 window.location.href = schemeLink;
 
-                setTimeout(() => location.reload(), 2000);
+                //setTimeout(() => location.reload(), 2000);
             })
                 .catch(error => {
                     console.error('Error:', error);
