@@ -433,108 +433,95 @@ export const getReturnbyid = async (req, res) => {
   }
 };
 export const printReceipt = async (req, res) => {
-  try {
-    const { id } = req.query; // transactionId
-
-    if (!id) {
-      const jsonResponse = JSON.stringify({ error: 'Missing transaction ID' });
-      //console.log('Sending JSON:', jsonResponse);
-      res.setHeader('Content-Type', 'application/json');
-      return res.end(jsonResponse);
-    }
-
-    const items = await VillageSolditems.findAll({
-      where: { transaction_id: id },
-      raw: true
-    });
-
-    if (!items.length) {
-      const jsonResponse = JSON.stringify({ error: 'No items found for receipt' });
-      //console.log('Sending JSON:', jsonResponse);
-      res.setHeader('Content-Type', 'application/json');
-      return res.end(jsonResponse);
-    }
-
-    let receipt = [];
-
-    // Title
-    receipt.push({
+  const response = {
+    0: {
       type: 0,
-      content: 'SALES RECEIPT',
+      content: 'TEST PRINT',
       bold: 1,
       align: 1,
-      format: 2
-    });
-
-    // Transaction ID
-    receipt.push({
-      type: 0,
-      content: `Transaction ID: ${id}`,
-      bold: 0,
-      align: 0,
       format: 0
-    });
-
-    // Separator
-    receipt.push({
-      type: 0,
-      content: '-----------------------------',
-      bold: 0,
-      align: 0,
-      format: 0
-    });
-
-    // Each item
-    for (const item of items) {
-      receipt.push({
-        type: 0,
-        content: `${item.name} x${item.quantity} - Ksh ${item.amount}`,
-        bold: 0,
-        align: 0,
-        format: 0
-      });
     }
-
-    // Total
-    const total = items.reduce((sum, item) => sum + parseFloat(item.amount), 0);
-    receipt.push({
-      type: 0,
-      content: `Total: Ksh ${total.toFixed(2)}`,
-      bold: 1,
-      align: 2,
-      format: 1
-    });
-
-    // Thank you
-    receipt.push({
-      type: 0,
-      content: 'Thank you for shopping!',
-      bold: 0,
-      align: 1,
-      format: 0
-    });
-
-    // Convert array to object with numeric keys
-    const jsonObject = {};
-    receipt.forEach((entry, index) => {
-      jsonObject[index] = entry;
-    });
-
-    // Stringify & log before sending
-    const jsonResponse = JSON.stringify(jsonObject);
-    //console.log('Sending JSON:', jsonResponse);
-
-    res.setHeader('Content-Type', 'application/json');
-    res.end(jsonResponse);
-
-  } catch (error) {
-    // Log the error for debugging
-    console.error('Error generating receipt:', error);
-
-    const jsonResponse = JSON.stringify({ error: 'Server error' });
-    //console.log('Sending JSON:', jsonResponse);
-
-    res.setHeader('Content-Type', 'application/json');
-    res.end(jsonResponse);
-  }
+  };
+  res.json(response);
 };
+// export const printReceipt = async (req, res) => {
+//   try {
+//     const { id } = req.query;
+
+//     if (!id) {
+//       return res.json({ error: 'Missing transaction ID' });
+//     }
+
+//     const items = await VillageSolditems.findAll({
+//       where: { transaction_id: id },
+//       raw: true
+//     });
+
+//     if (!items.length) {
+//       return res.json({ error: 'No items found for receipt' });
+//     }
+
+//     // Create response object directly (not array)
+//     const response = {
+//       0: {
+//         type: 0,
+//         content: 'SALES RECEIPT',
+//         bold: 1,
+//         align: 1,
+//         format: 2
+//       },
+//       1: {
+//         type: 0,
+//         content: `Transaction ID: ${id}`,
+//         bold: 0,
+//         align: 0,
+//         format: 0
+//       },
+//       2: {
+//         type: 0,
+//         content: '-----------------------------',
+//         bold: 0,
+//         align: 0,
+//         format: 0
+//       }
+//     };
+
+//     // Add items
+//     items.forEach((item, index) => {
+//       response[index + 3] = {
+//         type: 0,
+//         content: `${item.name} x${item.quantity} - Ksh ${item.amount}`,
+//         bold: 0,
+//         align: 0,
+//         format: 0
+//       };
+//     });
+
+//     // Add total
+//     const total = items.reduce((sum, item) => sum + parseFloat(item.amount), 0);
+//     const totalIndex = items.length + 3;
+//     response[totalIndex] = {
+//       type: 0,
+//       content: `Total: Ksh ${total.toFixed(2)}`,
+//       bold: 1,
+//       align: 2,
+//       format: 1
+//     };
+
+//     // Add thank you
+//     response[totalIndex + 1] = {
+//       type: 0,
+//       content: 'Thank you for shopping!',
+//       bold: 0,
+//       align: 1,
+//       format: 0
+//     };
+
+//     res.setHeader('Content-Type', 'application/json');
+//     res.json(response);
+
+//   } catch (error) {
+//     console.error('Error generating receipt:', error);
+//     res.json({ error: 'Server error' });
+//   }
+// };
