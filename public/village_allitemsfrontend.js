@@ -306,56 +306,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ itemsSold: itemsSold })
                 
             })
-            .then(response =>{
-                
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                // Check the content type
-                const contentType = response.headers.get('content-type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    throw new TypeError("Didn't receive JSON");
-                }
-                 return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                 localStorage.removeItem('saleItems');
-                 console.log('Transaction data:', data);
+                //console.log('Sale confirmation success:', data);
+                localStorage.removeItem('saleItems'); // Clear the sale items from localStorage
     
-                const transactionId = data.transactionId;
-                if (!transactionId) {
-                    throw new Error('No transaction ID received');
-                }
+                //Hide the modal
+                // const saleModal = new bootstrap.Modal(document.getElementById('saleModal'));
+                // saleModal.hide();
 
-                // // Construct the final print URL directly
-                // const schemeLink = `my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/village_dashboarddata/printreceipt?id=${transactionId}`;
-                // console.log('Final print link:', schemeLink);
-                // window.location.href = schemeLink;
-
-                //setTimeout(() => location.reload(), 2000);
-            })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Printing failed: ' + error.message);
-                });
-                //const schemeLink = `my.bluetoothprint.scheme://${responseURL}`;
+                // const transactionId = data.transactionId;
+                // const responseURL = `https://charity-001-dbcfa9ff5e49.herokuapp.com/dashboarddata/printreceipt?id=${transactionId}`;
+                // const schemeLink = `my.bluetoothprint.scheme://${responseURL}`;
 
                 // Trigger print
                 //window.location.href = schemeLink;
 
                 // Optional reload
-               // setTimeout(() => location.reload(), 2000);
-    
-                //Hide the modal
-                // const saleModal = new bootstrap.Modal(document.getElementById('saleModal'));
-                // saleModal.hide();
+                //setTimeout(() => location.reload(), 2000);
     
                 // Reload the page
                 location.reload();
-            // })
-            // .catch(error => {
-            //     console.error('Error during sale confirmation:', error);
-            // });
+            })
+            .catch(error => {
+                console.error('Error during sale confirmation:', error);
+            });
         } else {
             alert('Insufficient amount given.');
         }
