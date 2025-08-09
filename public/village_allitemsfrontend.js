@@ -328,13 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 // Construct the final print URL directly
-                const printUrl = new URL(
-                    `/village_dashboarddata/printreceipt?id=${transactionId}`,
-                    'https://charity-001-dbcfa9ff5e49.herokuapp.com'
-                ).toString();
-
-                // PROPERLY FORMATTED SCHEME LINK
-                const schemeLink = `my.bluetoothprint.scheme://${printUrl}`;
+                const schemeLink = `my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/village_dashboarddata/printreceipt?id=${transactionId}`;
                 console.log('Final print link:', schemeLink);
                 window.location.href = schemeLink;
 
