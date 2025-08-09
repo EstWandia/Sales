@@ -319,28 +319,24 @@ document.addEventListener('DOMContentLoaded', () => {
                  return response.json();
             })
             .then(data => {
-                //console.log('Sale confirmation success:', data);
-                localStorage.removeItem('saleItems'); // Clear the sale items from localStorage
-                console.log('Raw JSON received:', data);
-
+                 localStorage.removeItem('saleItems');
+    console.log('Transaction data:', data);
+    
                 const transactionId = data.transactionId;
-                //console.log('transactionId',transactionId);
-                const responseURL = `https://charity-001-dbcfa9ff5e49.herokuapp.com/village_dashboarddata/printreceipt?id=${transactionId}`;
-                //console.log('response',responseURL);
-                 return fetch(responseURL);
-                })
-                .then(printResponse => {
-                    if (!printResponse.ok) {
-                        throw new Error('Print response was not ok');
-                    }
-                    return printResponse.json();
-                })
-                .then(printData => {
-                    console.log('Print data:', printData);
-                    const schemeLink = `my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/village_dashboarddata/printreceipt?id=${printData.transactionId}`;
-                    window.location.href = schemeLink;
-                    setTimeout(() => location.reload(), 2000);
-                })
+                if (!transactionId) {
+                    throw new Error('No transaction ID received');
+                }
+
+                // Construct the final print URL directly
+                const printUrl = `https://charity-001-dbcfa9ff5e49.herokuapp.com/village_dashboarddata/printreceipt?id=${transactionId}`;
+
+                // Option 1: Directly use the URL (recommended)
+                const schemeLink = `my.bluetoothprint.scheme://${encodeURIComponent(printUrl)}`;
+                console.log('Final print link:', schemeLink);
+                window.location.href = schemeLink;
+
+                setTimeout(() => location.reload(), 2000);
+            })
                 .catch(error => {
                     console.error('Error:', error);
                     alert('Printing failed: ' + error.message);
