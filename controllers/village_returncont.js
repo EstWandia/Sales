@@ -7,7 +7,7 @@ const {VillageReturneditems,VillageSolditems,VillageAllitems} = db
 
 export const getReturnedItems = async (req, res) => {
     try {
-        console.log("Fetching returned items...");
+        //console.log("Fetching returned items...");
         
         const items = await VillageReturneditems.findAll(); 
 

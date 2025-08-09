@@ -202,14 +202,14 @@ try{
   }
   export const confirmSale = async (req, res) => {
     try {
-      console.log('kasongo')
+      //console.log('kasongo')
       const { itemsSold } = req.body;
       //console.log('Received itemsSold:', itemsSold);
       const transactionId = uuidv4();
       
       for (const item of itemsSold) {
         const itemId = uuidv4();
-        console.log("Generated UUID:", itemId);
+        //console.log("Generated UUID:", itemId);
 
         const {  id,name, quantity, price, amount, state,buying_price, category_id } = item;
 
@@ -226,12 +226,12 @@ try{
           category_id:item.category_id
         });
 
-        console.log("Item id:", item.id);
+        //console.log("Item id:", item.id);
         const existingItem = await VillageAllitems.findOne({ where: { id: item.id } });
         
             if (existingItem) {
                 const newQuantity = existingItem.in_stock - item.quantity;
-                console.log(newQuantity);
+                //console.log(newQuantity);
 
                 if (newQuantity < 0) {
                     return res.status(400).json({ error: `Insufficient stock for item: ${item.name}` });
@@ -290,7 +290,7 @@ try{
           }
         } 
       });
-      console.log(cash);
+      //console.log(cash);
 
   
       const mpesa = await VillageSolditems.sum('quantity', {
@@ -337,7 +337,7 @@ try{
 export const getsoldItemss = async (req, res) => {
   try {
       const { id } = req.params;
-      console.log("Fetching sold item details for ID:", id);  // Debugging log
+      //console.log("Fetching sold item details for ID:", id);  // Debugging log
 
       const item = await VillageSolditems.findOne({ where: { id } });
 
@@ -346,7 +346,7 @@ export const getsoldItemss = async (req, res) => {
           return res.status(404).json({ error: 'Item not found' });
       }
 
-      console.log("Found item details:", item.toJSON());  // Log the actual item
+      //console.log("Found item details:", item.toJSON());  // Log the actual item
 
       res.json({
           id: item.id,
@@ -364,7 +364,7 @@ export const getReturnbyid = async (req, res) => {
       const { id } = req.params; // This is sold_item_id
       const { quantity } = req.body;
 
-      console.log("Processing return for Sold Item ID:", id, "Quantity:", quantity);
+      //console.log("Processing return for Sold Item ID:", id, "Quantity:", quantity);
 
       const returnQuantity = parseInt(quantity, 10);
 
@@ -372,11 +372,11 @@ export const getReturnbyid = async (req, res) => {
       const soldItem = await VillageSolditems.findByPk(id);
 
       if (!soldItem) {
-          console.log('Sold item not found for ID:', id);
+          //console.log('Sold item not found for ID:', id);
           return res.status(404).json({ error: 'Sold item not found' });
       }
 
-      console.log('Found sold item:', soldItem.toJSON());
+      //console.log('Found sold item:', soldItem.toJSON());
 
       // Step 2: Validate return quantity
       if (returnQuantity <= 0 || returnQuantity > soldItem.quantity) {
@@ -403,13 +403,13 @@ export const getReturnbyid = async (req, res) => {
           deleted_at: null
       });
 
-      console.log("Inserted into returned_items:", returnedItem.toJSON());
+      //console.log("Inserted into returned_items:", returnedItem.toJSON());
 
       // Step 5: Update or delete the sold item record
       if (newQuantity <= 0) {
           // Remove item if no more stock left
           await VillageSolditems.destroy({ where: { id } });
-          console.log(`Sold item with ID ${id} deleted (no stock left)`);
+          //console.log(`Sold item with ID ${id} deleted (no stock left)`);
       } else {
           // Update item quantity and amount
           const newAmount = newQuantity * soldItem.price;
@@ -421,7 +421,7 @@ export const getReturnbyid = async (req, res) => {
               where: { id }
           });
 
-          console.log(`Sold item with ID ${id} updated (new quantity: ${newQuantity}, new amount: ${newAmount})`);
+          //console.log(`Sold item with ID ${id} updated (new quantity: ${newQuantity}, new amount: ${newAmount})`);
       }
 
       // Step 6: Final response
@@ -438,7 +438,7 @@ export const printReceipt = async (req, res) => {
 
     if (!id) {
       const jsonResponse = JSON.stringify({ error: 'Missing transaction ID' });
-      console.log('Sending JSON:', jsonResponse);
+      //console.log('Sending JSON:', jsonResponse);
       res.setHeader('Content-Type', 'application/json');
       return res.end(jsonResponse);
     }
@@ -450,7 +450,7 @@ export const printReceipt = async (req, res) => {
 
     if (!items.length) {
       const jsonResponse = JSON.stringify({ error: 'No items found for receipt' });
-      console.log('Sending JSON:', jsonResponse);
+      //console.log('Sending JSON:', jsonResponse);
       res.setHeader('Content-Type', 'application/json');
       return res.end(jsonResponse);
     }
@@ -522,7 +522,7 @@ export const printReceipt = async (req, res) => {
 
     // Stringify & log before sending
     const jsonResponse = JSON.stringify(jsonObject);
-    console.log('Sending JSON:', jsonResponse);
+    //console.log('Sending JSON:', jsonResponse);
 
     res.setHeader('Content-Type', 'application/json');
     res.end(jsonResponse);
@@ -532,7 +532,7 @@ export const printReceipt = async (req, res) => {
     console.error('Error generating receipt:', error);
 
     const jsonResponse = JSON.stringify({ error: 'Server error' });
-    console.log('Sending JSON:', jsonResponse);
+    //console.log('Sending JSON:', jsonResponse);
 
     res.setHeader('Content-Type', 'application/json');
     res.end(jsonResponse);

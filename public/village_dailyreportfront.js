@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('I am here');
+    //console.log('I am here');
 
     let soldData = [];
 
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        console.log("Data received:", data);
+       // console.log("Data received:", data);
 
         // Group data by month
         const monthlyReports = {};

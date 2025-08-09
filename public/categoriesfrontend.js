@@ -1,4 +1,4 @@
-console.log('mee')
+//console.log('mee')
 let categoryData = [];
 fetch('/categories/itemscategory')
 .then(response=>{
@@ -77,13 +77,13 @@ function filterCategoryTable() {
 }
 function viewItem(event,id) {
   event.preventDefault(); 
-  console.log('View button clicked for item ID:', id);
+  //console.log('View button clicked for item ID:', id);
 
   // Fetch item details from the server (replace with actual URL)
   fetch(`/categories/item/${id}`)
     .then(response => response.json())
     .then(itemDetails => {
-      console.log(itemDetails);
+      //console.log(itemDetails);
 
       // Populate the modal with item details
       const viewDetails = `
@@ -103,13 +103,13 @@ function viewItem(event,id) {
 
 function editItem(event, id) {
   event.preventDefault();
-  console.log('Edit button clicked for item ID:', id);
+  //console.log('Edit button clicked for item ID:', id);
 
   // Fetch item details from the server to populate the form (replace with your actual URL)
   fetch(`/categories/item/${id}`)
     .then(response => response.json())
     .then(itemDetails => {
-      console.log(itemDetails);
+      //console.log(itemDetails);
 
       // Populate the form with item details
       document.getElementById('editItemName').value = itemDetails.name || '';
@@ -145,7 +145,7 @@ function updateItem(event) {
   })
   .then(response => response.json())
   .then(updatedItemDetails => {
-    console.log('Item updated:', updatedItemDetails);
+    //console.log('Item updated:', updatedItemDetails);
 
     alert('Item successfully updated!');
     window.location.reload();
@@ -157,7 +157,7 @@ function updateItem(event) {
 }
 function deleteItem(event, id) {
   event.preventDefault();
-  console.log('Delete button clicked for item ID:', id);
+  //console.log('Delete button clicked for item ID:', id);
 
   const confirmation = confirm('Are you sure you want to delete this item?');
 
@@ -170,7 +170,7 @@ function deleteItem(event, id) {
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Item deleted:', data);
+      //console.log('Item deleted:', data);
       alert('Item successfully deleted!');
       
       // Optionally, remove the item from the table without reloading
@@ -241,7 +241,7 @@ fetch('/categories/displaycategory')
     return response.json();
   })
   .then(data => {
-    console.log("rent", data); // Log the fetched data
+    //console.log("rent", data); // Log the fetched data
 
     const iconsList = document.getElementById('iconsList');
     iconsList.innerHTML = ''; // Clear previous content
@@ -257,7 +257,7 @@ fetch('/categories/displaycategory')
 
         // Ensure the image URL is correct
         const imageUrl = item.image_url ? item.image_url : '/assets/images/default.jpg'; // Use default image if not present
-        console.log(item.image_url); // Check if the image URL is correct
+        //console.log(item.image_url); // Check if the image URL is correct
 
         colDiv.innerHTML = `
             <div class="card">
@@ -285,7 +285,7 @@ fetch('/categories/displaycategory')
 .catch(error => console.error('Error loading sales data:', error));
 
 function finishedTable(data) {
-  console.log('youps')
+  //console.log('youps')
   const salesTableBody = document.getElementById('reportfinishedItems');
   salesTableBody.innerHTML = ''; // Clear existing rows
   //data in descending order

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('ssssssssssssssssssssssssss');
+    //console.log('ssssssssssssssssssssssssss');
 
     let FastMoving = []; 
 

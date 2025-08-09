@@ -7,13 +7,13 @@ const {DebtItems} =db
 
 export const Debt = async (req, res) => {
     try {
-      console.log('debt')
+      //console.log('debt')
       const { itemsDebt} = req.body;
-      console.log('Received debtitems:', itemsDebt);
+      //console.log('Received debtitems:', itemsDebt);
       
       for (const item of itemsDebt) {
         const itemId = uuidv4();
-        console.log("Generated UUID:", itemId);
+        //console.log("Generated UUID:", itemId);
 
         const { name,client_name, quantity, price, amount,amount_paid,amount_remaining, state,buying_price, category_id } = item;
 
@@ -35,7 +35,7 @@ export const Debt = async (req, res) => {
         
             if (existingItem) {
                 const newQuantity = existingItem.in_stock - item.quantity;
-                console.log(newQuantity);
+                //console.log(newQuantity);
 
                 if (newQuantity < 0) {
                     return res.status(400).json({ error: `Insufficient stock for item: ${item.name}` });

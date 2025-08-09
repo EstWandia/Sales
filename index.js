@@ -92,7 +92,7 @@ app.get('/pages/reports', checkAuth, noCache,checkPermission, (req, res) => {
 
 
 app.get('/',noCache, (req, res) => {
-    console.log(path.join(__dirname, 'public', 'pages', 'samples', 'login.html'));
+   // console.log(path.join(__dirname, 'public', 'pages', 'samples', 'login.html'));
     res.sendFile(path.join(__dirname, 'public', 'pages', 'samples', 'login.html'));
 });
 

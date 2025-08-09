@@ -5,7 +5,7 @@ const { Solditems } = db;
 
 export const getFastMoving = async (req, res) => { 
     try {
-        console.log("Fetching fast-moving items...");
+        //console.log("Fetching fast-moving items...");
 
         const reports = await Solditems.findAll({
             attributes: [

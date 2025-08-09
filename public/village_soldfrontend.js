@@ -1,6 +1,6 @@
 
 
-console.log('I am here')
+//console.log('I am here')
 let soldData =[]
 fetch('/sold/allsold')
 .then(response =>
@@ -12,14 +12,14 @@ fetch('/sold/allsold')
 )
 
 function renderSoldTable(data) {
-  const soldDataTable = document.getElementById('reportSoldItems');
+  const soldDataTable = document.getElementById('villagereportSoldItems');
   soldDataTable.innerHTML = ''; // Clear the table
 
   if (!data.length) {
       soldDataTable.innerHTML = `<tr><td colspan="7" class="text-center">No items found matching the filters.</td></tr>`;
       return;
   }
-  console.log("god have:",data)
+  //console.log("god have:",data)
 
   data.forEach((item, index) => {
       const row = document.createElement('tr');
@@ -82,13 +82,13 @@ function villagefilterSoldTable() {
 
     function viewItem(event,id) {
       event.preventDefault(); 
-      console.log('View button clicked for item ID:', id);
+      //console.log('View button clicked for item ID:', id);
     
       // Fetch item details from the server (replace with actual URL)
       fetch(`/sold/item/${id}`)
         .then(response => response.json())
         .then(itemDetails => {
-          console.log(itemDetails);
+          //console.log(itemDetails);
     
           // Populate the modal with item details
           const viewDetails = `
@@ -111,13 +111,13 @@ function villagefilterSoldTable() {
 
     function editItem(event, id) {
       event.preventDefault();
-      console.log('Edit button clicked for item ID:', id);
+      //console.log('Edit button clicked for item ID:', id);
     
       // Fetch item details from the server to populate the form (replace with your actual URL)
       fetch(`/sold/item/${id}`)
         .then(response => response.json())
         .then(itemDetails => {
-          console.log(itemDetails);
+          //console.log(itemDetails);
     
           // Populate the form with item details
           document.getElementById('editItemName').value = itemDetails.name || '';
@@ -127,7 +127,7 @@ function villagefilterSoldTable() {
           const state = itemDetails.state === 'Mpesa' ? 1 : 0;
           document.getElementById('editItemState').value = state;
           document.getElementById('editItemId').value = itemDetails.id || '';
-          console.log(document.getElementById('editItemState').value);
+          (document.getElementById('editItemState').value);
     
           // Show the modal to edit the item
           showEditModal();
@@ -159,7 +159,7 @@ function villagefilterSoldTable() {
       })
       .then(response => response.json())
       .then(updatedItemDetails => {
-        console.log('Item updated:', updatedItemDetails);
+        //console.log('Item updated:', updatedItemDetails);
 
         alert('Item successfully updated!');
         window.location.reload();
@@ -171,7 +171,7 @@ function villagefilterSoldTable() {
     }
     function deleteItem(event, id) {
       event.preventDefault();
-      console.log('Delete button clicked for item ID:', id);
+      //console.log('Delete button clicked for item ID:', id);
     
       const confirmation = confirm('Are you sure you want to delete this item?');
     
@@ -184,7 +184,7 @@ function villagefilterSoldTable() {
         })
         .then(response => response.json())
         .then(data => {
-          console.log('Item deleted:', data);
+          //console.log('Item deleted:', data);
           alert('Item successfully deleted!');
           
           // Optionally, remove the item from the table without reloading

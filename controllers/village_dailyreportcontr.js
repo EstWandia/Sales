@@ -5,7 +5,7 @@ const { VillageDailyreport, VillageSolditems } = db;
 
 export const getDailyReports = async (req, res) => {
     try {
-        console.log("Fetching daily reports...");
+        //console.log("Fetching daily reports...");
 
         const reports = await VillageSolditems.findAll({
             attributes: [
@@ -37,7 +37,7 @@ export const getDailyReports = async (req, res) => {
             return { ...report.get(), total_profit: adjustedProfit };
         });
 
-        console.log("Daily reports fetched successfully.");
+        //console.log("Daily reports fetched successfully.");
         res.json(reportsWithAdjustedProfit);
     } catch (error) {
         console.error("Error fetching daily reports:", error);

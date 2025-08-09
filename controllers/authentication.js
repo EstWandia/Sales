@@ -88,7 +88,7 @@ export const loggedInuser =async (req,res)=>{
             }));
               res.render('index',{ users: formattedUsers });
     }catch(error){
-        console.log(error);
+        //console.log(error);
               res.status(500).send('Internal Server Error');
 
     }
@@ -96,7 +96,7 @@ export const loggedInuser =async (req,res)=>{
 export const getLoginName = async (req, res) => {
     try {
       const userId = req.user.id;
-      console.log('User ID:', userId);
+      //console.log('User ID:', userId);
 
   
       const user = await users.findByPk(userId);

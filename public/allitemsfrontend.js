@@ -1,6 +1,6 @@
-console.log('for the love of christ');
-console.log(`Current Time: ${new Date().toString()}`);
-console.log(`Time Zone Offset: ${new Date().getTimezoneOffset()} minutes`);
+//console.log('for the love of christ');
+//console.log(`Current Time: ${new Date().toString()}`);
+//console.log(`Time Zone Offset: ${new Date().getTimezoneOffset()} minutes`);
 let tabledData = []; 
 
 async function fetchItems(filters = {}) {
@@ -345,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // });
 
     document.getElementById('returnItemForm').addEventListener('submit', function(event) {
-            console.log('save debt')
+            //console.log('save debt')
         const saleItems = JSON.parse(localStorage.getItem('saleItems')) || [];
         const amountGiven = parseFloat(document.getElementById('amountGiven').value) || 0;
         const grossTotal = saleItems.reduce((total, item) => total + item.total, 0);
@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     state:item.state
                 };
             });
-            console.log(debtSold);
+           // console.log(debtSold);
     
             // Send the sale data to the backend
             fetch('/debtroute/getdebt', {

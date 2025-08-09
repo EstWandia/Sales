@@ -198,13 +198,13 @@ fetch('/partials/_topbar.html')
   
   function viewItem(event,id) {
     event.preventDefault(); 
-    console.log('View button clicked for item ID:', id);
+    //console.log('View button clicked for item ID:', id);
   
     // Fetch item details from the server (replace with actual URL)
     fetch(`/village_allitemsroute/itemsview/${id}`)
       .then(response => response.json())
       .then(itemDetails => {
-        console.log(itemDetails);
+        //console.log(itemDetails);
   
         // Populate the modal with item details
         const viewDetails = `
@@ -225,13 +225,13 @@ fetch('/partials/_topbar.html')
   
   function editItem(event, id) {
     event.preventDefault();
-    console.log('Edit button clicked for item ID:', id);
+    //console.log('Edit button clicked for item ID:', id);
   
     // Fetch item details from the server to populate the form (replace with your actual URL)
     fetch(`/village_allitemsroute/itemsview/${id}`)
       .then(response => response.json())
       .then(itemDetails => {
-        console.log(itemDetails);
+        //console.log(itemDetails);
   
         // Populate the form with item details
         document.getElementById('editItemName').value = itemDetails.name || '';
@@ -269,7 +269,7 @@ fetch('/partials/_topbar.html')
     })
     .then(response => response.json())
     .then(updatedItemDetails => {
-      console.log('Item updated:', updatedItemDetails);
+      //console.log('Item updated:', updatedItemDetails);
   
       alert('Item successfully updated!');
       window.location.reload();
@@ -281,7 +281,7 @@ fetch('/partials/_topbar.html')
   }
   function deleteItem(event, id) {
     event.preventDefault();
-    console.log('Delete button clicked for item ID:', id);
+    //console.log('Delete button clicked for item ID:', id);
   
     const confirmation = confirm('Are you sure you want to delete this item?');
   
@@ -294,7 +294,7 @@ fetch('/partials/_topbar.html')
       })
       .then(response => response.json())
       .then(data => {
-        console.log('Item deleted:', data);
+        //console.log('Item deleted:', data);
         alert('Item successfully deleted!');
         
         // Optionally, remove the item from the table without reloading
@@ -466,7 +466,7 @@ document.addEventListener('DOMContentLoaded', checkPermissions);
 
   function returnItem(event, id) {
     event.preventDefault();
-    console.log("Return button clicked for item ID:", id); // Debugging log
+    //console.log("Return button clicked for item ID:", id); // Debugging log
 
     if (!id) {
         console.error("Error: ID is undefined");
@@ -476,7 +476,7 @@ document.addEventListener('DOMContentLoaded', checkPermissions);
     fetch(`/village_dashboarddata/returnitem/${id}`)
       .then(response => response.json())
       .then(returnDetails => {
-          console.log("Received return details:", returnDetails);
+          //console.log("Received return details:", returnDetails);
 
           document.getElementById('villagereturnItemName').value = returnDetails.name || '';
           document.getElementById('villagereturnItemQuantity').value = returnDetails.quantity || '';
@@ -493,7 +493,7 @@ function updatereturnItem(event) {
   const id = document.getElementById('villagereturnItemId').value;
   const quantity = parseInt(document.getElementById('villagereturnItemQuantity').value, 10);
 
-  console.log("Submitting return for item ID:", id, "with quantity:", quantity); // Debugging
+  //console.log("Submitting return for item ID:", id, "with quantity:", quantity); // Debugging
 
   if (!id || isNaN(quantity) || quantity <= 0) {
       alert('Please enter a valid quantity.');
@@ -509,7 +509,7 @@ function updatereturnItem(event) {
   })
   .then(response => response.json())
   .then(data => {
-      console.log("Server response:", data); // Debugging
+      //console.log("Server response:", data); // Debugging
 
       if (data.success) {
           alert('Return processed successfully!');

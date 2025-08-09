@@ -3,7 +3,7 @@ import db from '../models/index.js'
 const {Solditems} = db
 
 export const getAllSoldItems = async(req,res)=>{
-    console.log('this')
+   // console.log('this')
     try{
     const all_sold = await Solditems.findAll(
       {
