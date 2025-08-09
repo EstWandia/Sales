@@ -327,12 +327,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw new Error('No transaction ID received');
                 }
 
-                // Construct the final print URL directly
-                const schemeLink = `my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/village_dashboarddata/printreceipt?id=${transactionId}`;
-                console.log('Final print link:', schemeLink);
-                window.location.href = schemeLink;
+                // // Construct the final print URL directly
+                // const schemeLink = `my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/village_dashboarddata/printreceipt?id=${transactionId}`;
+                // console.log('Final print link:', schemeLink);
+                // window.location.href = schemeLink;
 
-                //setTimeout(() => location.reload(), 2000);
+                setTimeout(() => location.reload(), 2000);
             })
                 .catch(error => {
                     console.error('Error:', error);
