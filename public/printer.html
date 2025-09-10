@@ -169,6 +169,18 @@
             opacity: 0.8;
         }
         
+        .error-fix {
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .error-fix h3 {
+            margin-bottom: 10px;
+        }
+        
         @media (max-width: 600px) {
             .print-options {
                 grid-template-columns: 1fr;
@@ -188,6 +200,22 @@
         </header>
         
         <div class="content">
+            <div class="error-fix">
+                <h3>JSON Error Fixed!</h3>
+                <p>The app expects a JSON object with a "printData" property containing the array of print commands.</p>
+            </div>
+            
+            <div class="instructions">
+                <h3>Instructions:</h3>
+                <ol>
+                    <li>Install the "Bluetooth Print" app from Google Play Store</li>
+                    <li>Enable "Browser Print" function in the app settings</li>
+                    <li>Start the Node.js server on your machine</li>
+                    <li>Open this page on your Android device browser</li>
+                    <li>Click any print button below</li>
+                    <li>The app should open and print the content</li>
+                </ol>
+            </div>
             
             <div class="print-options">
                 <div class="option-card">
@@ -209,6 +237,33 @@
                 </div>
             </div>
             
+            <div class="response-preview">
+                <h3>Correct JSON Response Format:</h3>
+                <pre>{
+  "printData": [
+    {
+      "type": 0,
+      "content": "NODE.JS TEST RECEIPT",
+      "bold": 1,
+      "align": 1,
+      "format": 3
+    },
+    {
+      "type": 0,
+      "content": " ",
+      "bold": 0,
+      "align": 0
+    },
+    {
+      "type": 2,
+      "value": "1234567890123",
+      "width": 100,
+      "height": 50,
+      "align": 1
+    }
+  ]
+}</pre>
+            </div>
         </div>
     </div>
     
