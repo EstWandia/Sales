@@ -307,14 +307,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 
             })
             .then(response => response.json())
-            .then(data => {
-                //console.log('Sale confirmation success:', data);
-                localStorage.removeItem('saleItems'); // Clear the sale items from localStorage
-                
-                const printUrl = `my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/print-transaction?transactionId=${data.transactionId}`;
-                 window.location.href = printUrl;
-               // location.reload();
-            })
+                .then(data => {
+                    if (data.success) {
+                        localStorage.removeItem('saleItems');
+
+                        // Construct print URL for the app
+                        const printUrl = `my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/print-transaction?transactionId=${data.transactionId}`;
+
+                        // Open the printer page
+                        window.open(printUrl, "_blank");
+
+                        // Reload your POS page after short delay
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    }
+                })
             .catch(error => {
                 console.error('Error during sale confirmation:', error);
             });
