@@ -308,26 +308,21 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(response => response.json())
             .then(data => {
-                //console.log('Sale confirmation success:', data);
-                localStorage.removeItem('saleItems'); // Clear the sale items from localStorage
-    
-                //Hide the modal
-                // const saleModal = new bootstrap.Modal(document.getElementById('saleModal'));
-                // saleModal.hide();
+                    if (data.success) {
+                        localStorage.removeItem('saleItems');
 
-                // const transactionId = data.transactionId;
-                // const responseURL = `https://charity-001-dbcfa9ff5e49.herokuapp.com/dashboarddata/printreceipt?id=${transactionId}`;
-                // const schemeLink = `my.bluetoothprint.scheme://${responseURL}`;
+                        // Construct print URL for the app
+                        const printUrl = `my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/print-transaction?transactionId=${data.transactionId}`;
 
-                // Trigger print
-                //window.location.href = schemeLink;
+                        // Open the printer page
+                        window.open(printUrl, "_blank");
 
-                // Optional reload
-                //setTimeout(() => location.reload(), 2000);
-    
-                // Reload the page
-                location.reload();
-            })
+                        // Reload your POS page after short delay
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    }
+                })
             .catch(error => {
                 console.error('Error during sale confirmation:', error);
             });
