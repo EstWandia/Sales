@@ -1,7 +1,20 @@
 import express from "express";
 const router = express.Router();
 
-// Fixed endpoint - returns JSON array directly
+/**
+ * Helper: Convert array → JSON_FORCE_OBJECT style
+ */
+function forceJsonObject(arr) {
+    const obj = {};
+    arr.forEach((item, i) => {
+        obj[i] = item;
+    });
+    return obj;
+}
+
+// =========================
+// Print Receipt Endpoint
+// =========================
 router.get('/print-data-fixed', (req, res) => {
     const { id, type } = req.query;
 
@@ -17,42 +30,15 @@ router.get('/print-data-fixed', (req, res) => {
     });
 
     // Empty line
-    printData.push({
-        type: 0,
-        content: ' ',
-        bold: 0,
-        align: 0
-    });
+    printData.push({ type: 0, content: ' ', bold: 0, align: 0 });
 
     // Order info
-    printData.push({
-        type: 0,
-        content: `Order #: ${id || 'NOD' + Date.now()}`,
-        bold: 0,
-        align: 0
-    });
-
-    printData.push({
-        type: 0,
-        content: `Type: ${type || 'Test'}`,
-        bold: 0,
-        align: 0
-    });
-
-    printData.push({
-        type: 0,
-        content: `Date: ${new Date().toLocaleString()}`,
-        bold: 0,
-        align: 0
-    });
+    printData.push({ type: 0, content: `Order #: ${id || 'NOD' + Date.now()}`, bold: 0, align: 0 });
+    printData.push({ type: 0, content: `Type: ${type || 'Test'}`, bold: 0, align: 0 });
+    printData.push({ type: 0, content: `Date: ${new Date().toLocaleString()}`, bold: 0, align: 0 });
 
     // Empty line
-    printData.push({
-        type: 0,
-        content: ' ',
-        bold: 0,
-        align: 0
-    });
+    printData.push({ type: 0, content: ' ', bold: 0, align: 0 });
 
     // Items
     const items = [
@@ -60,70 +46,51 @@ router.get('/print-data-fixed', (req, res) => {
         'Product B - $15.50',
         'Product C - $8.75'
     ];
-
     items.forEach(item => {
-        printData.push({
-            type: 0,
-            content: item,
-            bold: 0,
-            align: 0
-        });
+        printData.push({ type: 0, content: item, bold: 0, align: 0 });
     });
 
     // Empty line
-    printData.push({
-        type: 0,
-        content: ' ',
-        bold: 0,
-        align: 0
-    });
+    printData.push({ type: 0, content: ' ', bold: 0, align: 0 });
 
     // Total
-    printData.push({
-        type: 0,
-        content: 'TOTAL: $34.25',
-        bold: 1,
-        align: 2 // right
-    });
+    printData.push({ type: 0, content: 'TOTAL: $34.25', bold: 1, align: 2 });
 
     // Empty line
-    printData.push({
-        type: 0,
-        content: ' ',
-        bold: 0,
-        align: 0
-    });
+    printData.push({ type: 0, content: ' ', bold: 0, align: 0 });
 
     // Barcode
     printData.push({
-        type: 2, // barcode
+        type: 2,
         value: '1234567890123',
         width: 100,
         height: 50,
-        align: 1 // center
+        align: 1
     });
 
     // QR code
     printData.push({
-        type: 3, // QR code
+        type: 3,
         value: 'https://example.com/order/123',
         size: 40,
-        align: 1 // center
+        align: 1
     });
 
-    // Thank you message
+    // Thank you
     printData.push({
         type: 0,
         content: 'Thank you for your business!',
         bold: 1,
-        align: 1 // center
+        align: 1
     });
 
-    // FIX: Return the JSON array directly, not wrapped in an object
-    res.json(printData);
+    //Return JSON_FORCE_OBJECT
+    res.json(forceJsonObject(printData));
 });
 
-// Fixed HTML print endpoint
+// =========================
+// Print HTML Endpoint
+// =========================
 router.get('/print-html-fixed', (req, res) => {
     const printData = [];
 
@@ -134,8 +101,8 @@ router.get('/print-html-fixed', (req, res) => {
                   <p>Server Date: ${new Date().toLocaleString()}</p>`
     });
 
-    // FIX: Return the JSON array directly, not wrapped in an object
-    res.json(printData);
+    //Return JSON_FORCE_OBJECT
+    res.json(forceJsonObject(printData));
 });
 
 export default router;
