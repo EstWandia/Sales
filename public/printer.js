@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 import db from '../models/index.js';
 
-const {Solditems} =db;
+const {Solditems,VillageSolditems} =db;
 
 /**
  * Helper: Convert array → JSON_FORCE_OBJECT style
@@ -191,6 +191,101 @@ router.get('/print-transaction', async (req, res) => {
         printData.push({
             type: 0,
             content: 'Thank you Charity values you!',
+            bold: 1,
+            align: 1
+        });
+
+        res.json(forceJsonObject(printData));
+
+    } catch (err) {
+        console.error("Print transaction error:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+router.get('/print-village-transaction', async (req, res) => {
+    try {
+        const { transactionId } = req.query;
+
+        if (!transactionId) {
+            return res.status(400).json({ error: "Missing transactionId" });
+        }
+
+        const items = await VillageSolditems.findAll({ where: { transaction_id: transactionId } });
+        if (!items || items.length === 0) {
+            return res.status(404).json({ error: "No items found for this transaction" });
+        }
+
+        const printData = [];
+
+        // Title
+        printData.push({
+            type: 0,
+            content: 'VILLAGE MARKET RECEIPT',
+            bold: 1,
+            align: 1,
+            format: 3
+        });
+
+        // Empty line
+        printData.push({ type: 0, content: ' ', bold: 0, align: 0 });
+
+        // Transaction ID
+        printData.push({
+            type: 0,
+            content: `Transaction: ${transactionId}`,
+            bold: 0,
+            align: 0
+        });
+
+        printData.push({
+            type: 0,
+            content: `Date: ${new Date().toLocaleString()}`,
+            bold: 0,
+            align: 0
+        });
+
+        // Divider
+        printData.push({ type: 0, content: '---------------------------', bold: 0, align: 0 });
+
+        // Items
+        let total = 0;
+        items.forEach(item => {
+            const line = `${item.name} x${item.quantity} @ ${item.price} = ${item.amount}`;
+            printData.push({ type: 0, content: line, bold: 0, align: 0 });
+            total += parseFloat(item.amount);
+        });
+
+        // Divider
+        printData.push({ type: 0, content: '---------------------------', bold: 0, align: 0 });
+
+        // Total
+        printData.push({
+            type: 0,
+            content: `TOTAL: ${total.toFixed(2)}`,
+            bold: 1,
+            align: 2
+        });
+
+         printData.push({
+        type: 2,
+        value: '1234567890123',
+        width: 100,
+        height: 50,
+        align: 1
+    });
+
+    // QR code
+    printData.push({
+        type: 3,
+        value: 'https://example.com/order/123',
+        size: 40,
+        align: 1
+    });
+
+        // Thank you
+        printData.push({
+            type: 0,
+            content: 'Thank you VillageMarket values you!',
             bold: 1,
             align: 1
         });

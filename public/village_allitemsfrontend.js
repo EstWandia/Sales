@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.removeItem('saleItems');
 
                         // Construct print URL for the app
-                        const printUrl = `my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/print-transaction?transactionId=${data.transactionId}`;
+                        const printUrl = `my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/print-village-transaction?transactionId=${data.transactionId}`;
 
                         // Open the printer page
                         window.open(printUrl, "_blank");
