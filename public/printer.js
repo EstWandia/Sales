@@ -125,7 +125,7 @@ router.get('/print-transaction', async (req, res) => {
         // Title
         printData.push({
             type: 0,
-            content: 'SALES RECEIPT',
+            content: 'CHARITY RECEIPT',
             bold: 1,
             align: 1,
             format: 3
@@ -171,10 +171,26 @@ router.get('/print-transaction', async (req, res) => {
             align: 2
         });
 
+         printData.push({
+        type: 2,
+        value: '1234567890123',
+        width: 100,
+        height: 50,
+        align: 1
+    });
+
+    // QR code
+    printData.push({
+        type: 3,
+        value: 'https://example.com/order/123',
+        size: 40,
+        align: 1
+    });
+
         // Thank you
         printData.push({
             type: 0,
-            content: 'Thank you for your purchase!',
+            content: 'Thank you Charity values you!',
             bold: 1,
             align: 1
         });
