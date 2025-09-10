@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Node.js Bluetooth Printer Test</title>
+    <title>Node.js Bluetooth Printer Test - Fixed</title>
     <style>
         * {
             box-sizing: border-box;
@@ -170,7 +170,7 @@
         }
         
         .error-fix {
-            background: #e74c3c;
+            background: #2ecc71;
             color: white;
             padding: 15px;
             border-radius: 10px;
@@ -195,14 +195,14 @@
 <body>
     <div class="container">
         <header>
-            <h1>Node.js Bluetooth Printer Test</h1>
-            <p class="subtitle">Test your thermal printer with Node.js backend</p>
+            <h1>Node.js Bluetooth Printer Test - FIXED</h1>
+            <p class="subtitle">JSON response issue has been resolved</p>
         </header>
         
         <div class="content">
             <div class="error-fix">
                 <h3>JSON Error Fixed!</h3>
-                <p>The app expects a JSON object with a "printData" property containing the array of print commands.</p>
+                <p>The app expects a JSON array directly, not an object with a printData property.</p>
             </div>
             
             <div class="instructions">
@@ -221,48 +221,46 @@
                 <div class="option-card">
                     <h3>Test Receipt</h3>
                     <p>Print a sample receipt with items and totals</p>
-                    <a href="my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/print-data" class="btn">Print Receipt</a>
+                    <a href="my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/print-data-fixed" class="btn">Print Receipt</a>
                 </div>
                 
                 <div class="option-card">
                     <h3>HTML Content</h3>
                     <p>Print formatted HTML content</p>
-                    <a href="my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/print-html" class="btn btn-success">Print HTML</a>
+                    <a href="my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/print-html-fixed" class="btn btn-success">Print HTML</a>
                 </div>
                 
                 <div class="option-card">
                     <h3>With Parameters</h3>
                     <p>Print with custom parameters</p>
-                    <a href="my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/print-data?id=123&type=receipt" class="btn btn-warning">Print with Params</a>
+                    <a href="my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/print-data-fixed?id=123&type=receipt" class="btn btn-warning">Print with Params</a>
                 </div>
             </div>
             
             <div class="response-preview">
                 <h3>Correct JSON Response Format:</h3>
-                <pre>{
-  "printData": [
-    {
-      "type": 0,
-      "content": "NODE.JS TEST RECEIPT",
-      "bold": 1,
-      "align": 1,
-      "format": 3
-    },
-    {
-      "type": 0,
-      "content": " ",
-      "bold": 0,
-      "align": 0
-    },
-    {
-      "type": 2,
-      "value": "1234567890123",
-      "width": 100,
-      "height": 50,
-      "align": 1
-    }
-  ]
-}</pre>
+                <pre>[
+  {
+    "type": 0,
+    "content": "NODE.JS TEST RECEIPT",
+    "bold": 1,
+    "align": 1,
+    "format": 3
+  },
+  {
+    "type": 0,
+    "content": " ",
+    "bold": 0,
+    "align": 0
+  },
+  {
+    "type": 2,
+    "value": "1234567890123",
+    "width": 100,
+    "height": 50,
+    "align": 1
+  }
+]</pre>
             </div>
         </div>
     </div>
@@ -272,7 +270,6 @@
     </footer>
 
     <script>
-        // You can add any client-side interactivity here if needed
         document.addEventListener('DOMContentLoaded', function() {
             const buttons = document.querySelectorAll('.btn');
             buttons.forEach(button => {

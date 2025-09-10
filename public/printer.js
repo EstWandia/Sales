@@ -1,8 +1,8 @@
-// printer.js
 import express from "express";
 const router = express.Router();
 
-router.get('/print-data', (req, res) => {
+// Fixed endpoint - returns JSON array directly
+router.get('/print-data-fixed', (req, res) => {
     const { id, type } = req.query;
 
     const printData = [];
@@ -103,11 +103,11 @@ router.get('/print-data', (req, res) => {
         align: 1 // center
     });
 
-    // QR code - FIXED: Added size property
+    // QR code
     printData.push({
         type: 3, // QR code
         value: 'https://example.com/order/123',
-        size: 40, // Added the missing size property
+        size: 40,
         align: 1 // center
     });
 
@@ -119,11 +119,12 @@ router.get('/print-data', (req, res) => {
         align: 1 // center
     });
 
-    // FIX: Return a JSON object with printData property instead of array directly
-    res.json({ printData });
+    // FIX: Return the JSON array directly, not wrapped in an object
+    res.json(printData);
 });
 
-router.get('/print-html', (req, res) => {
+// Fixed HTML print endpoint
+router.get('/print-html-fixed', (req, res) => {
     const printData = [];
 
     printData.push({
@@ -133,8 +134,8 @@ router.get('/print-html', (req, res) => {
                   <p>Server Date: ${new Date().toLocaleString()}</p>`
     });
 
-    // FIX: Return a JSON object with printData property instead of array directly
-    res.json({ printData });
+    // FIX: Return the JSON array directly, not wrapped in an object
+    res.json(printData);
 });
 
 export default router;
