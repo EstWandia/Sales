@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Bluetooth Printer Test</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+        
+        .content {
+            padding: 25px;
+        }
+        
+        .instructions {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .instructions h3 {
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+            line-height: 1.6;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .print-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .option-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .option-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .option-card p {
+            margin-bottom: 15px;
+            color: #7f8c8d;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+        
+        .btn-success {
+            background: #2ecc71;
+        }
+        
+        .btn-success:hover {
+            background: #27ae60;
+        }
+        
+        .btn-warning {
+            background: #f39c12;
+        }
+        
+        .btn-warning:hover {
+            background: #e67e22;
+        }
+        
+        .response-preview {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .response-preview h3 {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        pre {
+            background: #1a2530;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 600px) {
+            .print-options {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Node.js Bluetooth Printer Test</h1>
+            <p class="subtitle">Test your thermal printer with Node.js backend</p>
+        </header>
+        
+        <div class="content">
+            
+            <div class="print-options">
+                <div class="option-card">
+                    <h3>Test Receipt</h3>
+                    <p>Print a sample receipt with items and totals</p>
+                    <a href="my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/print-data" class="btn">Print Receipt</a>
+                </div>
+                
+                <div class="option-card">
+                    <h3>HTML Content</h3>
+                    <p>Print formatted HTML content</p>
+                    <a href="my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/print-html" class="btn btn-success">Print HTML</a>
+                </div>
+                
+                <div class="option-card">
+                    <h3>With Parameters</h3>
+                    <p>Print with custom parameters</p>
+                    <a href="my.bluetoothprint.scheme://https://charity-001-dbcfa9ff5e49.herokuapp.com/print-data?id=123&type=receipt" class="btn btn-warning">Print with Params</a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <footer>
+        <p>Designed for Bluetooth Thermal Printer Testing with Node.js</p>
+    </footer>
+
+    <script>
+        // You can add any client-side interactivity here if needed
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    alert('If the print app does not open, make sure you have the Bluetooth Print app installed and the correct server IP address.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

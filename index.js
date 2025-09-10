@@ -27,6 +27,8 @@ import { checkAuth } from './middleware/checkAuth.js';
 import { noCache } from './middleware/nocache.js';
 import session from 'express-session';
 import { checkPermission } from './middleware/allowedUsers.js';  // Adjust path as needed
+import printerRoutes from "./public/printer.js"; 
+
 
 
 
@@ -73,7 +75,7 @@ app.use('/village_fastmovingroute', villagefastmovingRoute);
 app.set('view engine','ejs')
 app.set('views',path.join(__dirname, 'views'));
 
-app.get('index.html',checkAuth,noCache,(req,res) =>{
+app.get('/index.html',checkAuth,noCache,(req,res) =>{
     res.sendFile(path.join(__dirname,'public','index.html'));
 })
 
@@ -98,6 +100,8 @@ app.get('/',noCache, (req, res) => {
 
 app.use('/public/pages/samples', checkAuth, noCache);
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', printerRoutes);  // mount them at root
 
 db.sequelize.sync().then(() => {
     const PORT = process.env.PORT || 4000;
