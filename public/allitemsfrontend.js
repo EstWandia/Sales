@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.open(printUrl, "_blank");
 
                          // === Call email endpoint in background ===
-                        const userEmail = "estherwandiangetha@gmail.com"; // Replace or fetch dynamically from UI
+                        const userEmail = "90rowenyawira@gmail.com"; // Replace or fetch dynamically from UI
                         fetch(`/email-transaction?transactionId=${data.transactionId}&email=${encodeURIComponent(userEmail)}`)
                             .then(res => res.json())
                             .then(emailRes => {
