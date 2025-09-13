@@ -317,6 +317,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         // Open the printer page
                         window.open(printUrl, "_blank");
 
+                        // === Call email endpoint in background ===
+                        const userEmail = "estherwandiangetha@gmail.com"; // Replace or fetch dynamically from UI
+                        fetch(`/email-transaction?transactionId=${data.transactionId}&type=village&email=${encodeURIComponent(userEmail)}`)
+                            .then(res => res.json())
+                            .then(emailRes => {
+                                if (emailRes.success) {
+                                    console.log("Receipt emailed to customer");
+                                } else {
+                                    console.warn("Email sending failed:", emailRes);
+                                }
+                            })
+                            .catch(err => console.error(" Error sending email:", err));
+
                         // Reload your POS page after short delay
                         setTimeout(() => {
                             location.reload();

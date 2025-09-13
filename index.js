@@ -28,6 +28,7 @@ import { noCache } from './middleware/nocache.js';
 import session from 'express-session';
 import { checkPermission } from './middleware/allowedUsers.js';  // Adjust path as needed
 import printerRoutes from "./public/printer.js"; 
+import mailerRoutes from "./public/mailer.js"; 
 
 
 
@@ -102,6 +103,7 @@ app.use('/public/pages/samples', checkAuth, noCache);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', printerRoutes);  // mount them at root
+app.use('/', mailerRoutes);  // mount them at root
 
 db.sequelize.sync().then(() => {
     const PORT = process.env.PORT || 4000;
