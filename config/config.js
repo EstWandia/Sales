@@ -1,6 +1,7 @@
-require('dotenv').config();
+// config/config.js
+import 'dotenv/config';
 
-module.exports = {
+export default {
   development: {
     username: "root",
     password: "P@ssW0rd",
