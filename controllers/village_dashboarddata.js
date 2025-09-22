@@ -2,6 +2,7 @@ import db from '../models/index.js';
 import sequelize from "sequelize";
 import { v4 as uuidv4 } from 'uuid';
 import { Op } from 'sequelize'; // Add this line if Sequelize is imported from the package
+import moment from 'moment-timezone';
 
 
 const {VillageSolditems,VillageAllitems,VillageReturneditems} =db;
@@ -202,7 +203,7 @@ try{
   }
   export const confirmSale = async (req, res) => {
     try {
-      const moment = require('moment-timezone');
+      
       const now = moment().tz('Africa/Nairobi').format('YYYY-MM-DD HH:mm:ss');
       //console.log('kasongo')
       const { itemsSold } = req.body;
