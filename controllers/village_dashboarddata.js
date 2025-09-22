@@ -118,7 +118,7 @@ export const getTodayProfit = async (req, res) => {
           0
       );
 
-      const totalProfit = Math.max(beforeProfit-800, 0);
+      const totalProfit = Math.max(beforeProfit-400, 0);
 
       // Send response
      res.json({ totalProfit });
@@ -202,6 +202,8 @@ try{
   }
   export const confirmSale = async (req, res) => {
     try {
+      const moment = require('moment-timezone');
+      const now = moment().tz('Africa/Nairobi').format('YYYY-MM-DD HH:mm:ss');
       //console.log('kasongo')
       const { itemsSold } = req.body;
       //console.log('Received itemsSold:', itemsSold);
@@ -223,7 +225,9 @@ try{
           buying_price: item.buying_price,
           amount:item.amount,
           state:state,
-          category_id:item.category_id
+          category_id:item.category_id,
+          created_at: now,
+          updated_at: now
         });
 
         //console.log("Item id:", item.id);

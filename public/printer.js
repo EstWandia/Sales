@@ -72,12 +72,7 @@ router.get('/print-data-fixed', (req, res) => {
     });
 
     // QR code
-    printData.push({
-        type: 3,
-        value: 'https://example.com/order/123',
-        size: 40,
-        align: 1
-    });
+    
 
     // Thank you
     printData.push({
@@ -180,12 +175,7 @@ router.get('/print-transaction', async (req, res) => {
     });
 
     // QR code
-    printData.push({
-        type: 3,
-        value: 'https://example.com/order/123',
-        size: 40,
-        align: 1
-    });
+    
 
         // Thank you
         printData.push({
@@ -275,12 +265,7 @@ router.get('/print-village-transaction', async (req, res) => {
     });
 
     // QR code
-    printData.push({
-        type: 3,
-        value: 'https://example.com/order/123',
-        size: 40,
-        align: 1
-    });
+    
 
         // Thank you
         printData.push({
