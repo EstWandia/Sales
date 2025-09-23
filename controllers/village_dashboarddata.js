@@ -119,7 +119,7 @@ export const getTodayProfit = async (req, res) => {
           0
       );
 
-      const totalProfit = Math.max(beforeProfit-400, 0);
+      const totalProfit = Math.max(beforeProfit-666, 0);
 
       // Send response
      res.json({ totalProfit });
