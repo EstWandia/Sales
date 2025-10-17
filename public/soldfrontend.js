@@ -33,14 +33,14 @@ function renderSoldTable(data) {
           <td>${formattedDate}</td>
           <td>
         <a href="#" class="mdi mdi-eye" title="View" data-id="${item.id}" onclick="viewItem(event, '${item.id}')"></a>
-        <a href="#" class="mdi mdi-pencil" title="Edit" data-id="${item.id}" onclick="editItem(event, '${item.id}')"></a>
-        <a href="#" class="mdi mdi-delete" title="Delete" data-id="${item.id}" onclick="deleteItem(event, '${item.id}')"></a>
         </td>
 
       `;
       soldDataTable.appendChild(row); // Append the row to the table body
   });
 }
+ //<a href="#" class="mdi mdi-pencil" title="Edit" data-id="${item.id}" onclick="editItem(event, '${item.id}')"></a>
+        // <a href="#" class="mdi mdi-delete" title="Delete" data-id="${item.id}" onclick="deleteItem(event, '${item.id}')"></a>
 function showViewModal() { 
   const modal = document.getElementById('viewModal');
    modal.classList.add('show');
